@@ -1,0 +1,11 @@
+.settingsLineTable {
+    border-bottom: 1px solid #DDDDDD;
+    padding-bottom: 10px;
+    padding-top: 5px;
+    width: 700px;
+}
+
+.settingsCaption {
+    width: 100px;
+    color: #A0A0A0;
+}
