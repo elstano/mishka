@@ -1,0 +1,12 @@
+
+
+- изменения по транспортировке (CONTAINER_TYPE, PLANT_CONTAINERS)
+- поле PREMIUM_A7 перенесено из CASTING_AGGREGATE в PLANT
+- добавлено в PLANT: CLIP_ADD_COST,  CLIP_MELT_LOSS
+- соединены литейные машины и доступные им оснастки: CM_ATTACHMENTS
+- в оснастку добавлено CAST_MACH_ID - к какой литейной машине она присоединена в начале месяца
+- изменения по объему заказа в ORDER: TONNAGE, DELTA_PLUS, DELTA_MINUS 
+- изменения по приоритетам заказа в ORDER: TIME_PRIORITY, TONNAGE_PRIORITY
+- поле WEIGHT перенесено из заказа в продукт, а также удалено из PRODUCED_PRODUCT
+- изменена таблица FILTER_CONS
+- поле LADLE_POUR_TIME_MAX перенесено из завода в агрегат
