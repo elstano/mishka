@@ -1,0 +1,74 @@
+<mockup version="1.0" skin="sketch" measuredW="815" measuredH="611" mockupW="800" mockupH="600">
+  <controls>
+    <control controlID="0" controlTypeID="com.balsamiq.mockups::BrowserWindow" x="15" y="11" w="800" h="600" measuredW="450" measuredH="400" zOrder="0" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>MISHKA%0Ahttp%3A//localhost%3A6800/index.html</text>
+      </controlProperties>
+    </control>
+    <control controlID="1" controlTypeID="com.balsamiq.mockups::VerticalTabBar" x="23" y="85" w="785" h="496" measuredW="200" measuredH="301" zOrder="1" locked="false" isInGroup="-1">
+      <controlProperties>
+        <hrefs>PLANT%26bm%3BPLANT.bmml%26bm%3BPLANT.bmml%26bm%3BPLANT.bmml%2CPRODUCT%26bm%3BPRODUCT.bmml%26bm%3BPRODUCT.bmml%26bm%3BPRODUCT.bmml%2CNSI%26bm%3BNSI.bmml%26bm%3BNSI.bmml%26bm%3BNSI.bmml%2CLA%26bm%3BLA.bmml%26bm%3BLA.bmml%26bm%3BLA.bmml%2CFILTR%26bm%3BFILTR.bmml%26bm%3BFILTR.bmml%26bm%3BFILTR.bmml%2CSGP%26bm%3BSGP.bmml%26bm%3BSGP.bmml%26bm%3BSGP.bmml%2CRAW%26bm%3BRAW.bmml%26bm%3BRAW.bmml%26bm%3BRAW.bmml%2CORDER%26bm%3BORDER.bmml%26bm%3BORDER.bmml%26bm%3BORDER.bmml%2CCALC%26bm%3BCALC.bmml%26bm%3BCALC.bmml%26bm%3BCALC.bmml</hrefs>
+        <selectedIndex>3</selectedIndex>
+        <text>%u0417%u0430%u0432%u043E%u0434%u044B%0A%u041F%u0440%u043E%u0434%u0443%u043A%u0442%u044B%0A%u041D%u0421%u0418%0A%u0420%u0430%u0441%u043F%u0438%u0441%u0430%u043D%u0438%u0435%20%u041B%u0410%0A%u0424%u0438%u043B%u044C%u0442%u0440%0A%u0421%u0413%u041D/%u041D%u0417%u041F%0A%u0425%u0438%u043C%u0438%u044F%20%u0441%u044B%u0440%u0446%u0430%0A%u041F%u0430%u043A%u0435%u0442%20%u0437%u0430%u043A%u0430%u0437%u043E%u0432%0A%u0420%u0430%u0441%u0447%u0435%u0442%u043D%u044B%u0439%20%u043C%u043E%u0434%u0443%u043B%u044C%0A%u0420%u0430%u0441%u043F%u0438%u0441%u0430%u043D%u0438%u0435</text>
+      </controlProperties>
+    </control>
+    <control controlID="2" controlTypeID="com.balsamiq.mockups::Button" x="468" y="95" w="-1" h="-1" measuredW="330" measuredH="32" zOrder="2" locked="false" isInGroup="-1">
+      <controlProperties>
+        <icon>DownloadIcon%7Csmall</icon>
+        <text>%u0417%u0430%u0433%u0440%u0443%u0437%u0438%u0442%u044C%20%u0438%u043D%u0444%u043E%u0440%u043C%u0430%u0446%u0438%u044E%20%u043E%20%u0434%u043E%u0441%u0442%u0443%u043F%u043D%u043E%u0441%u0442%u0438%20%u041B%u0410</text>
+      </controlProperties>
+    </control>
+    <control controlID="3" controlTypeID="com.balsamiq.mockups::Label" x="164" y="98" w="-1" h="-1" measuredW="176" measuredH="23" zOrder="3" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>%u0414%u0430%u0442%u0430%20%u043F%u043E%u0441%u043B%u0435%u0434%u043D%u0435%u0439%20%u0437%u0430%u0433%u0440%u0443%u0437%u043A%u0438%3A</text>
+      </controlProperties>
+    </control>
+    <control controlID="5" controlTypeID="com.balsamiq.mockups::DataGrid" x="164" y="130" w="636" h="202" measuredW="456" measuredH="206" zOrder="4" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>%u0418%u043C%u044F%20%u0444%u0430%u0439%u043B%u0430%2C%20%u0414%u0430%u0442%u0430%20%u0437%u0430%u0432%u0435%u0440%u0448%u0435%u043D%u0438%u044F%20%u0437%u0430%u0433%u0440%u0443%u0437%u043A%u0438%20%5E%2C%20%u0421%u0442%u0430%u0442%u0443%u0441%0A%u0414%u043E%u0441%u0442%u0443%u043F%u043D%u043E%u0441%u0442%u044C%20%u041B%u04101%20%28%u0421%u0410%u0417%29.xlsx%2C%2013-11-2013%2020%3A00%3A00%2C%20%0A%u0414%u043E%u0441%u0442%u0443%u043F%u043D%u043E%u0441%u0442%u044C%20%u041B%u04102%20%28%u0421%u0410%u0417%29.xlsx%2C%2013-11-2013%2020%3A05%3A00%2C%20%0A%u0414%u043E%u0441%u0442%u0443%u043F%u043D%u043E%u0441%u0442%u044C%20%u041B%u04103%20%28%u0421%u0410%u0417%29.xlsx%2C%2013-11-2013%2020%3A07%3A00%2C%20%0A%u0414%u043E%u0441%u0442%u0443%u043F%u043D%u043E%u0441%u0442%u044C%20%u041B%u0410%20%28%u041A%u0440%u0410%u0417%29.xlsx%2C%2013-11-2013%2020%3A00%3A00%2C%20%0A%u0414%u043E%u0441%u0442%u0443%u043F%u043D%u043E%u0441%u0442%u044C%20%u041B%u04101%20%28%u0411%u0440%u0410%u0417%29.xlsx%2C%2013-11-2013%2020%3A00%3A00%2C%20%0A%u0414%u043E%u0441%u0442%u0443%u043F%u043D%u043E%u0441%u0442%u044C%20%u041B%u04102%20%28%u0411%u0440%u0410%u0417%29.xlsx%2C%2013-11-2013%2020%3A05%3A00%2C%20</text>
+      </controlProperties>
+    </control>
+    <control controlID="6" controlTypeID="com.balsamiq.mockups::Button" x="719" y="152" w="79" h="32" measuredW="48" measuredH="32" zOrder="5" locked="false" isInGroup="-1">
+      <controlProperties>
+        <color>3700253</color>
+        <icon>CheckMarkIcon%7Csmall</icon>
+        <text/>
+      </controlProperties>
+    </control>
+    <control controlID="7" controlTypeID="com.balsamiq.mockups::Button" x="719" y="182" w="79" h="32" measuredW="48" measuredH="32" zOrder="6" locked="false" isInGroup="-1">
+      <controlProperties>
+        <color>3700253</color>
+        <icon>CheckMarkIcon%7Csmall</icon>
+        <text/>
+      </controlProperties>
+    </control>
+    <control controlID="8" controlTypeID="com.balsamiq.mockups::Button" x="719" y="240" w="79" h="32" measuredW="48" measuredH="32" zOrder="7" locked="false" isInGroup="-1">
+      <controlProperties>
+        <color>3700253</color>
+        <icon>CheckMarkIcon%7Csmall</icon>
+        <text/>
+      </controlProperties>
+    </control>
+    <control controlID="9" controlTypeID="com.balsamiq.mockups::Button" x="719" y="270" w="79" h="32" measuredW="48" measuredH="32" zOrder="8" locked="false" isInGroup="-1">
+      <controlProperties>
+        <color>3700253</color>
+        <icon>CheckMarkIcon%7Csmall</icon>
+        <text/>
+      </controlProperties>
+    </control>
+    <control controlID="10" controlTypeID="com.balsamiq.mockups::Button" x="719" y="300" w="79" h="32" measuredW="48" measuredH="32" zOrder="9" locked="false" isInGroup="-1">
+      <controlProperties>
+        <color>3700253</color>
+        <icon>CheckMarkIcon%7Csmall</icon>
+        <text/>
+      </controlProperties>
+    </control>
+    <control controlID="11" controlTypeID="com.balsamiq.mockups::Button" x="719" y="212" w="79" h="32" measuredW="48" measuredH="32" zOrder="10" locked="false" isInGroup="-1">
+      <controlProperties>
+        <color>3700253</color>
+        <icon>CheckMarkIcon%7Csmall</icon>
+        <text/>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>
