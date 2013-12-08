@@ -1,0 +1,20 @@
+
+- в PRODUCT добавлены PLANT, SPEC
+- в ORDER DELTA заменено на TOLERANCE в двух местах
+- в CONTAINER_TYPE поле TONNAGE заменено на CAPACITY
+- везде переименованы литейная машина в CastHouse, литейный агрегат в Casting Unit, оснастка в Mould
+- вместо поля CU_ID в FILTER добавлена связь "многие ко многим" CU_FILTERS (допустимые) и START_CU_ID
+- в MOULD переименовано CAST_MACH_ID в START_CAST_MACH_ID
+- таблица CASTING_SPEED отнесена к оснастке и марке
+- таблица PRODUCT_COST отнесена к заводу и содержит марку и форму
+- добавлена таблица HEATER
+- в CAST_HOUSE добавлено поле BLANK_WEIGHT_MAX
+- в CASTING_UNIT добавлено поле CLEAN_COST
+- таблицы CU_PRODUCT_CHANGE_TIME и CU_PRODUCT_CHANGE_COST объединены в одну: CU_PRODUCT_CHANGE
+- в миксерах и литейной машине удалены поля PREPARE_TIME_CONST, вместо этого создана таблица PREPARE_TIME_CONST, так как это время зависит еще от марки (+возможно, и от формы)
+- в CU_COLLECTOR и CU_DISTRIBUTOR добавлены поля NUM_CLEANS и CLEAN_TIME
+- в CU_CASTING_MACHINE добавлено поля LENGHT_BLANK_MAX, NUM_SNIF_CLEANS, SNIF_CLEAN_TIME, NUM_PDBF_CLEANS, PDBF_CLEAN_TIME, NUM_CRYST_CHANGES, CRYST_CHANGE_TIME
+- вместо поля CU_ID в CU_HOMOGEN_CUTTING_LINE добавлена связь "многие ко многим" CU_CH_LINES 
+- в HOMOGENIZATION_LINE поле SPEED заменено на LOAD_TIME
+- в CU_HOMOGEN_CUTTING_LINE добавлены поля LENGHT_BLANK_MIN, LENGHT_BLANK_MAX
+- добавлена таблица MOULD_BLANKS
