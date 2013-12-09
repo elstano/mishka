@@ -23,4 +23,21 @@ public interface MenuRSBundle extends ClientBundle {
 
     @Source("orders.png")
     ImageResource orders();
+
+    @Source("product.png")
+    ImageResource products();
+
+    ImageResource nsi();
+
+    ImageResource schedule();
+
+    ImageResource filter();
+
+    ImageResource sgp();
+
+    ImageResource chemistry();
+
+    ImageResource transport();
+
+    ImageResource resultSchedule();
 }
