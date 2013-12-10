@@ -1,0 +1,5 @@
+1) Добавлены поля в таблицу PRODUCT: PRODUCT_NAME,CR_MIN/MAX, ZN_MIN/MAX, B_MIN/MAX, NA_MIN/MAX, CA_MIN/MAX
+2) Добавлина таблица FORM
+3) Добавлена таблица MARK
+4) В таблице CU_CH_LINES изменен второй ID HC_ID на HC_LINE_ID
+5) Обновлены типы колонок во всех таблицах
