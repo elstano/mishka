@@ -1,0 +1,20 @@
+
+- в ордер добавить SHIPPING_DATE
+- в FILTER_CONS поправить CA_ID на CU_ID
+- добавить таблицу CU_MARKS - все марки, которые можно отливать на данном агрегате:
+	CU_ID
+	MARK_ID
+- в таблицу MOULD добавить поле NUM_BLANKS_MAX - для цилиндрических слитков можно отливать от 1 до NUM_BLANKS_MAX заготовок одновременно, причем это число может быть порядка 100. Для плоских слитков число заготовок определяется по таблице MOULD_BLANKS (уже есть).
+- в PRODUCT убрать поле QUALITY. Поле FILTRATION может принимать 4 значения: NO, PTF, PDBF, PTF/PDBF. Для этого создан справочник FILTRATION.
+- у периодических операций будет указываться смена. Поэтому нужно создать 
+таблицу MIXER_CLEAN:
+ 	COLLE_ID
+ 	DISTR_ID
+ 	DATE	
+ 	SHIFT
+и таблицу CAST_MACH_CLEAN:
+ 	CAST_MACH_ID
+ 	OPERATION_ID - значения из справочника CM_OPERATIONS: SNIF_CLEAN, PDBF_CLEAN, CRYST_CHANGE, CAISSON_CLEAN
+ 	DATE 
+ 	SHIFT
+
