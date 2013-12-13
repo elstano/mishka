@@ -1,0 +1,62 @@
+.uploadMain {
+    width: 800px;
+    margin-top: 50px;
+    margin-left: 20px;
+}
+
+.lastUploadDate {
+    width: 99%;
+}
+
+.uploadButtonTD {
+    width: 1%;
+}
+
+.uploadButtonTD button {
+    white-space: nowrap;
+}
+
+.uploadsTable {
+    width: 100%;
+    border: 1px solid lightgray;
+    margin-top: 10px;
+}
+
+.uploadsTable td {
+    white-space: nowrap;
+    padding: 5px;
+}
+
+.iconCol {
+    width: 1%;
+}
+
+.statusCol {
+    width: 5%;
+}
+
+.statusTD {
+    text-align: center;
+}
+
+.fileNameTD{
+    padding-left: 10px;
+    margin-left: 10px;
+}
+
+.dateCol {
+    width: 10%;
+}
+
+.dateTD {
+    text-align: center;
+}
+
+.uploadsTable TR TD{
+    border-bottom: 1px solid lightgray;
+}
+
+.uploadsTable TR.headerTR TD{
+    border-bottom: 1px solid gray;
+    font-weight: bold;
+}

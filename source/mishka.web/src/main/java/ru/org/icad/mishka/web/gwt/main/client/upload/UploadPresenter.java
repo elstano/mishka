@@ -1,11 +1,15 @@
 package ru.org.icad.mishka.web.gwt.main.client.upload;
 
 import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import ru.org.icad.mishka.web.gwt.main.client.MainView;
 import ru.org.icad.mishka.web.gwt.main.client.menu.OptionPresenter;
+import ru.org.icad.mishka.web.gwt.main.client.upload.theme.UploadBundle;
+import ru.org.icad.mishka.web.gwt.main.client.upload.theme.UploadCss;
 import ru.org.icad.mishka.web.gwt.main.shared.upload.ImportStatus;
 import ru.org.icad.mishka.web.gwt.main.shared.upload.UploadedFile;
 
@@ -38,11 +42,17 @@ public class UploadPresenter implements OptionPresenter{
 
     @Override
     public void presentOption() {
+        UploadCss css = UploadBundle.INSTANCE.css();
+        css.ensureInjected();
+
         layout = new FlexTable();
+        layout.setStyleName(css.uploadMain());
         lastUploadDate = new Label("Дата последней загрузки:");
         upload = new Button("Загрузить информацио " + uploadCaption);
         layout.setWidget(0,0,lastUploadDate);
+        layout.getFlexCellFormatter().setStyleName(0, 0, css.lastUploadDate());
         layout.setWidget(0,1, upload);
+        layout.getFlexCellFormatter().setStyleName(0, 1, css.uploadButtonTD());
         uploaded = new FlexTable();
         layout.getFlexCellFormatter().setColSpan(1, 0, 2);
         layout.setWidget(1,0,uploaded);
@@ -51,16 +61,41 @@ public class UploadPresenter implements OptionPresenter{
     }
 
     private void presentFiles(List<UploadedFile> files){
+        UploadCss css = UploadBundle.INSTANCE.css();
+        css.ensureInjected();
         uploaded.removeAllRows();
+        uploaded.setStyleName(css.uploadsTable());
+
+        uploaded.setCellPadding(0);
+        uploaded.setCellSpacing(0);
+
         int i=1;
-        uploaded.setText(0,0,"Имя Файла");
-        uploaded.setText(0,1,"Дата Завершения Загрузки");
-        uploaded.setText(0,2,"Статус");
+        uploaded.getRowFormatter().setStyleName(0, css.headerTR());
+        uploaded.getColumnFormatter().setStyleName(0, css.iconCol());
+        uploaded.getColumnFormatter().setStyleName(2, css.dateCol());
+        uploaded.getColumnFormatter().setStyleName(3, css.statusCol());
+        uploaded.setHTML(0, 0, "&nbsp;");
+        uploaded.setText(0,1,"Имя Файла");
+        uploaded.setText(0,2,"Дата Завершения Загрузки");
+        uploaded.setText(0,3,"Статус");
         DateTimeFormat dtf = DateTimeFormat.getFormat("dd-MM-YYYY HH:mm:ss");
         for(UploadedFile f: files){
-            uploaded.setText(i, 0, f.getName());
-            uploaded.setText(i, 1, dtf.format(f.getUploadedDate()));
-            uploaded.setText(i, 2, f.getImportStatus().toString());
+            uploaded.setWidget(i,0, new Image(UploadBundle.INSTANCE.excel()));
+            uploaded.setText(i, 1, f.getName());
+            uploaded.getFlexCellFormatter().setStyleName(i, 1, css.fileNameTD());
+            uploaded.setText(i, 2, dtf.format(f.getUploadedDate()));
+            uploaded.getFlexCellFormatter().setStyleName(i,2,css.dateTD());
+            uploaded.getFlexCellFormatter().setStyleName(i,3,css.statusTD());
+            switch (f.getImportStatus()){
+                case FINISHED:
+                    uploaded.setWidget(i, 3, new Image(UploadBundle.INSTANCE.uploaded()));
+                    break;
+                case IN_PROGRESS:
+                    uploaded.setWidget(i, 3, new Image(UploadBundle.INSTANCE.loading()));
+                    break;
+                case NOT_STARTED:
+                    uploaded.setWidget(i, 3, new Image(UploadBundle.INSTANCE.pending()));
+            }
             i++;
         }
     }
