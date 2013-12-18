@@ -1,5 +1,6 @@
 package ru.org.icad.mishka.app.versions;
 
+import org.apache.commons.lang3.StringUtils;
 import ru.org.icad.mishka.app.jdbc.JDBCHandler;
 import ru.org.icad.mishka.app.jdbc.JDBCTool;
 import ru.org.icad.mishka.app.jdbc.ParamsProvider;
@@ -24,6 +25,8 @@ public class UpgradeManager {
     public static final String COL_MINOR_TABLE_VERSION = "minor";
     public static final String COL_ASSEMBLY_TABLE_VERSION = "assembly";
     public static final String COL_INSTALLED_TABLE_VERSION = "installed";
+
+    public static final String SCRIPTS_DELIMITER = "--next-sql-script";
 
     private static final Log log = LogFactory.getLog(UpgradeManager.class);
 
@@ -121,13 +124,33 @@ public class UpgradeManager {
 
     public void install(VersionInstaller installer) throws SQLException {
         for(String script: installer.getScripts().values()){
-            //simplest option
-            StringTokenizer tok = new StringTokenizer(script, ";", false);
-            while(tok.hasMoreTokens()){
-                String toRun = tok.nextToken();
-                JDBCTool.instance().executeUpdate(toRun);
+
+
+            String[] singles = StringUtils.splitByWholeSeparator(script, SCRIPTS_DELIMITER);
+            if(singles == null || singles.length == 0){
+                log.info("Version " + installer.getVersion() + " has no scripts");
+                continue;
             }
-            setInstalledVersion(installer.getVersion());
+            for(String toRun : singles){
+                toRun = StringUtils.trimToNull(toRun);
+                if(toRun == null){
+                    continue;
+                }
+                toRun += "\n";
+                log.debug("Executing script \n" + toRun);
+
+                JDBCTool.instance().executeCommand(toRun);
+                log.debug("Executed successfully");
+            }
+//            log.debug("Executing script \n" + script);
+//            JDBCTool.instance().executeUpdate(script);
+//            log.debug("Executed successfully");
         }
+        setInstalledVersion(installer.getVersion());
+        log.info("Version " + installer.getVersion() + " has been installed");
+    }
+
+    public void resetDB() throws SQLException {
+        JDBCTool.instance().executeUpdate("begin pkg_admin.purge_tables(); end;");
     }
 }

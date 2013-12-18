@@ -23,6 +23,7 @@ public class SettingsPresenter implements OptionPresenter{
 
     private FlexTable initializedPane;
     private Button initializedButton;
+    private Button resetButton;
 
     @Override
     public void presentOption() {
@@ -60,7 +61,7 @@ public class SettingsPresenter implements OptionPresenter{
                     settingsService.installNewVersion(new AsyncCallback<Void>() {
                         @Override
                         public void onFailure(Throwable throwable) {
-
+                            Window.alert("Error upgrading version");
                         }
 
                         @Override
@@ -72,8 +73,26 @@ public class SettingsPresenter implements OptionPresenter{
             }
         });
 
-        initializedPane.setWidget(0,4,initializedButton);
+        initializedPane.setWidget(0, 4, initializedButton);
 
+        resetButton = new Button("Reset DB");
+        resetButton.addClickHandler(new ClickHandler() {
+            @Override
+            public void onClick(ClickEvent clickEvent) {
+                settingsService.resetDB(new AsyncCallback<Void>() {
+                    @Override
+                    public void onFailure(Throwable throwable) {
+                        Window.alert("Error resetting the database");
+                    }
+
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Window.alert("success");
+                    }
+                });
+            }
+        });
+        initializedPane.setWidget(0,5, resetButton);
 
         MainView.instance.getMainLayout().add(initializedPane);
     }

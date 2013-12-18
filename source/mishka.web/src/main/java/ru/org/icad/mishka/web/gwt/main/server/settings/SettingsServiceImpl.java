@@ -1,5 +1,7 @@
 package ru.org.icad.mishka.web.gwt.main.server.settings;
 
+import ru.org.icad.mishka.app.tx.Callable;
+import ru.org.icad.mishka.app.tx.TxUtil;
 import ru.org.icad.mishka.app.versions.UpgradeManager;
 import ru.org.icad.mishka.app.versions.VersionParser;
 import ru.org.icad.mishka.web.gwt.main.client.settings.SettingsService;
@@ -34,13 +36,32 @@ public class SettingsServiceImpl extends RemoteServiceServlet implements Setting
 
     @Override
     public void installNewVersion() {
+        TxUtil.executeInTransaction(new Callable<Object>() {
+            @Override
+            public Object run() {
+                try {
+                    log.info("installing new version: started");
+                    VersionParser parser = new VersionParser();
+                    parser.parseInstallers();
+                    new UpgradeManager().performUpgrade(parser.getInstallers());
+                    log.info("installing new version: finished");
+                    return null;
+                } catch (IOException | SQLException e) {
+                    log.error(e);
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void resetDB() {
         try {
-            log.info("installing new version: started");
-            VersionParser parser = new VersionParser();
-            parser.parseInstallers();
-            new UpgradeManager().performUpgrade(parser.getInstallers());
-            log.info("installing new version: finished");
-        } catch (IOException | SQLException e) {
+            log.info("resetting database: started");
+            new UpgradeManager().resetDB();
+            log.info("resetting database: finished");
+        } catch (SQLException e) {
+            log.error("Error during resetting of the database", e);
             throw new RuntimeException(e);
         }
     }

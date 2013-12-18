@@ -106,6 +106,33 @@ public class JDBCTool {
         }
     }
 
+    public int executeCommand(String query) throws SQLException {
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet result = null;
+        try {
+            connection = ds.getConnection();
+            statement = connection.createStatement();
+            return statement.executeUpdate(query);
+        } finally {
+            try {
+                if(result != null){
+                    result.close();
+                }
+            } finally {
+                try {
+                    if(statement != null){
+                        statement.close();
+                    }
+                } finally {
+                    if(connection != null){
+                        connection.close();
+                    }
+                }
+            }
+        }
+    }
+
     public Boolean selectBoolean(String query, final ParamsProvider params) throws SQLException {
         JDBCHandler<Boolean> handler = new JDBCHandler<Boolean>(){
             @Override
