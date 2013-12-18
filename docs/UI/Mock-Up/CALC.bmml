@@ -91,5 +91,17 @@
         <text>%u0411%u0435%u0437%20%u043E%u0433%u0440%u0430%u043D%u0438%u0447%u0435%u043D%u0438%u0439%20%u043F%u043E%20%u043F%u0440%u0438%u0432%u044F%u0437%u043A%u0435%20%u043A%20%u0437%u0430%u0432%u043E%u0434%u0430%u043C</text>
       </controlProperties>
     </control>
+    <control controlID="18" controlTypeID="com.balsamiq.mockups::Button" x="553" y="440" w="248" h="28" measuredW="225" measuredH="32" zOrder="13" locked="false" isInGroup="-1">
+      <controlProperties>
+        <color>6710886</color>
+        <icon>FileIcon%7Csmall</icon>
+        <text>%u0421%u0444%u043E%u0440%u043C%u0438%u0440%u043E%u0432%u0430%u0442%u044C%20%u0440%u0430%u0441%u043F%u0438%u0441%u0430%u043D%u0438%u0435</text>
+      </controlProperties>
+    </control>
+    <control controlID="19" controlTypeID="com.balsamiq.mockups::TextInput" x="167" y="440" w="378" h="-1" measuredW="197" measuredH="27" zOrder="14" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>%u041A%u043E%u043C%u043C%u0435%u043D%u0442%u0430%u0440%u0438%u0439%20%u043A%20%u0440%u0430%u0441%u043F%u0438%u0441%u0430%u043D%u0438%u044E</text>
+      </controlProperties>
+    </control>
   </controls>
 </mockup>
