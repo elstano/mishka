@@ -7,4 +7,6 @@ public interface SettingsServiceAsync {
     void getSettings(AsyncCallback<SettingsBean> async);
 
     void installNewVersion(AsyncCallback<Void> async);
+
+    void resetDB(AsyncCallback<Void> async);
 }

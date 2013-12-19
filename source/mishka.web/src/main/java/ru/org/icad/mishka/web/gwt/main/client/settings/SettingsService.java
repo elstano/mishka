@@ -16,4 +16,6 @@ public interface SettingsService extends RemoteService {
     SettingsBean getSettings();
 
     void installNewVersion();
+
+    void resetDB();
 }
