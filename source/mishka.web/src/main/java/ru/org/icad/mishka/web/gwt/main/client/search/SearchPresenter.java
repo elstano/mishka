@@ -29,7 +29,7 @@ public class SearchPresenter {
         searchInput.setWidth("700px");
         topGrid.setWidget(0,2,searchInput);
 
-        searchButton = new Button("Search");
+        searchButton = new Button("Filter");
         topGrid.setWidget(0,3,searchButton);
 
         MainView.instance.getMainLayout().addNorth(topGrid, 75);

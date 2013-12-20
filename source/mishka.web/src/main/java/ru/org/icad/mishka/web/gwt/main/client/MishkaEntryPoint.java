@@ -13,7 +13,7 @@ public class MishkaEntryPoint implements EntryPoint {
     @Override
     public void onModuleLoad() {
         MainView.instance.init();
-//        new SearchPresenter().initSearchPanel();
+        new SearchPresenter().initSearchPanel();
         new MenuPresenter().initMenu();
     }
 }
