@@ -2,6 +2,7 @@ package ru.org.icad.mishka.app.order;
 
 import ru.org.icad.mishka.app.chemistry.Chemistry;
 
+@Deprecated
 public class Order {
 
     private int capacity;

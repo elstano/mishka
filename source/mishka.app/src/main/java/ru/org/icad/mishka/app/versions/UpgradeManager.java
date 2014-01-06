@@ -1,17 +1,16 @@
 package ru.org.icad.mishka.app.versions;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.org.icad.mishka.app.jdbc.JDBCHandler;
 import ru.org.icad.mishka.app.jdbc.JDBCTool;
 import ru.org.icad.mishka.app.jdbc.ParamsProvider;
 import ru.org.icad.mishka.app.jdbc.RSHandler;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 import java.sql.*;
 import java.util.Collections;
 import java.util.List;
-import java.util.StringTokenizer;
 
 /**
  * User: Boss
@@ -28,7 +27,7 @@ public class UpgradeManager {
 
     public static final String SCRIPTS_DELIMITER = "--next-sql-script";
 
-    private static final Log log = LogFactory.getLog(UpgradeManager.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(UpgradeManager.class);
 
     public boolean isVersioningInitialized() throws SQLException {
         return JDBCTool.instance().executeQuery(
@@ -111,12 +110,12 @@ public class UpgradeManager {
     public void performUpgrade(List<VersionInstaller> installers) throws SQLException {
         Collections.sort(installers);
         Version currentVersion = getCurrentVersion();
-        log.info("Upgrading from version " + currentVersion);
+        LOGGER.info("Upgrading from version " + currentVersion);
         for(VersionInstaller installer: installers ){
             if(installer.getVersion().compareTo(currentVersion) <= 0){
-                log.info("Version" + installer.getVersion() + " is already installed");
+                LOGGER.info("Version" + installer.getVersion() + " is already installed");
             } else {
-                log.info("Installing version " + installer.getVersion());
+                LOGGER.info("Installing version " + installer.getVersion());
                 install(installer);
             }
         }
@@ -128,7 +127,7 @@ public class UpgradeManager {
 
             String[] singles = StringUtils.splitByWholeSeparator(script, SCRIPTS_DELIMITER);
             if(singles == null || singles.length == 0){
-                log.info("Version " + installer.getVersion() + " has no scripts");
+                LOGGER.info("Version " + installer.getVersion() + " has no scripts");
                 continue;
             }
             for(String toRun : singles){
@@ -137,17 +136,17 @@ public class UpgradeManager {
                     continue;
                 }
                 toRun += "\n";
-                log.debug("Executing script \n" + toRun);
+                LOGGER.debug("Executing script \n" + toRun);
 
                 JDBCTool.instance().executeCommand(toRun);
-                log.debug("Executed successfully");
+                LOGGER.debug("Executed successfully");
             }
-//            log.debug("Executing script \n" + script);
+//            LOGGER.debug("Executing script \n" + script);
 //            JDBCTool.instance().executeUpdate(script);
-//            log.debug("Executed successfully");
+//            LOGGER.debug("Executed successfully");
         }
         setInstalledVersion(installer.getVersion());
-        log.info("Version " + installer.getVersion() + " has been installed");
+        LOGGER.info("Version " + installer.getVersion() + " has been installed");
     }
 
     public void resetDB() throws SQLException {

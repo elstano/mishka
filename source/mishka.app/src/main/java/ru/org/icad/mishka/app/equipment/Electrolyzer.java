@@ -2,6 +2,7 @@ package ru.org.icad.mishka.app.equipment;
 
 import ru.org.icad.mishka.app.chemistry.Chemistry;
 
+@Deprecated
 public class Electrolyzer implements Comparable<Electrolyzer> {
 
     private int number;

@@ -12,6 +12,7 @@ import java.util.Map;
 
 import static org.testng.Assert.assertTrue;
 
+@Deprecated
 public class RawFilterTest {
 
     private static final List<Order> orders = Lists.newArrayList(
