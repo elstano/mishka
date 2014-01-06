@@ -8,7 +8,7 @@ import java.sql.Date;
 @Table(name = "ELECTROLIZER_PROGNOSIS")
 public class ElectrolizerPrognosis implements Serializable {
 
-    private static final long serialVersionUID = 4768475723492111928L;
+    private static final long serialVersionUID = -4164604033642010961L;
 
     @Id
     @Column(name = "ELECTROLIZER_ID")
@@ -19,8 +19,8 @@ public class ElectrolizerPrognosis implements Serializable {
     private Date date;
     @Column(name = "SHIFT")
     private int shift;
-    @Column(name = "TONNANGE")
-    private int tonnange;
+    @Column(name = "TONNAGE")
+    private int tonnage;
     @Column(name = "FE")
     private double fe;
     @Column(name = "SI")
@@ -66,12 +66,12 @@ public class ElectrolizerPrognosis implements Serializable {
         this.shift = shift;
     }
 
-    public int getTonnange() {
-        return tonnange;
+    public int getTonnage() {
+        return tonnage;
     }
 
-    public void setTonnange(int tonnange) {
-        this.tonnange = tonnange;
+    public void setTonnage(int tonnange) {
+        this.tonnage = tonnange;
     }
 
     public double getFe() {

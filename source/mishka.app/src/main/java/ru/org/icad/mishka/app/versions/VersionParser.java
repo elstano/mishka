@@ -1,8 +1,8 @@
 package ru.org.icad.mishka.app.versions;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -20,7 +20,7 @@ public class VersionParser {
     public static final String INSTALLER_RES = "installer/installer.zip";
     public static final int BUF_SIZE = 31000;
 
-    private static final Log log = LogFactory.getLog(VersionParser.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(VersionParser.class);
 
     private Map<String, VersionInstaller> installers = new HashMap<>();
 
@@ -54,11 +54,11 @@ public class VersionParser {
         VersionInstaller installer = installers.get(key);
         if(installer == null){
             if(StringUtils.isBlank(version[0]) || !StringUtils.isNumeric(version[0])){
-                log.warn("invalid major version skipped: " + version[0]);
+                LOGGER.warn("invalid major version skipped: " + version[0]);
                 return;
             }
             if(StringUtils.isBlank(version[1]) || !StringUtils.isNumeric(version[1])){
-                log.warn("invalid major version skipped: " + version[1]);
+                LOGGER.warn("invalid major version skipped: " + version[1]);
                 return;
             }
             installer = new VersionInstaller(Integer.parseInt(version[0]), Integer.parseInt(version[1]));
