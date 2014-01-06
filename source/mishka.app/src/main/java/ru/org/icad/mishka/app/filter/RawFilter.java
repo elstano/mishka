@@ -8,6 +8,7 @@ import com.google.common.collect.Maps;
 
 import java.util.*;
 
+@Deprecated
 public class RawFilter {
 
     private RawFilter() {

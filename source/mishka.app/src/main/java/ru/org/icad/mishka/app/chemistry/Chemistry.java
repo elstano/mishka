@@ -1,5 +1,6 @@
 package ru.org.icad.mishka.app.chemistry;
 
+@Deprecated
 public class Chemistry implements Comparable<Chemistry> {
 
     private double contentFe;
