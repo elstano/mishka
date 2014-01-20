@@ -40,4 +40,6 @@ public interface MenuRSBundle extends ClientBundle {
     ImageResource transport();
 
     ImageResource resultSchedule();
+
+    ImageResource bug();
 }
