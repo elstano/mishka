@@ -1,11 +1,16 @@
-<project>
-	<parent>
-		<groupId>com.elstano.mishka</groupId>
-		<artifactId>mishka.parent</artifactId>
-		<version>1.0</version>
-	</parent>
-	<modelVersion>4.0.0</modelVersion>
-	<artifactId>mishka.web</artifactId>
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.elstano.mishka</groupId>
+        <artifactId>mishka.parent</artifactId>
+        <version>1.0</version>
+    </parent>
+
+    <artifactId>mishka.web</artifactId>
     <packaging>war</packaging>
 
     <dependencies>
@@ -41,6 +46,18 @@
             <groupId>com.google.gwt</groupId>
             <artifactId>gwt-servlet</artifactId>
             <version>2.5.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.code.gwtx</groupId>
+            <artifactId>gwtx</artifactId>
+            <version>1.5.3</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>1.2.1</version>
         </dependency>
     </dependencies>
 
