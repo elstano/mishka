@@ -1,7 +1,7 @@
 package ru.org.icad.mishka.app.excel.loader;
 
 import org.testng.annotations.Test;
-import ru.org.icad.mishka.app.entity.ElectrolizerPrognosis;
+import ru.org.icad.mishka.app.model.ElectrolizerPrognosis;
 
 import java.net.URL;
 import java.net.URLDecoder;

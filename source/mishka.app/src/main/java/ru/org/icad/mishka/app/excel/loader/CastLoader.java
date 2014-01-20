@@ -7,8 +7,9 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.org.icad.mishka.app.model.Cast;
 import ru.org.icad.mishka.app.model.CastingUnit;
-import ru.org.icad.mishka.app.model.ElectrolizerPrognosis;
+import ru.org.icad.mishka.app.model.Order;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -16,13 +17,13 @@ import java.sql.Date;
 import java.util.Collections;
 import java.util.List;
 
-public class ElectrolizerPrognosisLoader {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ElectrolizerPrognosisLoader.class);
+public class CastLoader {
+    private static final Logger LOGGER = LoggerFactory.getLogger(CastLoader.class);
 
-    private ElectrolizerPrognosisLoader() {
+    private CastLoader() {
     }
 
-    public static List<ElectrolizerPrognosis> load(String filePath, String sheetName) {
+    public static List<Cast> load(String filePath, String sheetName) {
         File file = new File(filePath);
         XSSFWorkbook workbook = null;
 
@@ -45,7 +46,7 @@ public class ElectrolizerPrognosisLoader {
             return Collections.emptyList();
         }
 
-        List<ElectrolizerPrognosis> electrolizerPrognosises = Lists.newArrayList();
+        List<Cast> casts = Lists.newArrayList();
 
         final int lastRowNum = sheet.getLastRowNum();
         for (int rowCounter = 0; rowCounter <= lastRowNum; rowCounter++) {
@@ -68,38 +69,32 @@ public class ElectrolizerPrognosisLoader {
             CastingUnit castingUnit = new CastingUnit();
             castingUnit.setId(castingUnitId);
 
-            final int electrolizerId = getIntCellValue(row, 1);
-
-            Cell dateCell = row.getCell(2);
+            Cell dateCell = row.getCell(1);
             final Date date = new Date(dateCell.getDateCellValue().getTime());
 
-            final int shift = getIntCellValue(row, 3);
-            final int tonnage = getIntCellValue(row, 4);
+            final int shift = getIntCellValue(row, 2);
+            final int castNumber = getIntCellValue(row, 3);
+            final int orderId = getIntCellValue(row, 4);
+            Order order = new Order();
+            order.setId(orderId);
 
-            double contentFe = getDoubleCellValue(row, 5);
-            double contentSi = getDoubleCellValue(row, 6);
-            double contentCu = getDoubleCellValue(row, 7);
-            double contentMg = getDoubleCellValue(row, 8);
-            double contentMn = getDoubleCellValue(row, 9);
-            double contentTi = getDoubleCellValue(row, 10);
+            final int ingotCount = getIntCellValue(row, 5);
+            final int ingotInBlankCount = getIntCellValue(row, 6);
 
-            ElectrolizerPrognosis electrolizerPrognosis = new ElectrolizerPrognosis();
-            electrolizerPrognosis.setCastingUnit(castingUnit);
-            electrolizerPrognosis.setId(electrolizerId);
-            electrolizerPrognosis.setDate(date);
-            electrolizerPrognosis.setShift(shift);
-            electrolizerPrognosis.setTonnage(tonnage);
-            electrolizerPrognosis.setFe(contentFe);
-            electrolizerPrognosis.setSi(contentSi);
-            electrolizerPrognosis.setCu(contentCu);
-            electrolizerPrognosis.setMg(contentMg);
-            electrolizerPrognosis.setMn(contentMn);
-            electrolizerPrognosis.setTi(contentTi);
 
-            electrolizerPrognosises.add(electrolizerPrognosis);
+            Cast cast = new Cast();
+            cast.setCastingUnit(castingUnit);
+            cast.setDate(date);
+            cast.setShift(shift);
+            cast.setCastNumber(castNumber);
+            cast.setOrder(order);
+            cast.setIngotCount(ingotCount);
+            cast.setIngotInBlankCount(ingotInBlankCount);
+
+            casts.add(cast);
         }
 
-        return electrolizerPrognosises;
+        return casts;
     }
 
 
