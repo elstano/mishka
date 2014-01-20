@@ -3,9 +3,6 @@ package ru.org.icad.mishka.web.gwt.main.shared.upload;
 import java.io.Serializable;
 import java.util.Date;
 
-/**
- * Created by Boss on 12/10/13.
- */
 public class UploadedFile implements Serializable {
     private String name;
     private Date uploadedDate;
