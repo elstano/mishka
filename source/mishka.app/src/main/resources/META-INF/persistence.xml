@@ -5,5 +5,7 @@
              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
              http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
 
-    <persistence-unit name="Mishka" transaction-type="JTA" />
+    <persistence-unit name="MishkaService">
+        <jta-data-source>jdbc/MishkaDS</jta-data-source>
+    </persistence-unit>
 </persistence>
