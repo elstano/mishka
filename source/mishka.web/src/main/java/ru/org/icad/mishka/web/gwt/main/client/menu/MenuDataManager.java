@@ -1,11 +1,11 @@
 package ru.org.icad.mishka.web.gwt.main.client.menu;
 
-import com.google.common.collect.Lists;
 import ru.org.icad.mishka.web.gwt.main.client.menu.bug.BugPresenter;
 import ru.org.icad.mishka.web.gwt.main.client.menu.theme.MenuRSBundle;
 import ru.org.icad.mishka.web.gwt.main.client.settings.SettingsPresenter;
 import ru.org.icad.mishka.web.gwt.main.client.upload.UploadPresenter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,7 +14,7 @@ import java.util.List;
  * Time: 10:29 PM
  */
 public class MenuDataManager {
-    private List<MenuItem> items = Lists.newArrayList();
+    private List<MenuItem> items = new ArrayList<MenuItem>();
 
     {
         items.add(new MenuItem(MenuRSBundle.INSTANCE.factories(), "Заводы", new UploadPresenter("о заводах")));
