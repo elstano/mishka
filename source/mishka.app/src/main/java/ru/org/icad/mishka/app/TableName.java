@@ -19,7 +19,7 @@ public class TableName {
     public static final String CONTAINER_TYPE = "CONTAINER_TYPE";
     public static final String CUTTING_LINE = "CUTTING_LINE";
     public static final String ELECTROLIZER_PROGNOSIS = "ELECTROLIZER_PROGNOSIS";
-    public static final String FILTER = "FILTER";
+    public static final String CU_FILTER = "CU_FILTER";
     public static final String FILTER_CHANGE_MARK = "FILTER_CHANGE_MARK";
     public static final String FILTER_CONS = "FILTER_CONS";
     public static final String FILTRATION = "FILTRATION";
@@ -30,7 +30,7 @@ public class TableName {
     public static final String MIXER_CLEAN = "MIXER_CLEAN";
     public static final String MOULD = "MOULD";
     public static final String MOULD_BLANKS = "MOULD_BLANKS";
-    public static final String ORDER = "ORDER";
+    public static final String CUSTOMER_ORDER = "CUSTOMER_ORDER";
     public static final String ORDER_CU_DIRECTIVE = "ORDER_CU_DIRECTIVE";
     public static final String PLANT_CONTAINERS = "PLANT_CONTAINERS";
     public static final String PREPARE_TIME_CONST = "PREPARE_TIME_CONST";
