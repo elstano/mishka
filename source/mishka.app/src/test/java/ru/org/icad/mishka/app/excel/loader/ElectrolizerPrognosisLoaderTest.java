@@ -1,6 +1,7 @@
 package ru.org.icad.mishka.app.excel.loader;
 
 import org.testng.annotations.Test;
+import ru.org.icad.mishka.app.loader.excel.ElectrolizerPrognosisLoader;
 import ru.org.icad.mishka.app.model.ElectrolizerPrognosis;
 
 import java.net.URL;
@@ -14,7 +15,10 @@ public class ElectrolizerPrognosisLoaderTest {
     public void testLoad() throws Exception {
         URL url = ElectrolizerPrognosisLoaderTest.class.getResource("/init/dictionaries/sample.xlsx");
         String filePath = URLDecoder.decode(url.getPath(), "UTF-8");
-        List<ElectrolizerPrognosis> electrolizerPrognosises = ElectrolizerPrognosisLoader.load(filePath, "ELECTROLIZER_PROGNOSIS");
+
+        ElectrolizerPrognosisLoader electrolizerPrognosisLoader = new ElectrolizerPrognosisLoader();
+        List<ElectrolizerPrognosis> electrolizerPrognosises
+                = electrolizerPrognosisLoader.load(filePath, "ELECTROLIZER_PROGNOSIS");
 
         assertTrue(electrolizerPrognosises.size() == 20);
     }
