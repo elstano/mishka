@@ -1,5 +1,7 @@
 package ru.org.icad.mishka.app.model;
 
+import ru.org.icad.mishka.app.TableName;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -7,7 +9,7 @@ import javax.persistence.Table;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "TRANSPORT_DESTINATION")
+@Table(name = TableName.TRANSPORT_DESTINATION)
 public class TransportDestination implements Serializable {
 
     private static final long serialVersionUID = 395587670788451859L;

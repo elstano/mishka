@@ -1,10 +1,12 @@
 package ru.org.icad.mishka.app.model;
 
+import ru.org.icad.mishka.app.TableName;
+
 import javax.persistence.*;
 import java.sql.Date;
 
 @Entity
-@Table(name = "CAST_MACH_CLEAN")
+@Table(name = TableName.CAST_MACH_CLEAN)
 public class CastingMachineClean {
 
     @Id

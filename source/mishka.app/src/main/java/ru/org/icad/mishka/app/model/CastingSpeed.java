@@ -1,9 +1,11 @@
 package ru.org.icad.mishka.app.model;
 
+import ru.org.icad.mishka.app.TableName;
+
 import javax.persistence.*;
 
 @Entity
-@Table(name = "CASTING_SPEED")
+@Table(name = TableName.CASTING_SPEED)
 public class CastingSpeed {
 
     @Id

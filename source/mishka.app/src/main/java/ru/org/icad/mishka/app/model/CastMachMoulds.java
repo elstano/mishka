@@ -1,10 +1,12 @@
 package ru.org.icad.mishka.app.model;
 
+import ru.org.icad.mishka.app.TableName;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "CAST_MACH_MOULDS")
+@Table(name = TableName.CAST_MACH_MOULDS)
 public class CastMachMoulds implements Serializable {
 
     private static final long serialVersionUID = 4803568493813809259L;

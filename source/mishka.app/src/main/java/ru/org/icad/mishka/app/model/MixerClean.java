@@ -1,11 +1,13 @@
 package ru.org.icad.mishka.app.model;
 
+import ru.org.icad.mishka.app.TableName;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Date;
 
 @Entity
-@Table(name = "MIXER_CLEAN")
+@Table(name = TableName.MIXER_CLEAN)
 public class MixerClean implements Serializable {
 
     private static final long serialVersionUID = 6009840528538329248L;

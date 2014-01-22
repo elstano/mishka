@@ -1,10 +1,12 @@
 package ru.org.icad.mishka.app.model;
 
+import ru.org.icad.mishka.app.TableName;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "CU_CH_LINES")
+@Table(name = TableName.CU_CH_LINES)
 public class CastingUnitHomogenCuttingLines implements Serializable {
 
     private static final long serialVersionUID = -7974075454531038361L;

@@ -1,10 +1,12 @@
 package ru.org.icad.mishka.app.model;
 
+import ru.org.icad.mishka.app.TableName;
+
 import javax.persistence.*;
 import java.sql.Date;
 
 @Entity
-@Table(name = "CASTING_UNIT")
+@Table(name = TableName.CASTING_UNIT)
 public class CastingUnit {
 
     @Id

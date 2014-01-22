@@ -1,5 +1,7 @@
 package ru.org.icad.mishka.app.model;
 
+import org.eclipse.persistence.annotations.Customizer;
+import ru.org.icad.mishka.app.OrderCustomizer;
 import ru.org.icad.mishka.app.TableName;
 
 import javax.persistence.Column;
@@ -8,6 +10,7 @@ import javax.persistence.Id;
 import java.math.BigDecimal;
 
 @Entity(name = TableName.PLANT)
+@Customizer(OrderCustomizer.class)
 public class Plant {
 
     public Plant() {
@@ -17,7 +20,6 @@ public class Plant {
         this.id = id;
     }
 
-    public static final String PLANT = "PLANT";
     @Id
     @Column(name = "PLANT_ID")
     private int id;

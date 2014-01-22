@@ -1,10 +1,12 @@
 package ru.org.icad.mishka.app.model;
 
+import ru.org.icad.mishka.app.TableName;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "FILTER_CHANGE_MARK")
+@Table(name = TableName.FILTER_CHANGE_MARK)
 public class FilterChangeMark implements Serializable {
 
     private static final long serialVersionUID = 7255032725200944555L;

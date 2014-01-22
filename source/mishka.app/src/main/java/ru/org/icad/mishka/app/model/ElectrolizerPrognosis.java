@@ -1,11 +1,13 @@
 package ru.org.icad.mishka.app.model;
 
+import ru.org.icad.mishka.app.TableName;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Date;
 
 @Entity
-@Table(name = "ELECTROLIZER_PROGNOSIS")
+@Table(name = TableName.ELECTROLIZER_PROGNOSIS)
 public class ElectrolizerPrognosis implements Serializable {
 
     private static final long serialVersionUID = -4164604033642010961L;

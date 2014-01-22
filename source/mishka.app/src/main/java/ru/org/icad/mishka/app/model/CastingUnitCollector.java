@@ -1,10 +1,12 @@
 package ru.org.icad.mishka.app.model;
 
+import ru.org.icad.mishka.app.TableName;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "CU_COLLECTOR")
+@Table(name = TableName.CU_COLLECTOR)
 public class CastingUnitCollector implements Serializable {
 
     private static final long serialVersionUID = 7605448809820966039L;

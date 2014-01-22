@@ -1,10 +1,12 @@
 package ru.org.icad.mishka.app.model;
 
+import ru.org.icad.mishka.app.TableName;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "CU_PRODUCT_CHANGE")
+@Table(name = TableName.CU_PRODUCT_CHANGE)
 public class CastingUnitProductChange implements Serializable {
 
     private static final long serialVersionUID = 763166633341116200L;

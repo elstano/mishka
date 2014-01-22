@@ -1,14 +1,16 @@
 package ru.org.icad.mishka.app.model;
 
+import ru.org.icad.mishka.app.TableName;
+
 import javax.persistence.*;
 import java.sql.Date;
 
 @Entity
-@Table(name = "CAST")
+@Table(name = TableName.CAST)
 public class Cast {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     @OneToOne
     private CastingUnit castingUnit;

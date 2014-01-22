@@ -1,11 +1,13 @@
 package ru.org.icad.mishka.app.model;
 
+import ru.org.icad.mishka.app.TableName;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "PRODUCT_COST")
+@Table(name = TableName.PRODUCT_COST)
 public class ProductCost implements Serializable {
 
     private static final long serialVersionUID = 2518727481064680089L;

@@ -19,6 +19,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.fileupload.util.Streams;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.org.icad.mishka.app.loader.DBLoader;
 
 public final class UploadServlet extends HttpServlet {
 
@@ -82,6 +83,8 @@ public final class UploadServlet extends HttpServlet {
       File file = new File(uploadDirectory, fileName);
 
       Streams.copy(inputStream, new FileOutputStream(file), true);
+
+      DBLoader.load(file.getPath());
 
       LOGGER.info(String.format("uploaded file %s", file.getAbsolutePath()));
     }

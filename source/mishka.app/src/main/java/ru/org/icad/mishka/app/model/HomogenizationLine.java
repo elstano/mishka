@@ -1,10 +1,12 @@
 package ru.org.icad.mishka.app.model;
 
+import ru.org.icad.mishka.app.TableName;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "HOMOGENIZATION_LINE")
+@Table(name = TableName.HOMOGENIZATION_LINE)
 public class HomogenizationLine implements Serializable {
 
     private static final long serialVersionUID = -1038131195448576635L;

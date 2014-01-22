@@ -1,10 +1,12 @@
 package ru.org.icad.mishka.app.model;
 
+import ru.org.icad.mishka.app.TableName;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "FILTER_CONS")
+@Table(name = TableName.FILTER_CONS)
 public class FilterCons implements Serializable {
 
     private static final long serialVersionUID = -6293132073432224171L;

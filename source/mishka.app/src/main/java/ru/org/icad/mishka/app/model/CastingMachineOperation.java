@@ -1,12 +1,14 @@
 package ru.org.icad.mishka.app.model;
 
+import ru.org.icad.mishka.app.TableName;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "CM_OPERATION")
+@Table(name = TableName.CM_OPERATION)
 public class CastingMachineOperation {
 
     @Id

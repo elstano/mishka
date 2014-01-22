@@ -1,12 +1,14 @@
 package ru.org.icad.mishka.app.model;
 
+import ru.org.icad.mishka.app.TableName;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Date;
 
 @Entity
-@Table(name = "ORDER")
+@Table(name = TableName.ORDER)
 public class Order implements Serializable {
 
     private static final long serialVersionUID = 8668045087203626660L;

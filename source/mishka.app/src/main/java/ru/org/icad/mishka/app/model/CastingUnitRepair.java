@@ -1,11 +1,13 @@
 package ru.org.icad.mishka.app.model;
 
+import ru.org.icad.mishka.app.TableName;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Date;
 
 @Entity
-@Table(name = "CU_REPAIR")
+@Table(name = TableName.CU_REPAIR)
 public class CastingUnitRepair implements Serializable {
 
     private static final long serialVersionUID = 6055479591883907458L;

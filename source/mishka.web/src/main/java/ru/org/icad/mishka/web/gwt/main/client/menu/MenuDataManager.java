@@ -1,6 +1,6 @@
 package ru.org.icad.mishka.web.gwt.main.client.menu;
 
-import ru.org.icad.mishka.web.gwt.main.client.menu.bug.BugPresenter;
+import ru.org.icad.mishka.web.gwt.main.client.menu.dev.DevPresenter;
 import ru.org.icad.mishka.web.gwt.main.client.menu.theme.MenuRSBundle;
 import ru.org.icad.mishka.web.gwt.main.client.settings.SettingsPresenter;
 import ru.org.icad.mishka.web.gwt.main.client.upload.UploadPresenter;
@@ -28,7 +28,7 @@ public class MenuDataManager {
         items.add(new MenuItem(MenuRSBundle.INSTANCE.orders(), "Пакет Заказов", new UploadPresenter("о пакете заказов")));
         items.add(new MenuItem(MenuRSBundle.INSTANCE.settings(), "Расчетный Модуль", new SettingsPresenter()));
         items.add(new MenuItem(MenuRSBundle.INSTANCE.resultSchedule(), "Расписание", null));
-        items.add(new MenuItem(MenuRSBundle.INSTANCE.bug(), "Отладка", new BugPresenter()));
+        items.add(new MenuItem(MenuRSBundle.INSTANCE.bug(), "Отладка", new DevPresenter()));
     }
 
     public List<MenuItem> getMenuItems() {

@@ -22,6 +22,10 @@
         <servlet-name>ru.org.icad.mishka.web.gwt.main.Main DownloadServlet</servlet-name>
         <servlet-class>ru.org.icad.mishka.web.gwt.main.server.DownloadServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ru.org.icad.mishka.web.gwt.main.Main DevService</servlet-name>
+        <servlet-class>ru.org.icad.mishka.web.gwt.main.server.dev.DevServiceImp</servlet-class>
+    </servlet>
 
     <servlet-mapping>
         <servlet-name>com.elstano.mishka.web.gwt.main.Main SettingsService</servlet-name>
@@ -38,6 +42,10 @@
     <servlet-mapping>
         <servlet-name>ru.org.icad.mishka.web.gwt.main.Main DownloadServlet</servlet-name>
         <url-pattern>/mishka_gwt/uploadprogress/download</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ru.org.icad.mishka.web.gwt.main.Main DevService</servlet-name>
+        <url-pattern>/mishka_gwt/DevService</url-pattern>
     </servlet-mapping>
 
     <description>

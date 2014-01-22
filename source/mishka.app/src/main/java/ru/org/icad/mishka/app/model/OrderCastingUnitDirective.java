@@ -1,10 +1,12 @@
 package ru.org.icad.mishka.app.model;
 
+import ru.org.icad.mishka.app.TableName;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "ORDER_CU_DIRECTIVE")
+@Table(name = TableName.ORDER_CU_DIRECTIVE)
 public class OrderCastingUnitDirective implements Serializable {
 
     private static final long serialVersionUID = -1163427350156286789L;
