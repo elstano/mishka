@@ -13,5 +13,13 @@ public class DevServiceImp extends RemoteServiceServlet implements DevService {
         DevDbTool devDbTool = new DevDbTool();
 
         return devDbTool.getTableNames();
+
+    }
+
+    @Override
+    public String getTableContent(String tableName) {
+        DevDbTool devDbTool = new DevDbTool();
+
+        return devDbTool.getTableContent(tableName);
     }
 }
