@@ -1,5 +1,6 @@
 package ru.org.icad.mishka.app.model;
 
+import ru.org.icad.mishka.app.ColumnName;
 import ru.org.icad.mishka.app.TableName;
 
 import javax.persistence.Column;
@@ -10,12 +11,10 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = TableName.FILTRATION)
-public class Filtration implements Serializable {
-
-    private static final long serialVersionUID = -3616170886374500016L;
+public class Filtration {
 
     @Id
-    @Column(name = "FILTRATION_ID")
+    @Column(name = ColumnName.FILTRATION_ID)
     private int id;
     @Column(name = "TYPE")
     private String type;

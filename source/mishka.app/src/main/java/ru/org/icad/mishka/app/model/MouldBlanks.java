@@ -1,5 +1,6 @@
 package ru.org.icad.mishka.app.model;
 
+import ru.org.icad.mishka.app.ColumnName;
 import ru.org.icad.mishka.app.TableName;
 
 import javax.persistence.*;
@@ -7,14 +8,13 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = TableName.MOULD_BLANKS)
-public class MouldBlanks implements Serializable {
-
-    private static final long serialVersionUID = -3795722512830010105L;
+public class MouldBlanks {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
     @OneToOne
+    @JoinColumn(name = ColumnName.MOULD_ID)
     private Mould mould;
     @Column(name = "NUM_BLANKS")
     private int numBlanks;

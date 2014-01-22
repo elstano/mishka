@@ -1,5 +1,6 @@
 package ru.org.icad.mishka.app.model;
 
+import ru.org.icad.mishka.app.ColumnName;
 import ru.org.icad.mishka.app.TableName;
 
 import javax.persistence.*;
@@ -7,9 +8,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = TableName.ORDER_CU_DIRECTIVE)
-public class OrderCastingUnitDirective implements Serializable {
-
-    private static final long serialVersionUID = -1163427350156286789L;
+public class OrderCastingUnitDirective {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -17,8 +16,10 @@ public class OrderCastingUnitDirective implements Serializable {
     @OneToOne
     private Order order;
     @OneToOne
+    @JoinColumn(name = ColumnName.PLANT_ID)
     private Plant plant;
     @OneToOne
+    @JoinColumn(name = ColumnName.CU_ID)
     private CastingUnit castingUnit;
 
     public int getId() {

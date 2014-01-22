@@ -1,5 +1,6 @@
 package ru.org.icad.mishka.app.model;
 
+import ru.org.icad.mishka.app.ColumnName;
 import ru.org.icad.mishka.app.TableName;
 
 import javax.persistence.*;
@@ -7,9 +8,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = TableName.PREPARE_TIME_CONST)
-public class PrepareTimeConst implements Serializable {
-
-    private static final long serialVersionUID = -4491731018617617900L;
+public class PrepareTimeConst {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -17,10 +16,13 @@ public class PrepareTimeConst implements Serializable {
     @OneToOne
     private CastingUnitCollector castingUnitCollector;
     @OneToOne
+    @JoinColumn(name = ColumnName.DISTR_ID)
     private CastingUnitDistributor castingUnitDistributor;
     @OneToOne
+    @JoinColumn(name = ColumnName.CAST_MACH_ID)
     private CastingUnitCastingMachine castingUnitCastingMachine;
     @OneToOne
+    @JoinColumn(name = ColumnName.MARK_ID)
     private Mark mark;
     @Column(name = "DURATION_TIME")
     private int durationTime;

@@ -1,5 +1,6 @@
 package ru.org.icad.mishka.app.model;
 
+import ru.org.icad.mishka.app.ColumnName;
 import ru.org.icad.mishka.app.TableName;
 
 import javax.persistence.*;
@@ -7,16 +8,16 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = TableName.PRODUCED_PRODUCT)
-public class ProducedProduct implements Serializable {
-
-    private static final long serialVersionUID = -3015559876845171831L;
+public class ProducedProduct {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
     @OneToOne
+    @JoinColumn(name = ColumnName.PLANT_ID)
     private Plant plant;
     @OneToOne
+    @JoinColumn(name = ColumnName.PRODUCT_ID)
     private Product product;
     @Column(name = "TONNAGE")
     private int tonnage;

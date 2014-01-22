@@ -1,5 +1,6 @@
 package ru.org.icad.mishka.app.model;
 
+import ru.org.icad.mishka.app.ColumnName;
 import ru.org.icad.mishka.app.TableName;
 
 import javax.persistence.*;
@@ -8,20 +9,20 @@ import java.sql.Date;
 
 @Entity
 @Table(name = TableName.PLANT_CONTAINERS)
-public class PlantContainers implements Serializable {
-
-    private static final long serialVersionUID = -710862832246962569L;
+public class PlantContainers {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
     @OneToOne
+    @JoinColumn(name = ColumnName.CONTAINER_TYPE_ID)
     private ContainerType containerType;
     @OneToOne
+    @JoinColumn(name = ColumnName.PLANT_ID)
     private Plant plant;
     @Column(name = "NUM_CONTAINERS")
     private int numContainers;
-    @Column(name = "DATE")
+    @Column(name = "ADMISSION_DATE")
     private Date date;
 
     public int getId() {

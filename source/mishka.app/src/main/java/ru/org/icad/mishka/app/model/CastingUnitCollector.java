@@ -1,5 +1,6 @@
 package ru.org.icad.mishka.app.model;
 
+import ru.org.icad.mishka.app.ColumnName;
 import ru.org.icad.mishka.app.TableName;
 
 import javax.persistence.*;
@@ -7,14 +8,13 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = TableName.CU_COLLECTOR)
-public class CastingUnitCollector implements Serializable {
-
-    private static final long serialVersionUID = 7605448809820966039L;
+public class CastingUnitCollector {
 
     @Id
-    @Column(name = "COLLE_ID")
+    @Column(name = ColumnName.COLLE_ID)
     private int id;
     @OneToOne
+    @JoinColumn(name = ColumnName.CU_ID)
     private CastingUnit castingUnit;
     @Column(name = "MIXER_TONNAGE_MAX")
     private int mixerTonnageMax;

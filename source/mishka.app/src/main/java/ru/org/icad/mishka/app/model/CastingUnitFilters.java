@@ -1,5 +1,6 @@
 package ru.org.icad.mishka.app.model;
 
+import ru.org.icad.mishka.app.ColumnName;
 import ru.org.icad.mishka.app.TableName;
 
 import javax.persistence.*;
@@ -7,16 +8,16 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = TableName.CU_FILTERS)
-public class CastingUnitFilters implements Serializable {
-
-    private static final long serialVersionUID = -3868068150785310580L;
+public class CastingUnitFilters {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
     @OneToOne
+    @JoinColumn(name = ColumnName.CU_ID)
     private CastingUnit castingUnit;
     @OneToOne
+    @JoinColumn(name = ColumnName.FILTER_ID)
     private Filter filter;
 
     public int getId() {

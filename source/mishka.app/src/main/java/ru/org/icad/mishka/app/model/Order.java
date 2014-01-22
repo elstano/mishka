@@ -1,20 +1,18 @@
 package ru.org.icad.mishka.app.model;
 
+import ru.org.icad.mishka.app.ColumnName;
 import ru.org.icad.mishka.app.TableName;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Date;
 
 @Entity
-@Table(name = TableName.ORDER)
-public class Order implements Serializable {
-
-    private static final long serialVersionUID = 8668045087203626660L;
+@Table(name = TableName.CUSTOMER_ORDER)
+public class Order {
 
     @Id
-    @Column(name = "ORDER_ID")
+    @Column(name = ColumnName.ORDER_ID)
     private int id;
     @Column(name = "TONNAGE")
     private int tonnage;
@@ -27,8 +25,10 @@ public class Order implements Serializable {
     @Column(name = "SHIPPING_DATE")
     private Date shippingDate;
     @OneToOne
+    @JoinColumn(name = ColumnName.DESTINATION_ID)
     private TransportDestination transportDestination;
     @OneToOne
+    @JoinColumn(name = ColumnName.PRODUCT_ID)
     private Product product;
     @Column(name = "LENGTH")
     private int length;

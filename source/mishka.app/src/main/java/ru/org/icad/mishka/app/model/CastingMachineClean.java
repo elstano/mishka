@@ -1,5 +1,6 @@
 package ru.org.icad.mishka.app.model;
 
+import ru.org.icad.mishka.app.ColumnName;
 import ru.org.icad.mishka.app.TableName;
 
 import javax.persistence.*;
@@ -13,10 +14,12 @@ public class CastingMachineClean {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
     @OneToOne
+    @JoinColumn(name = ColumnName.CAST_MACH_ID)
     private CastingUnitCastingMachine castingUnitCastingMachine;
     @OneToOne
+    @JoinColumn(name = ColumnName.OPERATION_ID)
     private CastingMachineOperation castingMachineOperation;
-    @Column(name = "DATE")
+    @Column(name = "CAST_DATE")
     private Date date;
     @Column(name = "SHIFT")
     private int shift;

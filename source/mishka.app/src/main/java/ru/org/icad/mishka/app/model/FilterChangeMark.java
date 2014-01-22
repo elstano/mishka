@@ -1,5 +1,6 @@
 package ru.org.icad.mishka.app.model;
 
+import ru.org.icad.mishka.app.ColumnName;
 import ru.org.icad.mishka.app.TableName;
 
 import javax.persistence.*;
@@ -7,14 +8,13 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = TableName.FILTER_CHANGE_MARK)
-public class FilterChangeMark implements Serializable {
-
-    private static final long serialVersionUID = 7255032725200944555L;
+public class FilterChangeMark {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
     @OneToOne
+    @JoinColumn(name = ColumnName.FILTER_ID)
     private Filter filter;
     @Column(name = "MARK_ID_1")
     private int markId1;

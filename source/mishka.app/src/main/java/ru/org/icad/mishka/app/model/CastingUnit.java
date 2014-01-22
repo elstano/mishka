@@ -1,5 +1,6 @@
 package ru.org.icad.mishka.app.model;
 
+import ru.org.icad.mishka.app.ColumnName;
 import ru.org.icad.mishka.app.TableName;
 
 import javax.persistence.*;
@@ -10,7 +11,7 @@ import java.sql.Date;
 public class CastingUnit {
 
     @Id
-    @Column(name = "CU_ID")
+    @Column(name = ColumnName.CU_ID)
     private int id;
     @OneToOne
     private CastHouse castHouse;

@@ -1,5 +1,6 @@
 package ru.org.icad.mishka.app.model;
 
+import ru.org.icad.mishka.app.ColumnName;
 import ru.org.icad.mishka.app.TableName;
 
 import javax.persistence.*;
@@ -8,14 +9,13 @@ import java.math.BigDecimal;
 
 @Entity
 @Table(name = TableName.PRODUCT_COST)
-public class ProductCost implements Serializable {
-
-    private static final long serialVersionUID = 2518727481064680089L;
+public class ProductCost {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
     @OneToOne
+    @JoinColumn(name = ColumnName.PLANT_ID)
     private Plant plant;
     @OneToOne
     private Mark mark;

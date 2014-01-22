@@ -1,5 +1,6 @@
 package ru.org.icad.mishka.app.model;
 
+import ru.org.icad.mishka.app.ColumnName;
 import ru.org.icad.mishka.app.TableName;
 
 import javax.persistence.Column;
@@ -10,12 +11,10 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = TableName.CU_HOMOGEN_CUTTING_LINE)
-public class CastingUnitHomogenCuttingLine implements Serializable {
-
-    private static final long serialVersionUID = -510917667272422440L;
+public class CastingUnitHomogenCuttingLine {
 
     @Id
-    @Column(name = "HC_LINE_ID")
+    @Column(name = ColumnName.HC_LINE_ID)
     private int homogenCuttingLineId;
     @Column(name = "LENGTH_BLANK_MIN")
     private int lengthBlankMin;

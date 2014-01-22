@@ -1,5 +1,6 @@
 package ru.org.icad.mishka.app.model;
 
+import ru.org.icad.mishka.app.ColumnName;
 import ru.org.icad.mishka.app.TableName;
 
 import javax.persistence.*;
@@ -8,16 +9,15 @@ import java.sql.Date;
 
 @Entity
 @Table(name = TableName.ELECTROLIZER_PROGNOSIS)
-public class ElectrolizerPrognosis implements Serializable {
-
-    private static final long serialVersionUID = -4164604033642010961L;
+public class ElectrolizerPrognosis {
 
     @Id
-    @Column(name = "ELECTROLIZER_ID")
+    @Column(name = ColumnName.ELECTROLIZER_ID)
     private int id;
     @OneToOne
+    @JoinColumn(name = ColumnName.CU_ID)
     private CastingUnit castingUnit;
-    @Column(name = "DATE")
+    @Column(name = "PROGNOS_DATE")
     private Date date;
     @Column(name = "SHIFT")
     private int shift;

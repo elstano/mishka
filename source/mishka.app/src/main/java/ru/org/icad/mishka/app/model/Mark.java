@@ -1,5 +1,6 @@
 package ru.org.icad.mishka.app.model;
 
+import ru.org.icad.mishka.app.ColumnName;
 import ru.org.icad.mishka.app.TableName;
 
 import javax.persistence.Column;
@@ -10,12 +11,10 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = TableName.MARK)
-public class Mark implements Serializable {
-
-    private static final long serialVersionUID = 3010727995864605098L;
+public class Mark {
 
     @Id
-    @Column(name = "MARK_ID")
+    @Column(name = ColumnName.MARK_ID)
     private int id;
     @Column(name = "MARK_NAME")
     private String name;

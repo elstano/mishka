@@ -1,5 +1,6 @@
 package ru.org.icad.mishka.app.model;
 
+import ru.org.icad.mishka.app.ColumnName;
 import ru.org.icad.mishka.app.TableName;
 
 import javax.persistence.*;
@@ -7,14 +8,13 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = TableName.CU_PRODUCT_CHANGE)
-public class CastingUnitProductChange implements Serializable {
-
-    private static final long serialVersionUID = 763166633341116200L;
+public class CastingUnitProductChange {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
     @OneToOne
+    @JoinColumn(name = ColumnName.CU_ID)
     private CastingUnit castingUnit;
     @Column(name = "MARK_ID_1")
     private int markId1;

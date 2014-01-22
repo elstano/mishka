@@ -1,5 +1,6 @@
 package ru.org.icad.mishka.app.model;
 
+import ru.org.icad.mishka.app.ColumnName;
 import ru.org.icad.mishka.app.TableName;
 
 import javax.persistence.*;
@@ -8,20 +9,22 @@ import java.sql.Date;
 
 @Entity
 @Table(name = TableName.CU_REPAIR)
-public class CastingUnitRepair implements Serializable {
-
-    private static final long serialVersionUID = 6055479591883907458L;
+public class CastingUnitRepair {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
     @OneToOne
+    @JoinColumn(name = ColumnName.COLLE_ID)
     private CastingUnitCollector castingUnitCollector;
     @OneToOne
+    @JoinColumn(name = ColumnName.DISTR_ID)
     private CastingUnitDistributor castingUnitDistributor;
     @OneToOne
+    @JoinColumn(name = ColumnName.CAST_MACH_ID)
     private CastingUnitCastingMachine castingUnitCastingMachine;
     @OneToOne
+    @JoinColumn(name = ColumnName.HC_LINE_ID)
     private CastingUnitHomogenCuttingLine castingUnitHomogenCuttingLine;
     @Column(name = "TIME_START")
     private Date timeStart;

@@ -1,31 +1,32 @@
 package ru.org.icad.mishka.app.model;
 
+import ru.org.icad.mishka.app.ColumnName;
 import ru.org.icad.mishka.app.TableName;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.math.BigDecimal;
 
 @Entity
 @Table(name = TableName.PRODUCT)
-public class Product implements Serializable {
-
-    private static final long serialVersionUID = 3479415488976214421L;
+public class Product {
 
     @Id
-    @Column(name = "PRODUCT_ID")
+    @Column(name = ColumnName.PRODUCT_ID)
     private int id;
     @Column(name = "PRODUCT_NAME")
     private String name;
     @OneToOne
+    @JoinColumn(name = ColumnName.PLANT_ID)
     private Plant plant;
     @Column(name = "SPEC")
     private String spec;
     @Column(name = "SERIES")
     private String series;
     @OneToOne
+    @JoinColumn(name = ColumnName.MARK_ID)
     private Mark mark;
     @OneToOne
+    @JoinColumn(name = ColumnName.FORM_ID)
     private Form formId;
     @Column(name = "PREMIUM")
     private BigDecimal premium;
@@ -38,6 +39,7 @@ public class Product implements Serializable {
     @Column(name = "WEIGHT")
     private int weight;
     @OneToOne
+    @JoinColumn(name = ColumnName.FILTRATION_ID)
     private Filtration filtration;
     @Column(name = "HOMOGENIZATION")
     private int homogenization;
