@@ -1,21 +1,20 @@
 package ru.org.icad.mishka.app.model;
 
+import ru.org.icad.mishka.app.ColumnName;
 import ru.org.icad.mishka.app.TableName;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.sql.Date;
 
 @Entity
-@Table(name = TableName.FILTER)
-public class Filter implements Serializable {
-
-    private static final long serialVersionUID = -2171566222069357036L;
+@Table(name = TableName.CU_FILTER)
+public class Filter {
 
     @Id
-    @Column(name = "FILTER_ID")
+    @Column(name = ColumnName.FILTER_ID)
     private int id;
     @OneToOne
+    @JoinColumn(name = ColumnName.CH_ID)
     private CastHouse castHouse;
     @Column(name = "STATE")
     private int state;
@@ -25,7 +24,7 @@ public class Filter implements Serializable {
     private int startHeaterId;
     @Column(name = "START_TIME")
     private Date startTime;
-    @Column(name = "RESOURCE")
+    @Column(name = "RESOURCE_CURRENT")
     private int resource;
     @Column(name = "RESOURCE_OVER")
     private int resourceOver;

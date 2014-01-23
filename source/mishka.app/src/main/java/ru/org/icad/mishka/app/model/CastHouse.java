@@ -1,5 +1,6 @@
 package ru.org.icad.mishka.app.model;
 
+import ru.org.icad.mishka.app.ColumnName;
 import ru.org.icad.mishka.app.TableName;
 
 import javax.persistence.*;
@@ -16,9 +17,10 @@ public class CastHouse {
     }
 
     @Id
-    @Column(name = "CH_ID")
+    @Column(name = ColumnName.CH_ID)
     private int id;
     @OneToOne
+    @JoinColumn(name = ColumnName.PLANT_ID)
     private Plant plant;
     @Column(name = "LADLE_TONNAGE_MAX")
     private int ladleTonnageMax;

@@ -1,5 +1,6 @@
 package ru.org.icad.mishka.app.model;
 
+import ru.org.icad.mishka.app.ColumnName;
 import ru.org.icad.mishka.app.TableName;
 
 import javax.persistence.*;
@@ -8,20 +9,22 @@ import java.math.BigDecimal;
 
 @Entity
 @Table(name = TableName.TRANSPORT_COST)
-public class TransportCost implements Serializable {
-
-    private static final long serialVersionUID = 4415117277323940256L;
+public class TransportCost {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
     @OneToOne
+    @JoinColumn(name = ColumnName.PLANT_ID)
     private Plant plant;
     @OneToOne
+    @JoinColumn(name = ColumnName.DESTINATION_ID)
     private TransportDestination transportDestination;
     @OneToOne
+    @JoinColumn(name = ColumnName.CONTAINER_TYPE_ID)
     private ContainerType containerType;
     @OneToOne
+    @JoinColumn(name = ColumnName.FORM_ID)
     private Form form;
     @Column(name = "COST")
     private BigDecimal cost;

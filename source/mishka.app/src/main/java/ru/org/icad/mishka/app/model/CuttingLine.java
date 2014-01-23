@@ -1,5 +1,6 @@
 package ru.org.icad.mishka.app.model;
 
+import ru.org.icad.mishka.app.ColumnName;
 import ru.org.icad.mishka.app.TableName;
 
 import javax.persistence.*;
@@ -7,14 +8,13 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = TableName.CUTTING_LINE)
-public class CuttingLine implements Serializable {
-
-    private static final long serialVersionUID = -5893789922488090588L;
+public class CuttingLine {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
     @OneToOne
+    @JoinColumn(name = ColumnName.HC_LINE_ID)
     private CastingUnitHomogenCuttingLine castingUnitHomogenCuttingLine;
     @Column(name = "DIAMETER")
     private int diameter;

@@ -1,5 +1,6 @@
 package ru.org.icad.mishka.app.model;
 
+import ru.org.icad.mishka.app.ColumnName;
 import ru.org.icad.mishka.app.TableName;
 
 import javax.persistence.*;
@@ -8,14 +9,13 @@ import java.sql.Date;
 
 @Entity
 @Table(name = TableName.HEATER)
-public class Heater implements Serializable {
-
-    private static final long serialVersionUID = 2823148252825628226L;
+public class Heater {
 
     @Id
-    @Column(name = "HEATER_ID")
+    @Column(name = ColumnName.HEATER_ID)
     private int id;
     @OneToOne
+    @JoinColumn(name = ColumnName.CH_ID)
     private CastHouse castHouse;
     @Column(name = "STATE")
     private int state;

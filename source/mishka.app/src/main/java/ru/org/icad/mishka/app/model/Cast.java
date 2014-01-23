@@ -1,5 +1,6 @@
 package ru.org.icad.mishka.app.model;
 
+import ru.org.icad.mishka.app.ColumnName;
 import ru.org.icad.mishka.app.TableName;
 
 import javax.persistence.*;
@@ -13,14 +14,16 @@ public class Cast {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     @OneToOne
+    @JoinColumn(name = ColumnName.CU_ID)
     private CastingUnit castingUnit;
-    @Column(name = "DATE")
+    @Column(name = "CAST_DATE")
     private Date date;
     @Column(name = "SHIFT")
     private int shift;
     @Column(name = "CAST_NUMBER")
     private int castNumber;
     @OneToOne
+    @JoinColumn(name = ColumnName.ORDER_ID)
     private Order order;
     @Column(name = "INGOT_COUNT")
     private int ingotCount;

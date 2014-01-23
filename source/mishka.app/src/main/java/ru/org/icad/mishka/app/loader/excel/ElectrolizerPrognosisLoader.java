@@ -1,4 +1,4 @@
-package ru.org.icad.mishka.app.excel.loader;
+package ru.org.icad.mishka.app.loader.excel;
 
 import com.google.common.collect.Lists;
 import org.apache.poi.ss.usermodel.Cell;
@@ -16,13 +16,11 @@ import java.sql.Date;
 import java.util.Collections;
 import java.util.List;
 
-public class ElectrolizerPrognosisLoader {
+public class ElectrolizerPrognosisLoader implements ExcelLoader<ElectrolizerPrognosis> {
     private static final Logger LOGGER = LoggerFactory.getLogger(ElectrolizerPrognosisLoader.class);
 
-    private ElectrolizerPrognosisLoader() {
-    }
-
-    public static List<ElectrolizerPrognosis> load(String filePath, String sheetName) {
+    @Override
+    public List<ElectrolizerPrognosis> load(String filePath, String sheetName) {
         File file = new File(filePath);
         XSSFWorkbook workbook = null;
 

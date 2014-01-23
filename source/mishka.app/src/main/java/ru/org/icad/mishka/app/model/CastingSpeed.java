@@ -1,5 +1,6 @@
 package ru.org.icad.mishka.app.model;
 
+import ru.org.icad.mishka.app.ColumnName;
 import ru.org.icad.mishka.app.TableName;
 
 import javax.persistence.*;
@@ -12,8 +13,10 @@ public class CastingSpeed {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
     @OneToOne
+    @JoinColumn(name = ColumnName.MOULD_ID)
     private Mould mould;
     @OneToOne
+    @JoinColumn(name = ColumnName.MARK_ID)
     private Mark mark;
     @Column(name = "SPEED")
     private int speed;

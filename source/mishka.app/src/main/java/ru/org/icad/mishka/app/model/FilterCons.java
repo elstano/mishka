@@ -1,5 +1,6 @@
 package ru.org.icad.mishka.app.model;
 
+import ru.org.icad.mishka.app.ColumnName;
 import ru.org.icad.mishka.app.TableName;
 
 import javax.persistence.*;
@@ -7,16 +8,16 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = TableName.FILTER_CONS)
-public class FilterCons implements Serializable {
-
-    private static final long serialVersionUID = -6293132073432224171L;
+public class FilterCons {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
     @OneToOne
+    @JoinColumn(name = ColumnName.CU_ID)
     private CastingUnit castingUnit;
     @OneToOne
+    @JoinColumn(name = ColumnName.MARK_ID)
     private Mark mark;
     @Column(name = "CONSUMPTION")
     private int consumption;

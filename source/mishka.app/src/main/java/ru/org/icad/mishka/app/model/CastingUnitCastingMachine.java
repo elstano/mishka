@@ -1,5 +1,6 @@
 package ru.org.icad.mishka.app.model;
 
+import ru.org.icad.mishka.app.ColumnName;
 import ru.org.icad.mishka.app.TableName;
 
 import javax.persistence.*;
@@ -9,9 +10,10 @@ import javax.persistence.*;
 public class CastingUnitCastingMachine {
 
     @Id
-    @Column(name = "CAST_MACH_ID")
+    @Column(name = ColumnName.CAST_MACH_ID)
     private int id;
     @OneToOne
+    @JoinColumn(name = ColumnName.CU_ID)
     private CastingUnit castingUnit;
     @Column(name = "REMOULD_TIME")
     private int remouldTime;

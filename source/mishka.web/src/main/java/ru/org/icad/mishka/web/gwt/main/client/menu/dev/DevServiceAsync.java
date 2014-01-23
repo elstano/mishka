@@ -7,4 +7,6 @@ import java.util.List;
 public interface DevServiceAsync {
 
     void getDbTableNames(AsyncCallback<List<String>> async);
+
+    void getTableContent(String tableName, AsyncCallback<String> async);
 }

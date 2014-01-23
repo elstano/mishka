@@ -9,4 +9,6 @@ import java.util.List;
 public interface DevService extends RemoteService {
 
     List<String> getDbTableNames();
+
+    String getTableContent(String tableName);
 }

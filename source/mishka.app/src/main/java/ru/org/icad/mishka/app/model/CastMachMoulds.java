@@ -1,5 +1,6 @@
 package ru.org.icad.mishka.app.model;
 
+import ru.org.icad.mishka.app.ColumnName;
 import ru.org.icad.mishka.app.TableName;
 
 import javax.persistence.*;
@@ -7,16 +8,16 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = TableName.CAST_MACH_MOULDS)
-public class CastMachMoulds implements Serializable {
-
-    private static final long serialVersionUID = 4803568493813809259L;
+public class CastMachMoulds {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
     @OneToOne
+    @JoinColumn(name = ColumnName.CAST_MACH_ID)
     private CastingUnitCastingMachine castingUnitCastingMachine;
     @OneToOne
+    @JoinColumn(name = ColumnName.MOULD_ID)
     private Mould mould;
 
     public int getId() {

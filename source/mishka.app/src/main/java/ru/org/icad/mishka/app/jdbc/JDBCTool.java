@@ -21,7 +21,7 @@ public class JDBCTool {
     private void init() {
         try {
             InitialContext context = new InitialContext();
-            this.ds = (DataSource) context.lookup("jdbc/mishka");
+            this.ds = (DataSource) context.lookup("jdbc/MishkaDS");
         } catch (NamingException e) {
             throw new RuntimeException(e);
         }

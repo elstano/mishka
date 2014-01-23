@@ -1,5 +1,6 @@
 package ru.org.icad.mishka.app.model;
 
+import ru.org.icad.mishka.app.ColumnName;
 import ru.org.icad.mishka.app.TableName;
 
 import javax.persistence.Column;
@@ -10,12 +11,10 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = TableName.MOULD)
-public class Mould implements Serializable {
-
-    private static final long serialVersionUID = -3131724523222975539L;
+public class Mould {
 
     @Id
-    @Column(name = "MOULD_ID")
+    @Column(name = ColumnName.MOULD_ID)
     private int id;
     @Column(name = "CH_ID")
     private int castHouseId;
@@ -29,7 +28,7 @@ public class Mould implements Serializable {
     private int height;
     @Column(name = "DIAMETER")
     private int diameter;
-    @Column(name = "RESOURCE")
+    @Column(name = "RESOURCE_CURRENT")
     private int resource;
     @Column(name = "RESOURCE_MAX")
     private int resourceMax;

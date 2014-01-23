@@ -1,5 +1,6 @@
 package ru.org.icad.mishka.app.model;
 
+import ru.org.icad.mishka.app.ColumnName;
 import ru.org.icad.mishka.app.TableName;
 
 import javax.persistence.Column;
@@ -12,7 +13,7 @@ import javax.persistence.Table;
 public class CastingMachineOperation {
 
     @Id
-    @Column(name = "OPERATION_ID")
+    @Column(name = ColumnName.OPERATION_ID)
     private int id;
     @Column(name = "TYPE")
     private String type;

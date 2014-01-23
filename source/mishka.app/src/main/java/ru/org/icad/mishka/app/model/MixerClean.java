@@ -1,5 +1,6 @@
 package ru.org.icad.mishka.app.model;
 
+import ru.org.icad.mishka.app.ColumnName;
 import ru.org.icad.mishka.app.TableName;
 
 import javax.persistence.*;
@@ -8,18 +9,18 @@ import java.sql.Date;
 
 @Entity
 @Table(name = TableName.MIXER_CLEAN)
-public class MixerClean implements Serializable {
-
-    private static final long serialVersionUID = 6009840528538329248L;
+public class MixerClean {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
     @OneToOne
+    @JoinColumn(name = ColumnName.COLLE_ID)
     private CastingUnitCollector castingUnitCollector;
     @OneToOne
+    @JoinColumn(name = ColumnName.DISTR_ID)
     private CastingUnitDistributor castingUnitDistributor;
-    @Column(name = "DATE")
+    @Column(name = "CLEAN_DATE")
     private Date date;
     @Column(name = "SHIFT")
     private int shift;
