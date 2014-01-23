@@ -18,6 +18,14 @@ public class CastingMachineOperation {
     @Column(name = "TYPE")
     private String type;
 
+    public CastingMachineOperation(int id) {
+        this.id = id;
+    }
+
+    public CastingMachineOperation() {
+
+    }
+
     public int getId() {
         return id;
     }

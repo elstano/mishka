@@ -71,4 +71,15 @@ public class Plant {
     public void setClipMeltLoss(BigDecimal clipMeltLoss) {
         this.clipMeltLoss = clipMeltLoss;
     }
+
+    @Override
+    public String toString() {
+        return "Plant{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", premiumA7=" + premiumA7 +
+                ", clipAddCost=" + clipAddCost +
+                ", clipMeltLoss=" + clipMeltLoss +
+                '}';
+    }
 }

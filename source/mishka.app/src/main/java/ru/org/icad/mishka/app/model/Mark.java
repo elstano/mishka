@@ -7,7 +7,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.io.Serializable;
 
 @Entity
 @Table(name = TableName.MARK)
@@ -18,6 +17,13 @@ public class Mark {
     private int id;
     @Column(name = "MARK_NAME")
     private String name;
+
+    public Mark() {
+    }
+
+    public Mark(int id) {
+        this.id = id;
+    }
 
     public int getId() {
         return id;
@@ -33,5 +39,13 @@ public class Mark {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Mark{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

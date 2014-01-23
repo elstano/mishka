@@ -4,6 +4,7 @@ import ru.org.icad.mishka.app.ColumnName;
 import ru.org.icad.mishka.app.TableName;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.sql.Date;
 
 @Entity
@@ -22,7 +23,7 @@ public class CastingUnit {
     @Column(name = "LADLE_POUR_TIME_MAX")
     private int ladlePourTimeMax;
     @Column(name = "CLEAN_COST")
-    private int cleanCost;
+    private BigDecimal cleanCost;
     @Column(name = "FE_DECREASE")
     private double feDecrease;
     @Column(name = "SI_DECREASE")
@@ -83,11 +84,11 @@ public class CastingUnit {
         this.ladlePourTimeMax = ladlePourTimeMax;
     }
 
-    public int getCleanCost() {
+    public BigDecimal getCleanCost() {
         return cleanCost;
     }
 
-    public void setCleanCost(int cleanCost) {
+    public void setCleanCost(BigDecimal cleanCost) {
         this.cleanCost = cleanCost;
     }
 
@@ -137,5 +138,23 @@ public class CastingUnit {
 
     public void setTiDecrease(double tiDecrease) {
         this.tiDecrease = tiDecrease;
+    }
+
+    @Override
+    public String toString() {
+        return "CastingUnit{" +
+                "id=" + id +
+                ", castHouse=" + castHouse +
+                ", startTime=" + startTime +
+                ", previousProductId=" + previousProductId +
+                ", ladlePourTimeMax=" + ladlePourTimeMax +
+                ", cleanCost=" + cleanCost +
+                ", feDecrease=" + feDecrease +
+                ", siDecrease=" + siDecrease +
+                ", cuDecrease=" + cuDecrease +
+                ", mgDecrease=" + mgDecrease +
+                ", mnDecrease=" + mnDecrease +
+                ", tiDecrease=" + tiDecrease +
+                '}';
     }
 }

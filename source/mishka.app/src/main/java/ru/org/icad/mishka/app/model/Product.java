@@ -64,6 +64,13 @@ public class Product {
     @Column(name = "MG_MAX")
     private double mgMax;
 
+    public Product() {
+    }
+
+    public Product(int id) {
+        this.id = id;
+    }
+
     public int getId() {
         return id;
     }

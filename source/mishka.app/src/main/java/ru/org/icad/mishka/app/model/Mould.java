@@ -7,7 +7,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.io.Serializable;
 
 @Entity
 @Table(name = TableName.MOULD)
@@ -36,6 +35,13 @@ public class Mould {
     private int prepareTime;
     @Column(name = "NUM_BLANKS_MAX")
     private int numBlanksMax;
+
+    public Mould() {
+    }
+
+    public Mould(int id) {
+        this.id = id;
+    }
 
     public int getId() {
         return id;

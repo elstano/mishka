@@ -4,15 +4,15 @@ import ru.org.icad.mishka.app.ColumnName;
 import ru.org.icad.mishka.app.TableName;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.math.BigDecimal;
+import java.sql.Date;
 
 @Entity
 @Table(name = TableName.PRODUCT_COST)
 public class ProductCost {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     @OneToOne
     @JoinColumn(name = ColumnName.PLANT_ID)
@@ -23,6 +23,8 @@ public class ProductCost {
     private Form form;
     @Column(name = "COST")
     private BigDecimal cost;
+    @Column(name = "COST_DATE")
+    private Date date;
 
     public int getId() {
         return id;
@@ -62,5 +64,13 @@ public class ProductCost {
 
     public void setCost(BigDecimal cost) {
         this.cost = cost;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 }

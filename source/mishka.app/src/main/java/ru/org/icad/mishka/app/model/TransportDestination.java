@@ -7,7 +7,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.io.Serializable;
 
 @Entity
 @Table(name = TableName.TRANSPORT_DESTINATION)
@@ -18,6 +17,13 @@ public class TransportDestination {
     private int id;
     @Column(name = "DESTINATION_NAME")
     private String name;
+
+    public TransportDestination() {
+    }
+
+    public TransportDestination(int id) {
+        this.id = id;
+    }
 
     public int getId() {
         return id;

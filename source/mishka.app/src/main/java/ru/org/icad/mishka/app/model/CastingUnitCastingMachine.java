@@ -32,6 +32,13 @@ public class CastingUnitCastingMachine {
     @Column(name = "CRYST_CHANGE_TIME")
     private int crystChangeTime;
 
+    public CastingUnitCastingMachine() {
+    }
+
+    public CastingUnitCastingMachine(int id) {
+        this.id = id;
+    }
+
     public int getId() {
         return id;
     }
