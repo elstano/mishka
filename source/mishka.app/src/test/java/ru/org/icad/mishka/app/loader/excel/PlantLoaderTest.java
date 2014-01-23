@@ -1,7 +1,6 @@
-package ru.org.icad.mishka.app.excel.loader;
+package ru.org.icad.mishka.app.loader.excel;
 
 import org.testng.annotations.Test;
-import ru.org.icad.mishka.app.loader.excel.PlantLoader;
 import ru.org.icad.mishka.app.model.Plant;
 
 import java.net.URL;
