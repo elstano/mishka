@@ -1,7 +1,12 @@
 package ru.org.icad.mishka.app.loader.excel;
 
-/**
- * Created by kidoz on 23.01.14.
- */
-public class CastingUnitHomogenCuttingLineLoader {
+import ru.org.icad.mishka.app.model.CastingUnitHomogenCuttingLine;
+
+import java.util.List;
+
+public class CastingUnitHomogenCuttingLineLoader implements ExcelLoader<CastingUnitHomogenCuttingLine> {
+    @Override
+    public List<CastingUnitHomogenCuttingLine> load(String filePath, String sheetName) {
+        return null;
+    }
 }
