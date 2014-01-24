@@ -4,7 +4,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import ru.org.icad.mishka.app.chemistry.Chemistry;
 import ru.org.icad.mishka.app.model.ElectrolizerPrognosis;
-import ru.org.icad.mishka.app.order.Order;
+import ru.org.icad.mishka.app.model.Order;
 
 import java.util.*;
 
@@ -27,7 +27,7 @@ public class RestrictionByRaw {
 
         for (Map.Entry<Order, List<ElectrolizerPrognosis>> entry : currentOrderMap.entrySet()) {
             Order currentOrder = entry.getKey();
-            int orderCapacity = currentOrder.getCapacity();
+//            int orderCapacity = currentOrder.getCapacity();
             int electrolyzersCapacity = 0;
 
             List<ElectrolizerPrognosis> electrolyzerList = entry.getValue();
@@ -35,9 +35,9 @@ public class RestrictionByRaw {
 
             Integer lastShitft = null;
             for (ElectrolizerPrognosis electrolyzer : electrolyzerList) {
-                if (orderCapacity <= electrolyzersCapacity) {
-                    break;
-                }
+//                if (orderCapacity <= electrolyzersCapacity) {
+//                    break;
+//                }
 
                 if (isNotLastShift(lastShitft, electrolyzer)) {
                     continue;
@@ -55,9 +55,9 @@ public class RestrictionByRaw {
             electrolyzerList.removeAll(usedElectrolyzer);
 
             for (ElectrolizerPrognosis electrolyzer : electrolyzerList) {
-                if (orderCapacity <= electrolyzersCapacity) {
-                    break;
-                }
+//                if (orderCapacity <= electrolyzersCapacity) {
+//                    break;
+//                }
 
                 if (isNotLastShift(lastShitft, electrolyzer)) {
                     continue;
@@ -70,9 +70,9 @@ public class RestrictionByRaw {
 
             }
 
-            if (electrolyzersCapacity >= orderCapacity) {
-                resultOrderMap.put(currentOrder, usedElectrolyzer);
-            }
+//            if (electrolyzersCapacity >= orderCapacity) {
+//                resultOrderMap.put(currentOrder, usedElectrolyzer);
+//            }
         }
 
 
@@ -88,7 +88,7 @@ public class RestrictionByRaw {
 
         for (Order order : orders) {
             List<ElectrolizerPrognosis> suitableElectrolyzers = Lists.newArrayList();
-            final Chemistry orderChemistry = order.getChemistry();
+//            final Chemistry orderChemistry = order.getChemistry();
 
 //            for (ElectrolizerPrognosis electrolyzer : electrolyzers) {
 //                if (orderChemistry.isSuit(electrolyzer.getChemistry())) {

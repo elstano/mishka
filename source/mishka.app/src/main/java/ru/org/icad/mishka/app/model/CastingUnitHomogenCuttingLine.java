@@ -13,6 +13,13 @@ import java.io.Serializable;
 @Table(name = TableName.CU_HOMOGEN_CUTTING_LINE)
 public class CastingUnitHomogenCuttingLine {
 
+    public CastingUnitHomogenCuttingLine() {
+    }
+
+    public CastingUnitHomogenCuttingLine(int homogenCuttingLineId) {
+        this.homogenCuttingLineId = homogenCuttingLineId;
+    }
+
     @Id
     @Column(name = ColumnName.HC_LINE_ID)
     private int homogenCuttingLineId;

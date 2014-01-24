@@ -10,15 +10,15 @@ import org.jetbrains.annotations.Nullable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.math.BigDecimal;
+import java.sql.Date;
 import java.util.Collections;
 import java.util.List;
 
 
-public class ExcelUtil{
+public class ExcelUtil {
 
-    private ExcelUtil(){
+    private ExcelUtil() {
     }
-
 
     public static List<String> getSheetNames(String filePath) {
         File file = new File(filePath);
@@ -38,7 +38,7 @@ public class ExcelUtil{
         List<String> sheetNames = Lists.newArrayList();
 
         int numberOfSheets = workbook.getNumberOfSheets();
-        for(int i= 0  ; i < numberOfSheets ; i++) {
+        for (int i = 0; i < numberOfSheets; i++) {
             sheetNames.add(workbook.getSheetName(i));
         }
 
@@ -64,7 +64,8 @@ public class ExcelUtil{
         return workbook.getSheet(sheetName);
     }
 
-    private static Double getDoubleCellValue(Row row, int columnNumber) {
+    @Nullable
+    public static Double getDoubleCellValue(Row row, int columnNumber) {
         final Cell contentCell = row.getCell(columnNumber);
         if (contentCell != null && Cell.CELL_TYPE_NUMERIC == contentCell.getCellType()) {
             return contentCell.getNumericCellValue();
@@ -73,6 +74,7 @@ public class ExcelUtil{
         return null;
     }
 
+    @Nullable
     public static Integer getIntCellValue(Row row, int columnNumber) {
         final Double doubleCellValue = getDoubleCellValue(row, columnNumber);
         if (doubleCellValue != null) {
@@ -83,6 +85,7 @@ public class ExcelUtil{
         return null;
     }
 
+    @Nullable
     public static String getStringCellValue(Row row, int columnNumber) {
         Cell contentCell = row.getCell(columnNumber);
         if (contentCell != null && Cell.CELL_TYPE_STRING == contentCell.getCellType()) {
@@ -92,10 +95,21 @@ public class ExcelUtil{
         return null;
     }
 
+    @Nullable
     public static BigDecimal getBigDecimalCellValue(Row row, int columnNumber) {
         final Double doubleCellValue = getDoubleCellValue(row, columnNumber);
         if (doubleCellValue != null) {
             return BigDecimal.valueOf(doubleCellValue);
+        }
+
+        return null;
+    }
+
+    @Nullable
+    public static Date getDateCellValue(Row row, int columnNumber) {
+        final Cell contentCell = row.getCell(columnNumber);
+        if (contentCell != null && Cell.CELL_TYPE_STRING == contentCell.getCellType()) {
+            return new Date(contentCell.getDateCellValue().getTime());
         }
 
         return null;

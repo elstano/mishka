@@ -93,4 +93,18 @@ public class Cast {
     public void setIngotInBlankCount(int ingotInBlankCount) {
         this.ingotInBlankCount = ingotInBlankCount;
     }
+
+    @Override
+    public String toString() {
+        return "Cast{" +
+                "id=" + id +
+                ", castingUnit=" + castingUnit +
+                ", date=" + date +
+                ", shift=" + shift +
+                ", castNumber=" + castNumber +
+                ", order=" + order +
+                ", ingotCount=" + ingotCount +
+                ", ingotInBlankCount=" + ingotInBlankCount +
+                '}';
+    }
 }

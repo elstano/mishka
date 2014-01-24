@@ -58,4 +58,14 @@ public class CastHouse {
     public void setBlankWeightMax(int blankWeightMax) {
         this.blankWeightMax = blankWeightMax;
     }
+
+    @Override
+    public String toString() {
+        return "CastHouse{" +
+                "id=" + id +
+                ", plant=" + plant +
+                ", ladleTonnageMax=" + ladleTonnageMax +
+                ", blankWeightMax=" + blankWeightMax +
+                '}';
+    }
 }

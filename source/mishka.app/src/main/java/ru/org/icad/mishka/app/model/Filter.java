@@ -35,6 +35,13 @@ public class Filter {
     @Column(name = "INSTALL_TIME")
     private int installTime;
 
+    public Filter() {
+    }
+
+    public Filter(int id) {
+        this.id = id;
+    }
+
     public int getId() {
         return id;
     }
