@@ -42,6 +42,7 @@ public class TableName {
     public static final String PLANT = "PLANT";
     public static final String CAST_HOUSE = "CAST_HOUSE";
     public static final String CAST = "CAST";
+    public static final String CAST_ELECTROLIZER = "CAST_ELECTROLIZER";
 
     private TableName() {
     }
