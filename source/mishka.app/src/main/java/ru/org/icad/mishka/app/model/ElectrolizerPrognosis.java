@@ -4,7 +4,6 @@ import ru.org.icad.mishka.app.ColumnName;
 import ru.org.icad.mishka.app.TableName;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.sql.Date;
 
 @Entity
@@ -12,11 +11,13 @@ import java.sql.Date;
 public class ElectrolizerPrognosis {
 
     @Id
-    @Column(name = ColumnName.ELECTROLIZER_ID)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+    @Column(name = ColumnName.ELECTROLIZER_ID)
+    private int electrolizerId;
     @OneToOne
-    @JoinColumn(name = ColumnName.CU_ID)
-    private CastingUnit castingUnit;
+    @JoinColumn(name = ColumnName.CH_ID)
+    private CastHouse castHouse;
     @Column(name = "PROGNOS_DATE")
     private Date date;
     @Column(name = "SHIFT")
@@ -44,12 +45,20 @@ public class ElectrolizerPrognosis {
         this.id = id;
     }
 
-    public CastingUnit getCastingUnit() {
-        return castingUnit;
+    public int getElectrolizerId() {
+        return electrolizerId;
     }
 
-    public void setCastingUnit(CastingUnit castingUnit) {
-        this.castingUnit = castingUnit;
+    public void setElectrolizerId(int electrolizerId) {
+        this.electrolizerId = electrolizerId;
+    }
+
+    public CastHouse getCastHouse() {
+        return castHouse;
+    }
+
+    public void setCastHouse(CastHouse castHouse) {
+        this.castHouse = castHouse;
     }
 
     public Date getDate() {
@@ -72,8 +81,8 @@ public class ElectrolizerPrognosis {
         return tonnage;
     }
 
-    public void setTonnage(int tonnange) {
-        this.tonnage = tonnange;
+    public void setTonnage(int tonnage) {
+        this.tonnage = tonnage;
     }
 
     public double getFe() {
@@ -122,5 +131,23 @@ public class ElectrolizerPrognosis {
 
     public void setTi(double ti) {
         this.ti = ti;
+    }
+
+    @Override
+    public String toString() {
+        return "ElectrolizerPrognosis{" +
+                "id=" + id +
+                ", electrolizerId=" + electrolizerId +
+                ", castingUnit=" + castHouse +
+                ", date=" + date +
+                ", shift=" + shift +
+                ", tonnage=" + tonnage +
+                ", fe=" + fe +
+                ", si=" + si +
+                ", cu=" + cu +
+                ", mg=" + mg +
+                ", mn=" + mn +
+                ", ti=" + ti +
+                '}';
     }
 }
