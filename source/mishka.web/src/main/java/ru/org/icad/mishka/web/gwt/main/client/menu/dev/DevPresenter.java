@@ -50,20 +50,57 @@ public class DevPresenter implements OptionPresenter {
         restrictionByRawButton.addClickHandler(new ClickHandler() {
             @Override
             public void onClick(ClickEvent clickEvent) {
-                devServiceAsync.getDbTableNames(new AsyncCallback<List<String>>() {
+                devServiceAsync.getTableContent(TableName.CAST_ELECTROLIZER, new AsyncCallback<String>() {
                     @Override
                     public void onFailure(Throwable throwable) {
                         throw new RuntimeException(throwable);
                     }
 
                     @Override
-                    public void onSuccess(List<String> dbTableNames) {
+                    public void onSuccess(final String tableContent) {
                         final PopupPanel popupPanel = new PopupPanel(true);
 
                         VerticalPanel verticalPanel = new VerticalPanel();
 
                         Button startCalcRestriction = new Button("Начать расчет");
+                        startCalcRestriction.addClickHandler(new ClickHandler() {
+                            @Override
+                            public void onClick(ClickEvent clickEvent) {
+                                devServiceAsync.restrictionProcess(new AsyncCallback<Void>() {
+                                    @Override
+                                    public void onFailure(Throwable throwable) {
+
+                                    }
+
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+
+                                    }
+                                });
+                            }
+                        });
+
                         Button showResultRestriction = new Button("Показать результат расчета");
+                        showResultRestriction.addClickHandler(new ClickHandler() {
+                            @Override
+                            public void onClick(ClickEvent clickEvent) {
+                                final PopupPanel popup = new PopupPanel(true);
+
+                                VerticalPanel verticalPanel = new VerticalPanel();
+                                HTML html = new HTML("<p>" + tableContent + "</p>");
+                                verticalPanel.add(html);
+
+                                popup.add(verticalPanel);
+                                popup.setPopupPositionAndShow(new PopupPanel.PositionCallback() {
+                                    @Override
+                                    public void setPosition(int offsetWidth, int offsetHeight) {
+                                        int left = (Window.getClientWidth() - offsetWidth) / 3;
+                                        int top = (Window.getClientHeight() - offsetHeight) / 3;
+                                        popup.setPopupPosition(left, top);
+                                    }
+                                });
+                            }
+                        });
 
                         verticalPanel.add(startCalcRestriction);
                         verticalPanel.add(showResultRestriction);
@@ -142,20 +179,40 @@ public class DevPresenter implements OptionPresenter {
         homogenizationButton.addClickHandler(new ClickHandler() {
             @Override
             public void onClick(ClickEvent clickEvent) {
-                devServiceAsync.getDbTableNames(new AsyncCallback<List<String>>() {
+                devServiceAsync.getTableContent("TEST", new AsyncCallback<String>() {
                     @Override
                     public void onFailure(Throwable throwable) {
                         throw new RuntimeException(throwable);
                     }
 
                     @Override
-                    public void onSuccess(List<String> dbTableNames) {
+                    public void onSuccess(final String tableContent) {
                         final PopupPanel popupPanel = new PopupPanel(true);
 
                         VerticalPanel verticalPanel = new VerticalPanel();
 
                         Button startCalcRestriction = new Button("Начать расчет");
                         Button showResultRestriction = new Button("Показать результат расчета");
+                        showResultRestriction.addClickHandler(new ClickHandler() {
+                            @Override
+                            public void onClick(ClickEvent clickEvent) {
+                                final PopupPanel popup = new PopupPanel(true);
+
+                                VerticalPanel verticalPanel = new VerticalPanel();
+                                HTML html = new HTML("<p>" + tableContent + "</p>");
+                                verticalPanel.add(html);
+
+                                popup.add(verticalPanel);
+                                popup.setPopupPositionAndShow(new PopupPanel.PositionCallback() {
+                                    @Override
+                                    public void setPosition(int offsetWidth, int offsetHeight) {
+                                        int left = (Window.getClientWidth() - offsetWidth) / 3;
+                                        int top = (Window.getClientHeight() - offsetHeight) / 3;
+                                        popup.setPopupPosition(left, top);
+                                    }
+                                });
+                            }
+                        });
 
 
                         verticalPanel.add(startCalcRestriction);
