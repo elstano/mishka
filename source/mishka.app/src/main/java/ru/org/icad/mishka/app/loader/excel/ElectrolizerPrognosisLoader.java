@@ -7,7 +7,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.org.icad.mishka.app.model.CastingUnit;
+import ru.org.icad.mishka.app.model.CastHouse;
 import ru.org.icad.mishka.app.model.ElectrolizerPrognosis;
 
 import java.io.File;
@@ -37,7 +37,7 @@ public class ElectrolizerPrognosisLoader implements ExcelLoader<ElectrolizerProg
 
         XSSFSheet sheet = workbook.getSheet(sheetName);
 
-        if(sheet == null) {
+        if (sheet == null) {
             LOGGER.error("Not found sheet name: " + sheetName);
 
             return Collections.emptyList();
@@ -62,9 +62,9 @@ public class ElectrolizerPrognosisLoader implements ExcelLoader<ElectrolizerProg
                 continue;
             }
 
-            final int castingUnitId = Double.valueOf(castingUnitIdCell.getNumericCellValue()).intValue();
-            CastingUnit castingUnit = new CastingUnit();
-            castingUnit.setId(castingUnitId);
+            final int castHouseId = Double.valueOf(castingUnitIdCell.getNumericCellValue()).intValue();
+            CastHouse castHouse = new CastHouse();
+            castHouse.setId(castHouseId);
 
             final int electrolizerId = getIntCellValue(row, 1);
 
@@ -82,8 +82,8 @@ public class ElectrolizerPrognosisLoader implements ExcelLoader<ElectrolizerProg
             double contentTi = getDoubleCellValue(row, 10);
 
             ElectrolizerPrognosis electrolizerPrognosis = new ElectrolizerPrognosis();
-            electrolizerPrognosis.setCastingUnit(castingUnit);
-            electrolizerPrognosis.setId(electrolizerId);
+            electrolizerPrognosis.setCastHouse(castHouse);
+            electrolizerPrognosis.setElectrolizerId(electrolizerId);
             electrolizerPrognosis.setDate(date);
             electrolizerPrognosis.setShift(shift);
             electrolizerPrognosis.setTonnage(tonnage);
