@@ -1,10 +1,12 @@
 package ru.org.icad.mishka.app.util;
 
 import com.google.common.collect.Lists;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
@@ -64,17 +66,17 @@ public class ExcelUtil {
         return workbook.getSheet(sheetName);
     }
 
-    @Nullable
+    @NotNull
     public static Double getDoubleCellValue(Row row, int columnNumber) {
         final Cell contentCell = row.getCell(columnNumber);
         if (contentCell != null && Cell.CELL_TYPE_NUMERIC == contentCell.getCellType()) {
             return contentCell.getNumericCellValue();
         }
 
-        return null;
+        return NumberUtils.DOUBLE_ZERO;
     }
 
-    @Nullable
+    @NotNull
     public static Integer getIntCellValue(Row row, int columnNumber) {
         final Double doubleCellValue = getDoubleCellValue(row, columnNumber);
         if (doubleCellValue != null) {
@@ -82,7 +84,7 @@ public class ExcelUtil {
 
         }
 
-        return null;
+        return NumberUtils.INTEGER_ZERO;
     }
 
     @Nullable
@@ -108,7 +110,7 @@ public class ExcelUtil {
     @Nullable
     public static Date getDateCellValue(Row row, int columnNumber) {
         final Cell contentCell = row.getCell(columnNumber);
-        if (contentCell != null && Cell.CELL_TYPE_STRING == contentCell.getCellType()) {
+        if (contentCell != null && Cell.CELL_TYPE_NUMERIC == contentCell.getCellType()) {
             return new Date(contentCell.getDateCellValue().getTime());
         }
 
