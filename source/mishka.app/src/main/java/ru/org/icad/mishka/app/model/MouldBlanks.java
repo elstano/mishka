@@ -42,4 +42,9 @@ public class MouldBlanks {
     public void setNumBlanks(int numBlanks) {
         this.numBlanks = numBlanks;
     }
+
+    @Override
+    public String toString() {
+        return String.valueOf(getId());
+    }
 }

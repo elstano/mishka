@@ -52,4 +52,9 @@ public class CastingUnitDistributor {
     public void setCleanTime(int cleanTime) {
         this.cleanTime = cleanTime;
     }
+
+    @Override
+    public String toString() {
+        return String.valueOf(getId());
+    }
 }

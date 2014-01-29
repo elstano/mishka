@@ -49,9 +49,7 @@ public class CastingMachineCleanLoader implements ExcelLoader<CastingMachineClea
 
             final int castingMachineCleanId = Double.valueOf(castingMachineCleanIdCell.getNumericCellValue()).intValue();
             final int castingMachineOperationId = ExcelUtil.getIntCellValue(row, 1);
-
-            Cell dateCell = row.getCell(2);
-            final Date date = new Date(dateCell.getDateCellValue().getTime());
+            final Date date = ExcelUtil.getDateCellValue(row, 2);
             final int shift = ExcelUtil.getIntCellValue(row, 3);
 
             CastingMachineClean castingMachineClean = new CastingMachineClean();

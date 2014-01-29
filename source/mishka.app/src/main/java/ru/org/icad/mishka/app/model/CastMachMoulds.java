@@ -43,4 +43,9 @@ public class CastMachMoulds {
     public void setMould(Mould mould) {
         this.mould = mould;
     }
+
+    @Override
+    public String toString() {
+        return String.valueOf(getId());
+    }
 }

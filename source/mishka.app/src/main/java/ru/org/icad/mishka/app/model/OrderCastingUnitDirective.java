@@ -53,4 +53,9 @@ public class OrderCastingUnitDirective {
     public void setCastingUnit(CastingUnit castingUnit) {
         this.castingUnit = castingUnit;
     }
+
+    @Override
+    public String toString() {
+        return String.valueOf(getId());
+    }
 }

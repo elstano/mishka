@@ -164,4 +164,9 @@ public class Order {
     public void setDirectiveShift(int directiveShift) {
         this.directiveShift = directiveShift;
     }
+
+    @Override
+    public String toString() {
+        return String.valueOf(getId());
+    }
 }

@@ -86,4 +86,9 @@ public class CastingUnitRepair {
     public void setTimeEnd(Date timeEnd) {
         this.timeEnd = timeEnd;
     }
+
+    @Override
+    public String toString() {
+        return String.valueOf(getId());
+    }
 }

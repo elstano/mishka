@@ -142,19 +142,6 @@ public class CastingUnit {
 
     @Override
     public String toString() {
-        return "CastingUnit{" +
-                "id=" + id +
-                ", castHouse=" + castHouse +
-                ", startTime=" + startTime +
-                ", previousProductId=" + previousProductId +
-                ", ladlePourTimeMax=" + ladlePourTimeMax +
-                ", cleanCost=" + cleanCost +
-                ", feDecrease=" + feDecrease +
-                ", siDecrease=" + siDecrease +
-                ", cuDecrease=" + cuDecrease +
-                ", mgDecrease=" + mgDecrease +
-                ", mnDecrease=" + mnDecrease +
-                ", tiDecrease=" + tiDecrease +
-                '}';
+        return String.valueOf(getId());
     }
 }

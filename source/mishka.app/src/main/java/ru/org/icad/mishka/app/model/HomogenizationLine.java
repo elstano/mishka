@@ -52,4 +52,11 @@ public class HomogenizationLine {
     public void setLoadTime(int loadTime) {
         this.loadTime = loadTime;
     }
+
+    @Override
+    public String toString() {
+        return String.valueOf(getId());
+    }
 }
+
+

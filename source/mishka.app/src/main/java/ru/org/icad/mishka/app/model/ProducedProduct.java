@@ -63,4 +63,9 @@ public class ProducedProduct {
     public void setLength(int length) {
         this.length = length;
     }
+
+    @Override
+    public String toString() {
+        return String.valueOf(getId());
+    }
 }

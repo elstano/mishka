@@ -50,10 +50,7 @@ public class CastingUnitLoader implements ExcelLoader<CastingUnit> {
 
             final int castingUnitId = Double.valueOf(castingUnitIdCell.getNumericCellValue()).intValue();
             final int castHouseId = ExcelUtil.getIntCellValue(row, 1);
-
-            Cell dateCell = row.getCell(2);
-            final Date date = new Date(dateCell.getDateCellValue().getTime());
-
+            final Date date = ExcelUtil.getDateCellValue(row, 2);
             final int previousProductId = ExcelUtil.getIntCellValue(row, 3);
             final int ladlePourTimeMax = ExcelUtil.getIntCellValue(row, 4);
             final BigDecimal cleanCost = ExcelUtil.getBigDecimalCellValue(row, 5);

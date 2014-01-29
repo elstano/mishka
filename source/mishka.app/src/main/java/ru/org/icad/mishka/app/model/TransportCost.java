@@ -76,4 +76,9 @@ public class TransportCost {
     public void setCost(BigDecimal cost) {
         this.cost = cost;
     }
+
+    @Override
+    public String toString() {
+        return String.valueOf(getId());
+    }
 }

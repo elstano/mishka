@@ -65,7 +65,7 @@ public class DBLoader {
         for (String sheetName : sheetNames) {
             ExcelLoader excelLoader = EXCEL_LOADER_MAP.get(sheetName);
             if (excelLoader != null) {
-                persist(excelLoader.load(filePath, sheetName));
+                saveOrUpdate(excelLoader.load(filePath, sheetName));
             }
         }
 
@@ -75,17 +75,17 @@ public class DBLoader {
         }
     }
 
-    private static <T> void persist(List<T> data) {
+    private static <T> void saveOrUpdate(List<T> data) {
         try {
             UserTransaction transaction = (UserTransaction) new InitialContext().lookup("java:comp/UserTransaction");
             transaction.begin();
             EntityManagerFactory emf = Persistence.createEntityManagerFactory("MishkaService");
             EntityManager em = emf.createEntityManager();
             if (data != null)
-                for (T plant : data) {
-                    em.persist(plant);
+                for (T t : data) {
+                    em.merge(t);
                 }
-            em.flush();
+//            em.flush();
 
             transaction.commit();
         } catch (Exception e) {

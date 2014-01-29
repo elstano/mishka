@@ -262,4 +262,9 @@ public class Product {
     public void setMgMax(double mgMax) {
         this.mgMax = mgMax;
     }
+
+    @Override
+    public String toString() {
+        return String.valueOf(getId());
+    }
 }

@@ -129,4 +129,9 @@ public class Filter {
     public void setInstallTime(int installTime) {
         this.installTime = installTime;
     }
+
+    @Override
+    public String toString() {
+        return String.valueOf(getId());
+    }
 }

@@ -62,4 +62,9 @@ public class CuttingLine {
     public void setSpeed(int speed) {
         this.speed = speed;
     }
+
+    @Override
+    public String toString() {
+        return String.valueOf(getId());
+    }
 }

@@ -43,4 +43,9 @@ public class CastingUnitFilters {
     public void setFilter(Filter filter) {
         this.filter = filter;
     }
+
+    @Override
+    public String toString() {
+        return String.valueOf(getId());
+    }
 }

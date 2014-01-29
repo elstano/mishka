@@ -130,4 +130,9 @@ public class Mould {
     public void setNumBlanksMax(int numBlanksMax) {
         this.numBlanksMax = numBlanksMax;
     }
+
+    @Override
+    public String toString() {
+        return String.valueOf(getId());
+    }
 }
