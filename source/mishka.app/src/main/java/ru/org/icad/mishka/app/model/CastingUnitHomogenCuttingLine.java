@@ -7,7 +7,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.io.Serializable;
 
 @Entity
 @Table(name = TableName.CU_HOMOGEN_CUTTING_LINE)
@@ -16,24 +15,24 @@ public class CastingUnitHomogenCuttingLine {
     public CastingUnitHomogenCuttingLine() {
     }
 
-    public CastingUnitHomogenCuttingLine(int homogenCuttingLineId) {
-        this.homogenCuttingLineId = homogenCuttingLineId;
+    public CastingUnitHomogenCuttingLine(int id) {
+        this.id = id;
     }
 
     @Id
     @Column(name = ColumnName.HC_LINE_ID)
-    private int homogenCuttingLineId;
+    private int id;
     @Column(name = "LENGTH_BLANK_MIN")
     private int lengthBlankMin;
     @Column(name = "LENGTH_BLANK_MAX")
     private int lengthBlankMax;
 
-    public int getHomogenCuttingLineId() {
-        return homogenCuttingLineId;
+    public int getId() {
+        return id;
     }
 
-    public void setHomogenCuttingLineId(int homogenCuttingLineId) {
-        this.homogenCuttingLineId = homogenCuttingLineId;
+    public void setId(int homogenCuttingLineId) {
+        this.id = homogenCuttingLineId;
     }
 
     public int getLengthBlankMin() {
@@ -50,5 +49,10 @@ public class CastingUnitHomogenCuttingLine {
 
     public void setLengthBlankMax(int lengthBlankMax) {
         this.lengthBlankMax = lengthBlankMax;
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(getId());
     }
 }

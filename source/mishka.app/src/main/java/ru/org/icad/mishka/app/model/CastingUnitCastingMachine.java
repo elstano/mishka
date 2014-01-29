@@ -118,4 +118,9 @@ public class CastingUnitCastingMachine {
     public void setCrystChangeTime(int crystChangeTime) {
         this.crystChangeTime = crystChangeTime;
     }
+
+    @Override
+    public String toString() {
+        return String.valueOf(getId());
+    }
 }

@@ -43,9 +43,6 @@ public class Mark {
 
     @Override
     public String toString() {
-        return "Mark{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
+        return String.valueOf(getId());
     }
 }

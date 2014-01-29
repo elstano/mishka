@@ -64,4 +64,9 @@ public class MixerClean {
     public void setShift(int shift) {
         this.shift = shift;
     }
+
+    @Override
+    public String toString() {
+        return String.valueOf(getId());
+    }
 }

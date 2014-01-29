@@ -68,9 +68,7 @@ public class CastLoader implements ExcelLoader<Cast> {
             CastingUnit castingUnit = new CastingUnit();
             castingUnit.setId(castingUnitId);
 
-            Cell dateCell = row.getCell(1);
-            final Date date = new Date(dateCell.getDateCellValue().getTime());
-
+            final Date date = ExcelUtil.getDateCellValue(row, 1);
             final int shift = ExcelUtil.getIntCellValue(row, 2);
             final int castNumber = ExcelUtil.getIntCellValue(row, 3);
             final int orderId = ExcelUtil.getIntCellValue(row, 4);

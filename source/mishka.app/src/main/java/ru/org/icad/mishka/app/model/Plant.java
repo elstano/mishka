@@ -74,12 +74,6 @@ public class Plant {
 
     @Override
     public String toString() {
-        return "Plant{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", premiumA7=" + premiumA7 +
-                ", clipAddCost=" + clipAddCost +
-                ", clipMeltLoss=" + clipMeltLoss +
-                '}';
+        return String.valueOf(getId());
     }
 }

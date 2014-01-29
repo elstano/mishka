@@ -23,7 +23,7 @@ public class CastHouse {
     @JoinColumn(name = ColumnName.PLANT_ID)
     private Plant plant;
     @Column(name = "LADLE_TONNAGE_MAX")
-    private int ladleTonnageMax;
+    private double ladleTonnageMax;
     @Column(name = "BLANK_WEIGHT_MAX")
     private int blankWeightMax;
 
@@ -43,11 +43,11 @@ public class CastHouse {
         this.plant = plant;
     }
 
-    public int getLadleTonnageMax() {
+    public double getLadleTonnageMax() {
         return ladleTonnageMax;
     }
 
-    public void setLadleTonnageMax(int ladleTonnageMax) {
+    public void setLadleTonnageMax(double ladleTonnageMax) {
         this.ladleTonnageMax = ladleTonnageMax;
     }
 
@@ -61,11 +61,6 @@ public class CastHouse {
 
     @Override
     public String toString() {
-        return "CastHouse{" +
-                "id=" + id +
-                ", plant=" + plant +
-                ", ladleTonnageMax=" + ladleTonnageMax +
-                ", blankWeightMax=" + blankWeightMax +
-                '}';
+        return String.valueOf(getId());
     }
 }

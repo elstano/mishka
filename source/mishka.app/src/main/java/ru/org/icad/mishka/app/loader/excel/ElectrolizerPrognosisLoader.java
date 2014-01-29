@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.org.icad.mishka.app.model.CastHouse;
 import ru.org.icad.mishka.app.model.ElectrolizerPrognosis;
+import ru.org.icad.mishka.app.util.ExcelUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -67,13 +68,9 @@ public class ElectrolizerPrognosisLoader implements ExcelLoader<ElectrolizerProg
             castHouse.setId(castHouseId);
 
             final int electrolizerId = getIntCellValue(row, 1);
-
-            Cell dateCell = row.getCell(2);
-            final Date date = new Date(dateCell.getDateCellValue().getTime());
-
+            final Date date = ExcelUtil.getDateCellValue(row, 2);
             final int shift = getIntCellValue(row, 3);
             final int tonnage = getIntCellValue(row, 4);
-
             double contentFe = getDoubleCellValue(row, 5);
             double contentSi = getDoubleCellValue(row, 6);
             double contentCu = getDoubleCellValue(row, 7);

@@ -43,4 +43,9 @@ public class CastingUnitHomogenCuttingLines {
     public void setCastingUnitHomogenCuttingLine(CastingUnitHomogenCuttingLine castingUnitHomogenCuttingLine) {
         this.castingUnitHomogenCuttingLine = castingUnitHomogenCuttingLine;
     }
+
+    @Override
+    public String toString() {
+        return String.valueOf(getId());
+    }
 }

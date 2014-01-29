@@ -49,8 +49,6 @@ public class CastElectrolizer extends Cast {
 
     @Override
     public String toString() {
-        return "CastElectrolizer{" +
-                "isEnough=" + isEnough +
-                "} " + super.toString();
+        return String.valueOf(getId());
     }
 }

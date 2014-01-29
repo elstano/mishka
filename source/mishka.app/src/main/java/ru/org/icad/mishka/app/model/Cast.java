@@ -96,15 +96,6 @@ public class Cast {
 
     @Override
     public String toString() {
-        return "Cast{" +
-                "id=" + id +
-                ", castingUnit=" + castingUnit +
-                ", date=" + date +
-                ", shift=" + shift +
-                ", castNumber=" + castNumber +
-                ", order=" + order +
-                ", ingotCount=" + ingotCount +
-                ", ingotInBlankCount=" + ingotInBlankCount +
-                '}';
+        return String.valueOf(getId());
     }
 }

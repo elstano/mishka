@@ -53,4 +53,9 @@ public class Heater {
     public void setStartTime(Date startTime) {
         this.startTime = startTime;
     }
+
+    @Override
+    public String toString() {
+        return String.valueOf(getId());
+    }
 }

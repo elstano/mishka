@@ -74,4 +74,9 @@ public class PrepareTimeConst {
     public void setDurationTime(int durationTime) {
         this.durationTime = durationTime;
     }
+
+    @Override
+    public String toString() {
+        return String.valueOf(getId());
+    }
 }

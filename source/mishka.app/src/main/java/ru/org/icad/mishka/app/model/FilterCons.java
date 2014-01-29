@@ -53,4 +53,9 @@ public class FilterCons {
     public void setConsumption(int consumption) {
         this.consumption = consumption;
     }
+
+    @Override
+    public String toString() {
+        return String.valueOf(getId());
+    }
 }

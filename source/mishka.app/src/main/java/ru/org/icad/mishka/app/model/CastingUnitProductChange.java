@@ -82,4 +82,9 @@ public class CastingUnitProductChange {
     public void setCleanNecessity(int cleanNecessity) {
         this.cleanNecessity = cleanNecessity;
     }
+
+    @Override
+    public String toString() {
+        return String.valueOf(getId());
+    }
 }

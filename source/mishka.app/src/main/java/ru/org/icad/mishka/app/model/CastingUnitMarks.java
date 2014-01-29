@@ -43,4 +43,9 @@ public class CastingUnitMarks {
     public void setMark(Mark mark) {
         this.mark = mark;
     }
+
+    @Override
+    public String toString() {
+        return String.valueOf(getId());
+    }
 }

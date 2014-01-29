@@ -135,19 +135,6 @@ public class ElectrolizerPrognosis {
 
     @Override
     public String toString() {
-        return "ElectrolizerPrognosis{" +
-                "id=" + id +
-                ", electrolizerId=" + electrolizerId +
-                ", castingUnit=" + castHouse +
-                ", date=" + date +
-                ", shift=" + shift +
-                ", tonnage=" + tonnage +
-                ", fe=" + fe +
-                ", si=" + si +
-                ", cu=" + cu +
-                ", mg=" + mg +
-                ", mn=" + mn +
-                ", ti=" + ti +
-                '}';
+        return String.valueOf(getId());
     }
 }
