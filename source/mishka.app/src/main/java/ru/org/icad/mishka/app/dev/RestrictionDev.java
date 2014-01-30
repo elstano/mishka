@@ -4,12 +4,15 @@ import com.google.common.collect.Lists;
 import ru.org.icad.mishka.app.model.Cast;
 import ru.org.icad.mishka.app.model.CastElectrolizer;
 import ru.org.icad.mishka.app.model.ElectrolizerPrognosis;
+import ru.org.icad.mishka.app.process.raw.RestrictionByRaw;
 
 import javax.naming.InitialContext;
 import javax.persistence.*;
 import javax.transaction.UserTransaction;
 import java.sql.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class RestrictionDev {
 
@@ -18,7 +21,7 @@ public class RestrictionDev {
     private static final Date START_DATE = new Date(1367362550L);
     private static final Date END_DATE = new Date(1370030399L);
 
-    private static <T> void persist(List<T> data) {
+    private static <T> void saveOrUpdate(List<T> data) {
         try {
             UserTransaction transaction = (UserTransaction) new InitialContext().lookup("java:comp/UserTransaction");
             transaction.begin();
@@ -26,9 +29,9 @@ public class RestrictionDev {
             EntityManager em = emf.createEntityManager();
             if (data != null)
                 for (T plant : data) {
-                    em.persist(plant);
+                    em.merge(plant);
                 }
-            em.flush();
+//            em.flush();
 
             transaction.commit();
         } catch (Exception e) {
@@ -73,12 +76,15 @@ public class RestrictionDev {
         }
 
         List<CastElectrolizer> castElectrolizers = Lists.newArrayList();
-        for (Cast cast : casts) {
+
+        Map<Cast, List<ElectrolizerPrognosis>> result = RestrictionByRaw.checkRestriction(casts, electrolizerPrognosises);
+
+        Set<Cast> resultCasts = result.keySet();
+        for (Cast cast : resultCasts) {
             castElectrolizers.add(new CastElectrolizer(cast, true));
         }
 
-        persist(castElectrolizers);
+        saveOrUpdate(castElectrolizers);
 
-//        Map<Order, List<ElectrolizerPrognosis>> result = RestrictionByRaw.checkRestriction(, electrolizerPrognosises);
     }
 }

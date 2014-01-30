@@ -27,17 +27,7 @@ public class Product {
     private Mark mark;
     @OneToOne
     @JoinColumn(name = ColumnName.FORM_ID)
-    private Form formId;
-    @Column(name = "PREMIUM")
-    private BigDecimal premium;
-    @Column(name = "DIAMETER")
-    private int diameter;
-    @Column(name = "WIDTH")
-    private int width;
-    @Column(name = "HEIGHT")
-    private int height;
-    @Column(name = "WEIGHT")
-    private int weight;
+    private Form form;
     @OneToOne
     @JoinColumn(name = ColumnName.FILTRATION_ID)
     private Filtration filtration;
@@ -63,6 +53,14 @@ public class Product {
     private double mgMin;
     @Column(name = "MG_MAX")
     private double mgMax;
+    @Column(name = "MN_MIN")
+    private double mnMin;
+    @Column(name = "MN_MAX")
+    private double mnMax;
+    @Column(name = "TI_MIN")
+    private double tiMin;
+    @Column(name = "TI_MAX")
+    private double tiMax;
 
     public Product() {
     }
@@ -119,52 +117,12 @@ public class Product {
         this.mark = mark;
     }
 
-    public Form getFormId() {
-        return formId;
+    public Form getForm() {
+        return form;
     }
 
-    public void setFormId(Form formId) {
-        this.formId = formId;
-    }
-
-    public BigDecimal getPremium() {
-        return premium;
-    }
-
-    public void setPremium(BigDecimal premium) {
-        this.premium = premium;
-    }
-
-    public int getDiameter() {
-        return diameter;
-    }
-
-    public void setDiameter(int diameter) {
-        this.diameter = diameter;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
-    public void setHeight(int height) {
-        this.height = height;
-    }
-
-    public int getWeight() {
-        return weight;
-    }
-
-    public void setWeight(int weight) {
-        this.weight = weight;
+    public void setForm(Form formId) {
+        this.form = formId;
     }
 
     public Filtration getFiltration() {
@@ -261,6 +219,48 @@ public class Product {
 
     public void setMgMax(double mgMax) {
         this.mgMax = mgMax;
+    }
+
+    public double getMnMin() {
+        return mnMin;
+    }
+
+    public void setMnMin(double mnMin) {
+        this.mnMin = mnMin;
+    }
+
+    public double getMnMax() {
+        return mnMax;
+    }
+
+    public void setMnMax(double mnMax) {
+        this.mnMax = mnMax;
+    }
+
+    public double getTiMin() {
+        return tiMin;
+    }
+
+    public void setTiMin(double tiMin) {
+        this.tiMin = tiMin;
+    }
+
+    public double getTiMax() {
+        return tiMax;
+    }
+
+    public void setTiMax(double tiMax) {
+        this.tiMax = tiMax;
+    }
+
+    public boolean isSuit(ElectrolizerPrognosis electrolizerPrognosis) {
+        return cuMax >= electrolizerPrognosis.getCu()
+                && feMax >= electrolizerPrognosis.getFe()
+                && mgMax >= electrolizerPrognosis.getMg()
+                && mnMax >= electrolizerPrognosis.getMn()
+                && siMax >= electrolizerPrognosis.getSi()
+                && tiMax >= electrolizerPrognosis.getTi();
+
     }
 
     @Override

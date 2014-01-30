@@ -133,6 +133,16 @@ public class ElectrolizerPrognosis {
         this.ti = ti;
     }
 
+    public boolean isSuit(Product product) {
+        return cu >= product.getCuMax()
+                && fe >= product.getFeMax()
+                && mg >= product.getMgMax()
+                && mn >= product.getMnMax()
+                && si >= product.getSiMax()
+                && ti >= product.getTiMax();
+
+    }
+
     @Override
     public String toString() {
         return String.valueOf(getId());

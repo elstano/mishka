@@ -13,6 +13,13 @@ import java.io.Serializable;
 @Table(name = TableName.FILTRATION)
 public class Filtration {
 
+    public Filtration() {
+    }
+
+    public Filtration(int id) {
+        this.id = id;
+    }
+
     @Id
     @Column(name = ColumnName.FILTRATION_ID)
     private int id;
