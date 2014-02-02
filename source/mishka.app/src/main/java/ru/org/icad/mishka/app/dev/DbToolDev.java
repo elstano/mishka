@@ -20,8 +20,7 @@ import java.util.Map;
 public class DbToolDev {
 
     private static final Map<String, Class> CLASS_MAP = ImmutableMap.<String, Class>builder()
-            .put(TableName.CAST_MACH_CLEAN, CastingMachineClean.class)
-            .put(TableName.CM_OPERATION, CastingMachineOperation.class)
+            .put(TableName.OPERATION, Operation.class)
             .put(TableName.CASTING_SPEED, CastingSpeed.class)
             .put(TableName.CASTING_UNIT, CastingUnit.class)
             .put(TableName.CU_CASTING_MACHINE, CastingUnitCastingMachine.class)
@@ -50,7 +49,7 @@ public class DbToolDev {
             .put(TableName.MOULD_BLANKS, MouldBlanks.class)
             .put(TableName.CUSTOMER_ORDER, Order.class)
             .put(TableName.ORDER_CU_DIRECTIVE, OrderCastingUnitDirective.class)
-            .put(TableName.PLANT_CONTAINERS, PlantContainers.class)
+            .put(TableName.PLANT_CONTAINERS, PlantContainer.class)
             .put(TableName.PREPARE_TIME_CONST, PrepareTimeConst.class)
             .put(TableName.PRODUCED_PRODUCT, ProducedProduct.class)
             .put(TableName.PRODUCT, Product.class)
