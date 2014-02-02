@@ -9,16 +9,11 @@ import javax.persistence.*;
 @Table(name = TableName.CAST_HOUSE)
 public class CastHouse {
 
-    public CastHouse() {
-    }
-
-    public CastHouse(int id) {
-        this.id = id;
-    }
-
     @Id
     @Column(name = ColumnName.CH_ID)
     private int id;
+    @Column(name = ColumnName.CH_NAME)
+    private String castHouseName;
     @OneToOne
     @JoinColumn(name = ColumnName.PLANT_ID)
     private Plant plant;
@@ -27,12 +22,27 @@ public class CastHouse {
     @Column(name = "BLANK_WEIGHT_MAX")
     private int blankWeightMax;
 
+    public CastHouse() {
+    }
+
+    public CastHouse(int id) {
+        this.id = id;
+    }
+
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getCastHouseName() {
+        return castHouseName;
+    }
+
+    public void setCastHouseName(String castHouseName) {
+        this.castHouseName = castHouseName;
     }
 
     public Plant getPlant() {

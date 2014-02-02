@@ -17,8 +17,7 @@ import java.util.Map;
 public class DBLoader {
 
     private static final Map<String, ExcelLoader> EXCEL_LOADER_MAP = ImmutableMap.<String, ExcelLoader>builder()
-            .put(TableName.CAST_MACH_CLEAN, new CastingMachineCleanLoader())
-            .put(TableName.CM_OPERATION, new CastingMachineOperationLoader())
+            .put(TableName.OPERATION, new OperationLoader())
             .put(TableName.CASTING_SPEED, new CastingSpeedLoader())
             .put(TableName.CASTING_UNIT, new CastingUnitLoader())
             .put(TableName.CU_CASTING_MACHINE, new CastingUnitCastingMachineLoader())

@@ -3,7 +3,8 @@ package ru.org.icad.mishka.app;
 public class TableName {
 
     public static final String CAST_MACH_CLEAN = "CAST_MACH_CLEAN";
-    public static final String CM_OPERATION = "CM_OPERATION";
+    public static final String PERIODIC_OPERATIONS = "PERIODIC_OPERATIONS";
+    public static final String OPERATION = "OPERATION";
     public static final String CASTING_SPEED = "CASTING_SPEED";
     public static final String CASTING_UNIT = "CASTING_UNIT";
     public static final String CU_CASTING_MACHINE = "CU_CASTING_MACHINE";

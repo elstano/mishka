@@ -13,7 +13,7 @@ public class Order {
 
     @Id
     @Column(name = ColumnName.ORDER_ID)
-    private int id;
+    private String id;
     @Column(name = "TONNAGE")
     private int tonnage;
     @Column(name = "TOLERANCE_MINUS")
@@ -24,9 +24,9 @@ public class Order {
     private Date dueDate;
     @Column(name = "SHIPPING_DATE")
     private Date shippingDate;
-    @OneToOne
-    @JoinColumn(name = ColumnName.DESTINATION_ID)
-    private TransportDestination transportDestination;
+  // @OneToOne
+   // @JoinColumn(name = ColumnName.DESTINATION_ID)
+   // private TransportDestination transportDestination;
     @OneToOne
     @JoinColumn(name = ColumnName.PRODUCT_ID)
     private Product product;
@@ -45,11 +45,11 @@ public class Order {
     @Column(name = "DIRECTIVE_SHIFT")
     private int directiveShift;
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -93,13 +93,13 @@ public class Order {
         this.shippingDate = shippingDate;
     }
 
-    public TransportDestination getTransportDestination() {
-        return transportDestination;
-    }
-
-    public void setTransportDestination(TransportDestination transportDestination) {
-        this.transportDestination = transportDestination;
-    }
+ //   public TransportDestination getTransportDestination() {
+//        return transportDestination;
+//    }
+//
+//    public void setTransportDestination(TransportDestination transportDestination) {
+//        this.transportDestination = transportDestination;
+//    }
 
     public Product getProduct() {
         return product;

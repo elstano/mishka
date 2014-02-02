@@ -9,7 +9,7 @@ import java.sql.Date;
 
 @Entity
 @Table(name = TableName.PLANT_CONTAINERS)
-public class PlantContainers {
+public class PlantContainer {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)

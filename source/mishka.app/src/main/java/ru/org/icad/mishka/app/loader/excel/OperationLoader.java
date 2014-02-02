@@ -6,17 +6,17 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.org.icad.mishka.app.model.CastingMachineOperation;
+import ru.org.icad.mishka.app.model.Operation;
 import ru.org.icad.mishka.app.util.ExcelUtil;
 
 import java.util.Collections;
 import java.util.List;
 
-public class CastingMachineOperationLoader implements ExcelLoader<CastingMachineOperation> {
+public class OperationLoader implements ExcelLoader<Operation> {
     private static final Logger LOGGER = LoggerFactory.getLogger(CastHouseLoader.class);
 
     @Override
-    public List<CastingMachineOperation> load(String filePath, String sheetName) {
+    public List<Operation> load(String filePath, String sheetName) {
         XSSFSheet sheet = ExcelUtil.getSheet(filePath, sheetName);
 
         if (sheet == null) {
@@ -25,7 +25,7 @@ public class CastingMachineOperationLoader implements ExcelLoader<CastingMachine
             return Collections.emptyList();
         }
 
-        List<CastingMachineOperation> castingMachineOperations = Lists.newArrayList();
+        List<Operation> operations = Lists.newArrayList();
 
         final int lastRowNum = sheet.getLastRowNum();
         for (int rowCounter = 0; rowCounter <= lastRowNum; rowCounter++) {
@@ -47,13 +47,13 @@ public class CastingMachineOperationLoader implements ExcelLoader<CastingMachine
             final int castingMachineOperationId = Double.valueOf(castingMachineOperationIdCell.getNumericCellValue()).intValue();
             final String type = ExcelUtil.getStringCellValue(row, 1);
 
-            CastingMachineOperation castingMachineOperation = new CastingMachineOperation();
-            castingMachineOperation.setId(castingMachineOperationId);
-            castingMachineOperation.setType(type);
+            Operation operation = new Operation();
+            operation.setId(castingMachineOperationId);
+            operation.setType(type);
 
-            castingMachineOperations.add(castingMachineOperation);
+            operations.add(operation);
         }
 
-        return castingMachineOperations;
+        return operations;
     }
 }

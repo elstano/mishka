@@ -9,8 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = TableName.CM_OPERATION)
-public class CastingMachineOperation {
+@Table(name = TableName.OPERATION)
+public class Operation {
 
     @Id
     @Column(name = ColumnName.OPERATION_ID)
@@ -18,11 +18,11 @@ public class CastingMachineOperation {
     @Column(name = "TYPE")
     private String type;
 
-    public CastingMachineOperation(int id) {
+    public Operation(int id) {
         this.id = id;
     }
 
-    public CastingMachineOperation() {
+    public Operation() {
 
     }
 

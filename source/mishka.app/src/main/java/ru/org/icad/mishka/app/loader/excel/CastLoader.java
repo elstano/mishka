@@ -73,7 +73,7 @@ public class CastLoader implements ExcelLoader<Cast> {
             final int castNumber = ExcelUtil.getIntCellValue(row, 3);
             final int orderId = ExcelUtil.getIntCellValue(row, 4);
             Order order = new Order();
-            order.setId(orderId);
+            order.setId(String.valueOf(orderId));
 
             final int ingotCount = ExcelUtil.getIntCellValue(row, 5);
             final int ingotInBlankCount = ExcelUtil.getIntCellValue(row, 6);

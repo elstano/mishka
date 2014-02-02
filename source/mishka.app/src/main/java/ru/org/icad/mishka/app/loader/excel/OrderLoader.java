@@ -7,6 +7,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.org.icad.mishka.app.model.Order;
+import ru.org.icad.mishka.app.model.Product;
 import ru.org.icad.mishka.app.util.ExcelUtil;
 
 import java.util.Collections;
@@ -32,6 +33,7 @@ public class OrderLoader implements ExcelLoader<Order> {
             Row row = sheet.getRow(rowCounter);
 
             if (row == null) {
+
                 continue;
             }
 
@@ -40,14 +42,16 @@ public class OrderLoader implements ExcelLoader<Order> {
                 continue;
             }
 
-            if (Cell.CELL_TYPE_NUMERIC != orderIdCell.getCellType()) {
+            if (row.getRowNum() == 0) {
                 continue;
             }
 
-            final int orderId = Double.valueOf(orderIdCell.getNumericCellValue()).intValue();
+            final String orderId = orderIdCell.getStringCellValue();
+            final int productId = ExcelUtil.getIntCellValue(row, 7);
 
             Order order = new Order();
             order.setId(orderId);
+            order.setProduct(new Product(productId));
 
             orders.add(order);
         }

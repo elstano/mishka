@@ -5,6 +5,7 @@ public class ColumnName {
     public static final String CU_ID = "CU_ID";
     public static final String ORDER_ID = "ORDER_ID";
     public static final String CH_ID = "CH_ID";
+    public static final String CH_NAME = "CH_NAME";
     public static final String OPERATION_ID = "OPERATION_ID";
     public static final String PLANT_ID = "PLANT_ID";
     public static final String CAST_MACH_ID = "CAST_MACH_ID";
