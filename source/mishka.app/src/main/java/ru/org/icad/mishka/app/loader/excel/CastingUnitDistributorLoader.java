@@ -47,8 +47,8 @@ public class CastingUnitDistributorLoader implements ExcelLoader<CastingUnitDist
 
             final int castingUnitDistributorId
                     = Double.valueOf(castingUnitDistributorIdCell.getNumericCellValue()).intValue();
-            final int numCleans = ExcelUtil.getIntCellValue(row, 1);
-            final int cleanTime = ExcelUtil.getIntCellValue(row, 2);
+            final int numCleans = ExcelUtil.getIntegerCellValue(row, 1);
+            final int cleanTime = ExcelUtil.getIntegerCellValue(row, 2);
 
             CastingUnitDistributor castingUnitDistributor = new CastingUnitDistributor();
             castingUnitDistributor.setId(castingUnitDistributorId);

@@ -46,9 +46,9 @@ public class FilterChangeMarkLoader implements ExcelLoader<FilterChangeMark> {
             }
 
             final int filterId = Double.valueOf(filterIdCell.getNumericCellValue()).intValue();
-            final int markId1 = ExcelUtil.getIntCellValue(row, 1);
-            final int markId2 = ExcelUtil.getIntCellValue(row, 2);
-            final int durationTime = ExcelUtil.getIntCellValue(row, 3);
+            final int markId1 = ExcelUtil.getIntegerCellValue(row, 1);
+            final int markId2 = ExcelUtil.getIntegerCellValue(row, 2);
+            final int durationTime = ExcelUtil.getIntegerCellValue(row, 3);
 
             FilterChangeMark filterChangeMark = new FilterChangeMark();
             filterChangeMark.setFilter(new Filter(filterId));

@@ -44,7 +44,6 @@ public class DbToolDev {
             .put(TableName.HEATER, Heater.class)
             .put(TableName.HOMOGENIZATION_LINE, HomogenizationLine.class)
             .put(TableName.MARK, Mark.class)
-            .put(TableName.MIXER_CLEAN, MixerClean.class)
             .put(TableName.MOULD, Mould.class)
             .put(TableName.MOULD_BLANKS, MouldBlanks.class)
             .put(TableName.CUSTOMER_ORDER, Order.class)

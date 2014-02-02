@@ -47,8 +47,8 @@ public class FilterConsLoader implements ExcelLoader<FilterCons> {
             }
 
             final int castingUnitId = Double.valueOf(castingUnitIdCell.getNumericCellValue()).intValue();
-            final int markId = ExcelUtil.getIntCellValue(row, 1);
-            final int consumption = ExcelUtil.getIntCellValue(row, 1);
+            final int markId = ExcelUtil.getIntegerCellValue(row, 1);
+            final int consumption = ExcelUtil.getIntegerCellValue(row, 1);
 
             FilterCons filterCons = new FilterCons();
             filterCons.setCastingUnit(new CastingUnit(castingUnitId));

@@ -47,9 +47,9 @@ public class CastHouseLoader implements ExcelLoader<CastHouse> {
 
             final int castHouseId = Double.valueOf(castHouseIdCell.getNumericCellValue()).intValue();
             final String castHouseName = ExcelUtil.getStringCellValue(row, 1);
-            final int plantId = ExcelUtil.getIntCellValue(row, 2);
+            final int plantId = ExcelUtil.getIntegerCellValue(row, 2);
             final double ladleTonnageMax = ExcelUtil.getDoubleCellValue(row, 3);
-            final int blankWeightMax = ExcelUtil.getIntCellValue(row, 4);
+            final int blankWeightMax = ExcelUtil.getIntegerCellValue(row, 4);
 
             CastHouse castHouse = new CastHouse();
             castHouse.setId(castHouseId);

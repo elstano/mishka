@@ -17,7 +17,7 @@ public class Filter {
     @JoinColumn(name = ColumnName.CH_ID)
     private CastHouse castHouse;
     @Column(name = "STATE")
-    private int state;
+    private String state;
     @Column(name = "START_CU_ID")
     private int startCastingUnitId;
     @Column(name = "START_HEATER_ID")
@@ -34,6 +34,8 @@ public class Filter {
     private int heatTime;
     @Column(name = "INSTALL_TIME")
     private int installTime;
+    @Column(name = "TYPE")
+    private String type;
 
     public Filter() {
     }
@@ -58,11 +60,11 @@ public class Filter {
         this.castHouse = castHouse;
     }
 
-    public int getState() {
+    public String getState() {
         return state;
     }
 
-    public void setState(int state) {
+    public void setState(String state) {
         this.state = state;
     }
 
@@ -128,6 +130,14 @@ public class Filter {
 
     public void setInstallTime(int installTime) {
         this.installTime = installTime;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     @Override

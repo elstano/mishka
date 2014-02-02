@@ -24,6 +24,13 @@ public class CastingUnitCollector {
     @Column(name = "CLEAN_TIME")
     private int cleanTime;
 
+    public CastingUnitCollector() {
+    }
+
+    public CastingUnitCollector(int id) {
+        this.id = id;
+    }
+
     public int getId() {
         return id;
     }

@@ -1,20 +1,29 @@
 package ru.org.icad.mishka.app.model;
 
+import ru.org.icad.mishka.app.ColumnName;
+import ru.org.icad.mishka.app.TableName;
+
 import javax.persistence.*;
 import java.sql.Date;
 
+@Entity
+@Table(name = TableName.PERIODIC_OPERATION)
 public class PeriodicOperation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     @OneToOne
+    @JoinColumn(name = ColumnName.COLLE_ID)
     private CastingUnitCollector castingUnitCollector;
     @OneToOne
+    @JoinColumn(name = ColumnName.DISTR_ID)
     private CastingUnitDistributor castingUnitDistributor;
     @OneToOne
+    @JoinColumn(name = ColumnName.CAST_MACH_ID)
     private CastingUnitCastingMachine castingUnitCastingMachine;
     @OneToOne
+    @JoinColumn(name = ColumnName.OPERATION_ID)
     private Operation operation;
     @Column(name = "OPERATION_DATE")
     private Date operationDate;

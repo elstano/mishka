@@ -1,6 +1,7 @@
 package ru.org.icad.mishka.app.model;
 
 import org.eclipse.persistence.annotations.Customizer;
+import ru.org.icad.mishka.app.ColumnName;
 import ru.org.icad.mishka.app.OrderCustomizer;
 import ru.org.icad.mishka.app.TableName;
 
@@ -14,7 +15,7 @@ import java.math.BigDecimal;
 public class Plant {
 
     @Id
-    @Column(name = "PLANT_ID")
+    @Column(name = ColumnName.PLANT_ID)
     private int id;
     @Column(name = "PLANT_NAME")
     private String name;

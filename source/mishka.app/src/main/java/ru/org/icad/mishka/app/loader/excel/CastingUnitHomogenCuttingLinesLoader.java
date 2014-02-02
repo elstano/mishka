@@ -47,7 +47,7 @@ public class CastingUnitHomogenCuttingLinesLoader implements ExcelLoader<Casting
             }
 
             final int castingUnitId = Double.valueOf(castingUnitIdCell.getNumericCellValue()).intValue();
-            final int castingUnitHomogenCuttingLineId = ExcelUtil.getIntCellValue(row, 1);
+            final int castingUnitHomogenCuttingLineId = ExcelUtil.getIntegerCellValue(row, 1);
 
             CastingUnitHomogenCuttingLines castingUnitHomogenCuttingLines = new CastingUnitHomogenCuttingLines();
             castingUnitHomogenCuttingLines.setCastingUnit(new CastingUnit(castingUnitId));

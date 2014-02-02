@@ -22,6 +22,13 @@ public class CastingUnitDistributor {
     @Column(name = "CLEAN_TIME")
     private int cleanTime;
 
+    public CastingUnitDistributor() {
+    }
+
+    public CastingUnitDistributor(int id) {
+        this.id = id;
+    }
+
     public int getId() {
         return id;
     }

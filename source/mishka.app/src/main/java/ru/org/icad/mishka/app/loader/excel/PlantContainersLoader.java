@@ -47,8 +47,8 @@ public class PlantContainersLoader implements ExcelLoader<PlantContainer> {
             }
 
             final int containerTypeId = Double.valueOf(containerTypeIdCell.getNumericCellValue()).intValue();
-            final int plantId = ExcelUtil.getIntCellValue(row, 1);
-            final int numContainers = ExcelUtil.getIntCellValue(row, 2);
+            final int plantId = ExcelUtil.getIntegerCellValue(row, 1);
+            final int numContainers = ExcelUtil.getIntegerCellValue(row, 2);
 
             PlantContainer plantContainer = new PlantContainer();
             plantContainer.setContainerType(new ContainerType(containerTypeId));

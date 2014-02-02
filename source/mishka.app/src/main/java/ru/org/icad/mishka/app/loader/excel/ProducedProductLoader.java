@@ -47,9 +47,9 @@ public class ProducedProductLoader implements ExcelLoader<ProducedProduct> {
             }
 
             final int plantId = Double.valueOf(plantIdCell.getNumericCellValue()).intValue();
-            final int productId = ExcelUtil.getIntCellValue(row, 1);
-            final int tonnage = ExcelUtil.getIntCellValue(row, 1);
-            final int length = ExcelUtil.getIntCellValue(row, 1);
+            final int productId = ExcelUtil.getIntegerCellValue(row, 1);
+            final int tonnage = ExcelUtil.getIntegerCellValue(row, 1);
+            final int length = ExcelUtil.getIntegerCellValue(row, 1);
 
             ProducedProduct producedProduct = new ProducedProduct();
             producedProduct.setPlant(new Plant(plantId));

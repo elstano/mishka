@@ -47,7 +47,7 @@ public class CastingUnitFiltersLoader implements ExcelLoader<CastingUnitFilters>
             }
 
             final int castingUnitId = Double.valueOf(castingUnitIdCell.getNumericCellValue()).intValue();
-            final int filterId = ExcelUtil.getIntCellValue(row, 1);
+            final int filterId = ExcelUtil.getIntegerCellValue(row, 1);
 
             CastingUnitFilters castingUnitFilters = new CastingUnitFilters();
             castingUnitFilters.setCastingUnit(new CastingUnit(castingUnitId));

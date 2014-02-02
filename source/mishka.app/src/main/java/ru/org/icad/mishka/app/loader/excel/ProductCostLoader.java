@@ -49,8 +49,8 @@ public class ProductCostLoader implements ExcelLoader<ProductCost> {
             }
 
             final int plantId = Double.valueOf(plantIdCell.getNumericCellValue()).intValue();
-            final int markId = ExcelUtil.getIntCellValue(row, 1);
-            final int formId = ExcelUtil.getIntCellValue(row, 2);
+            final int markId = ExcelUtil.getIntegerCellValue(row, 1);
+            final int formId = ExcelUtil.getIntegerCellValue(row, 2);
             final Date date = ExcelUtil.getDateCellValue(row, 3);
 
             ProductCost productCost = new ProductCost();

@@ -47,7 +47,7 @@ public class OrderLoader implements ExcelLoader<Order> {
             }
 
             final String orderId = orderIdCell.getStringCellValue();
-            final int productId = ExcelUtil.getIntCellValue(row, 7);
+            final int productId = ExcelUtil.getIntegerCellValue(row, 7);
 
             Order order = new Order();
             order.setId(orderId);

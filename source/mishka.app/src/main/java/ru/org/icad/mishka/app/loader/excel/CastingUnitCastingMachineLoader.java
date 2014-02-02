@@ -47,27 +47,15 @@ public class CastingUnitCastingMachineLoader implements ExcelLoader<CastingUnitC
 
             final int castingUnitCastingMachineId
                     = Double.valueOf(castingUnitCastingMachineIdCell.getNumericCellValue()).intValue();
-            final int castingUnitId = ExcelUtil.getIntCellValue(row, 1);
-            final int remouldTime = ExcelUtil.getIntCellValue(row, 2);
-            final int lenghtBlankMax = ExcelUtil.getIntCellValue(row, 3);
-            final int numSnifCleans = ExcelUtil.getIntCellValue(row, 4);
-            final int snifCleanTime = ExcelUtil.getIntCellValue(row, 5);
-            final int numPdbfCleans = ExcelUtil.getIntCellValue(row, 6);
-            final int pdbfCleanTime = ExcelUtil.getIntCellValue(row, 7);
-            final int numCrystChanges = ExcelUtil.getIntCellValue(row, 8);
-            final int crystChangeTime = ExcelUtil.getIntCellValue(row, 9);
+            final int castingUnitId = ExcelUtil.getIntegerCellValue(row, 1);
+            final int remouldTime = ExcelUtil.getIntegerCellValue(row, 2);
+            final int lenghtBlankMax = ExcelUtil.getIntegerCellValue(row, 3);
 
             CastingUnitCastingMachine castingUnitCastingMachine = new CastingUnitCastingMachine();
             castingUnitCastingMachine.setId(castingUnitCastingMachineId);
             castingUnitCastingMachine.setCastingUnit(new CastingUnit(castingUnitId));
             castingUnitCastingMachine.setRemouldTime(remouldTime);
             castingUnitCastingMachine.setLenghtBlankMax(lenghtBlankMax);
-            castingUnitCastingMachine.setNumSnifCleans(numSnifCleans);
-            castingUnitCastingMachine.setSnifCleanTime(snifCleanTime);
-            castingUnitCastingMachine.setNumPdbfCleans(numPdbfCleans);
-            castingUnitCastingMachine.setPdbfCleanTime(pdbfCleanTime);
-            castingUnitCastingMachine.setNumCrystChanges(numCrystChanges);
-            castingUnitCastingMachine.setCrystChangeTime(crystChangeTime);
 
             castingUnitCastingMachines.add(castingUnitCastingMachine);
         }

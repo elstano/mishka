@@ -46,11 +46,11 @@ public class CastingUnitProductChangeLoader implements ExcelLoader<CastingUnitPr
             }
 
             final int castingUnitId = Double.valueOf(castingUnitIdCell.getNumericCellValue()).intValue();
-            final int markId1 = ExcelUtil.getIntCellValue(row, 1);
-            final int markId2 = ExcelUtil.getIntCellValue(row, 2);
-            final int time = ExcelUtil.getIntCellValue(row, 3);
-            final int tonnage = ExcelUtil.getIntCellValue(row, 4);
-            final int cleanNecessity = ExcelUtil.getIntCellValue(row, 5);
+            final int markId1 = ExcelUtil.getIntegerCellValue(row, 1);
+            final int markId2 = ExcelUtil.getIntegerCellValue(row, 2);
+            final int time = ExcelUtil.getIntegerCellValue(row, 3);
+            final int tonnage = ExcelUtil.getIntegerCellValue(row, 4);
+            final int cleanNecessity = ExcelUtil.getIntegerCellValue(row, 5);
 
             CastingUnitProductChange castingUnitProductChange = new CastingUnitProductChange();
             castingUnitProductChange.setCastingUnit(new CastingUnit(castingUnitId));

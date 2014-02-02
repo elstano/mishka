@@ -2,8 +2,6 @@ package ru.org.icad.mishka.app;
 
 public class TableName {
 
-    public static final String CAST_MACH_CLEAN = "CAST_MACH_CLEAN";
-    public static final String PERIODIC_OPERATIONS = "PERIODIC_OPERATIONS";
     public static final String OPERATION = "OPERATION";
     public static final String CASTING_SPEED = "CASTING_SPEED";
     public static final String CASTING_UNIT = "CASTING_UNIT";
@@ -28,7 +26,6 @@ public class TableName {
     public static final String HEATER = "HEATER";
     public static final String HOMOGENIZATION_LINE = "HOMOGENIZATION_LINE";
     public static final String MARK = "MARK";
-    public static final String MIXER_CLEAN = "MIXER_CLEAN";
     public static final String MOULD = "MOULD";
     public static final String MOULD_BLANKS = "MOULD_BLANKS";
     public static final String CUSTOMER_ORDER = "CUSTOMER_ORDER";
@@ -44,6 +41,8 @@ public class TableName {
     public static final String CAST_HOUSE = "CAST_HOUSE";
     public static final String CAST = "CAST";
     public static final String CAST_ELECTROLIZER = "CAST_ELECTROLIZER";
+    public static final String TRANSPORT_LOAD = "TRANSPORT_LOAD";
+    public static final String PERIODIC_OPERATION = "PERIODIC_OPERATION";
 
     private TableName() {
     }

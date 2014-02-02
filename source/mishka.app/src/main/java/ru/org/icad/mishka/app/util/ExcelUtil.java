@@ -1,12 +1,10 @@
 package ru.org.icad.mishka.app.util;
 
 import com.google.common.collect.Lists;
-import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
@@ -66,25 +64,25 @@ public class ExcelUtil {
         return workbook.getSheet(sheetName);
     }
 
-    @NotNull
+    @Nullable
     public static Double getDoubleCellValue(Row row, int columnNumber) {
         final Cell contentCell = row.getCell(columnNumber);
         if (contentCell != null && Cell.CELL_TYPE_NUMERIC == contentCell.getCellType()) {
             return contentCell.getNumericCellValue();
         }
 
-        return NumberUtils.DOUBLE_ZERO;
+        return null;
     }
 
-    @NotNull
-    public static Integer getIntCellValue(Row row, int columnNumber) {
+    @Nullable
+    public static Integer getIntegerCellValue(Row row, int columnNumber) {
         final Double doubleCellValue = getDoubleCellValue(row, columnNumber);
         if (doubleCellValue != null) {
             return doubleCellValue.intValue();
 
         }
 
-        return NumberUtils.INTEGER_ZERO;
+        return null;
     }
 
     @Nullable

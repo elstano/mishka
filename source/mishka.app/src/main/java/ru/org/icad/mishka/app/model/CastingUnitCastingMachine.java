@@ -19,18 +19,6 @@ public class CastingUnitCastingMachine {
     private int remouldTime;
     @Column(name = "LENGHT_BLANK_MAX")
     private int lenghtBlankMax;
-    @Column(name = "NUM_SNIF_CLEANS")
-    private int numSnifCleans;
-    @Column(name = "SNIF_CLEAN_TIME")
-    private int snifCleanTime;
-    @Column(name = "NUM_PDBF_CLEANS")
-    private int numPdbfCleans;
-    @Column(name = "PDBF_CLEAN_TIME")
-    private int pdbfCleanTime;
-    @Column(name = "NUM_CRYST_CHANGES")
-    private int numCrystChanges;
-    @Column(name = "CRYST_CHANGE_TIME")
-    private int crystChangeTime;
 
     public CastingUnitCastingMachine() {
     }
@@ -69,54 +57,6 @@ public class CastingUnitCastingMachine {
 
     public void setLenghtBlankMax(int lenghtBlankMax) {
         this.lenghtBlankMax = lenghtBlankMax;
-    }
-
-    public int getNumSnifCleans() {
-        return numSnifCleans;
-    }
-
-    public void setNumSnifCleans(int numSnifCleans) {
-        this.numSnifCleans = numSnifCleans;
-    }
-
-    public int getSnifCleanTime() {
-        return snifCleanTime;
-    }
-
-    public void setSnifCleanTime(int snifCleanTime) {
-        this.snifCleanTime = snifCleanTime;
-    }
-
-    public int getNumPdbfCleans() {
-        return numPdbfCleans;
-    }
-
-    public void setNumPdbfCleans(int numPdbfCleans) {
-        this.numPdbfCleans = numPdbfCleans;
-    }
-
-    public int getPdbfCleanTime() {
-        return pdbfCleanTime;
-    }
-
-    public void setPdbfCleanTime(int pdbfCleanTime) {
-        this.pdbfCleanTime = pdbfCleanTime;
-    }
-
-    public int getNumCrystChanges() {
-        return numCrystChanges;
-    }
-
-    public void setNumCrystChanges(int numCrystChanges) {
-        this.numCrystChanges = numCrystChanges;
-    }
-
-    public int getCrystChangeTime() {
-        return crystChangeTime;
-    }
-
-    public void setCrystChangeTime(int crystChangeTime) {
-        this.crystChangeTime = crystChangeTime;
     }
 
     @Override

@@ -47,8 +47,8 @@ public class HomogenizationLineLoader implements ExcelLoader<HomogenizationLine>
 
             final int castingUnitHomogenCuttingLineId
                     = Double.valueOf(castingUnitHomogenCuttingLineIdCell.getNumericCellValue()).intValue();
-            final int diameter = ExcelUtil.getIntCellValue(row, 1);
-            final int loadTime = ExcelUtil.getIntCellValue(row, 1);
+            final int diameter = ExcelUtil.getIntegerCellValue(row, 1);
+            final int loadTime = ExcelUtil.getIntegerCellValue(row, 1);
 
             HomogenizationLine homogenizationLine = new HomogenizationLine();
             homogenizationLine.setCastingUnitHomogenCuttingLine(

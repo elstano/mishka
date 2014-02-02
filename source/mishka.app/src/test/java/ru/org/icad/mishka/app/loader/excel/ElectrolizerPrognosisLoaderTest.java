@@ -12,7 +12,7 @@ import static org.testng.Assert.assertTrue;
 public class ElectrolizerPrognosisLoaderTest {
     @Test
     public void testLoad() throws Exception {
-        URL url = ElectrolizerPrognosisLoaderTest.class.getResource("/init/dictionaries/ELECTROLIZER_PROGNOSIS.xlsx");
+        URL url = ElectrolizerPrognosisLoaderTest.class.getResource("/init/dictionaries/excelTables.xlsx");
         String filePath = URLDecoder.decode(url.getPath(), "UTF-8");
 
         ElectrolizerPrognosisLoader electrolizerPrognosisLoader = new ElectrolizerPrognosisLoader();

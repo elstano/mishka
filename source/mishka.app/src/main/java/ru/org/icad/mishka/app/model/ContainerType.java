@@ -17,8 +17,6 @@ public class ContainerType {
     private int id;
     @Column(name = "CONTAINERS_TYPE_NAME")
     private String name;
-    @Column(name = "CAPACITY")
-    private int capacity;
 
     public ContainerType() {
     }
@@ -41,14 +39,6 @@ public class ContainerType {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public int getCapacity() {
-        return capacity;
-    }
-
-    public void setCapacity(int capacity) {
-        this.capacity = capacity;
     }
 
     @Override

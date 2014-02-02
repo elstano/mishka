@@ -17,6 +17,8 @@ public class Mark {
     private int id;
     @Column(name = "MARK_NAME")
     private String name;
+    @Column(name = "PARENT_MARK_ID")
+    private int parentMarkId;
 
     public Mark() {
     }
@@ -39,6 +41,14 @@ public class Mark {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getParentMarkId() {
+        return parentMarkId;
+    }
+
+    public void setParentMarkId(int parentMarkId) {
+        this.parentMarkId = parentMarkId;
     }
 
     @Override

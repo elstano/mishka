@@ -46,15 +46,15 @@ public class ProductLoader implements ExcelLoader<Product> {
 
             final int productId = Double.valueOf(productIdCell.getNumericCellValue()).intValue();
             final String productName = ExcelUtil.getStringCellValue(row, 1);
-            final int plantId = ExcelUtil.getIntCellValue(row, 2);
+            final int plantId = ExcelUtil.getIntegerCellValue(row, 2);
             final String spec = ExcelUtil.getStringCellValue(row, 3);
             final String series = ExcelUtil.getStringCellValue(row, 4);
-            final int markId = ExcelUtil.getIntCellValue(row, 5);
-            final int formId = ExcelUtil.getIntCellValue(row, 6);
-            final int filtrationId = ExcelUtil.getIntCellValue(row, 7);
-//            final int homogenization = ExcelUtil.getIntCellValue(row, 8);
-            final int clipping = ExcelUtil.getIntCellValue(row, 9);
-            final int cob = ExcelUtil.getIntCellValue(row, 10);
+            final int markId = ExcelUtil.getIntegerCellValue(row, 5);
+            final int formId = ExcelUtil.getIntegerCellValue(row, 6);
+            final int filtrationId = ExcelUtil.getIntegerCellValue(row, 7);
+//            final int homogenization = ExcelUtil.getIntegerCellValue(row, 8);
+            final int clipping = ExcelUtil.getIntegerCellValue(row, 9);
+            final int cob = ExcelUtil.getIntegerCellValue(row, 10);
             final double siMin = ExcelUtil.getDoubleCellValue(row, 11);
             final double siMax = ExcelUtil.getDoubleCellValue(row, 12);
             final double feMin = ExcelUtil.getDoubleCellValue(row, 13);
