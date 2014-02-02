@@ -16,6 +16,8 @@ public class CastingUnit {
     private int id;
     @OneToOne
     private CastHouse castHouse;
+    @Column(name = "SCHEME")
+    private int scheme;
     @Column(name = "START_TIME")
     private Date startTime;
     @Column(name = "PREVIOUS_PRODUCT_ID")
@@ -58,6 +60,14 @@ public class CastingUnit {
 
     public void setCastHouse(CastHouse castHouse) {
         this.castHouse = castHouse;
+    }
+
+    public int getScheme() {
+        return scheme;
+    }
+
+    public void setScheme(int scheme) {
+        this.scheme = scheme;
     }
 
     public Date getStartTime() {

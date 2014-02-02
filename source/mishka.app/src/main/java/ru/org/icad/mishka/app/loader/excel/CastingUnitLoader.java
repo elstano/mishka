@@ -8,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.org.icad.mishka.app.model.CastHouse;
 import ru.org.icad.mishka.app.model.CastingUnit;
-import ru.org.icad.mishka.app.model.Mark;
 import ru.org.icad.mishka.app.util.ExcelUtil;
 
 import java.math.BigDecimal;
@@ -50,20 +49,22 @@ public class CastingUnitLoader implements ExcelLoader<CastingUnit> {
 
             final int castingUnitId = Double.valueOf(castingUnitIdCell.getNumericCellValue()).intValue();
             final int castHouseId = ExcelUtil.getIntCellValue(row, 1);
-            final Date date = ExcelUtil.getDateCellValue(row, 2);
-            final int previousProductId = ExcelUtil.getIntCellValue(row, 3);
-            final int ladlePourTimeMax = ExcelUtil.getIntCellValue(row, 4);
-            final BigDecimal cleanCost = ExcelUtil.getBigDecimalCellValue(row, 5);
-            final double feDecrease = ExcelUtil.getDoubleCellValue(row, 6);
-            final double siDecrease = ExcelUtil.getDoubleCellValue(row, 7);
-            final double cuDecrease = ExcelUtil.getDoubleCellValue(row, 8);
-            final double mgDecrease = ExcelUtil.getDoubleCellValue(row, 9);
-            final double mnDecrease = ExcelUtil.getDoubleCellValue(row, 10);
-            final double tiDecrease = ExcelUtil.getDoubleCellValue(row, 11);
+            final int scheme = ExcelUtil.getIntCellValue(row, 2);
+            final Date date = ExcelUtil.getDateCellValue(row, 3);
+            final int previousProductId = ExcelUtil.getIntCellValue(row, 4);
+            final int ladlePourTimeMax = ExcelUtil.getIntCellValue(row, 5);
+            final BigDecimal cleanCost = ExcelUtil.getBigDecimalCellValue(row, 6);
+            final double feDecrease = ExcelUtil.getDoubleCellValue(row, 7);
+            final double siDecrease = ExcelUtil.getDoubleCellValue(row, 8);
+            final double cuDecrease = ExcelUtil.getDoubleCellValue(row, 9);
+            final double mgDecrease = ExcelUtil.getDoubleCellValue(row, 10);
+            final double mnDecrease = ExcelUtil.getDoubleCellValue(row, 11);
+            final double tiDecrease = ExcelUtil.getDoubleCellValue(row, 12);
 
             CastingUnit castingUnit = new CastingUnit();
             castingUnit.setId(castingUnitId);
             castingUnit.setCastHouse(new CastHouse(castHouseId));
+            castingUnit.setScheme(scheme);
             castingUnit.setStartTime(date);
             castingUnit.setPreviousProductId(previousProductId);
             castingUnit.setLadlePourTimeMax(ladlePourTimeMax);
