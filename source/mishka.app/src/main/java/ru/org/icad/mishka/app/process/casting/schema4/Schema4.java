@@ -1,7 +1,7 @@
 package ru.org.icad.mishka.app.process.casting.schema4;
 
 import com.google.common.collect.Queues;
-import ru.org.icad.mishka.app.model.Cast;
+import ru.org.icad.mishka.app.process.casting.CastWrapper;
 import ru.org.icad.mishka.app.process.casting.Operation;
 import ru.org.icad.mishka.app.process.casting.Schema;
 import ru.org.icad.mishka.app.process.casting.schema3.operation.PrepareMixerOperation;
@@ -12,7 +12,7 @@ import java.util.Queue;
 
 public class Schema4 implements Schema {
 
-    private static final Queue<Cast> CASTS = Queues.newSynchronousQueue();
+    private static final Queue<CastWrapper> CAST_WRAPPERS = Queues.newSynchronousQueue();
 
     @Override
     public List<? extends Operation> getInitOperations() {
@@ -20,7 +20,14 @@ public class Schema4 implements Schema {
     }
 
     @Override
-    public void addToSchemeCasts(Cast cast) {
+    public void addToSchemeCasts(CastWrapper castWrapper) {
+        CAST_WRAPPERS.add(castWrapper);
 
     }
+
+    @Override
+    public Queue<CastWrapper> getQueueCastWrapper() {
+        return CAST_WRAPPERS;
+    }
+
 }

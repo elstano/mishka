@@ -7,14 +7,6 @@ import java.sql.Date;
 
 public class PrepareCmOneOperation extends Operation {
 
-    public PrepareCmOneOperation() {
-    }
-
-    @Override
-    public void init(CastWrapper castWrapper) {
-
-    }
-
     @Override
     public boolean activate() {
 //        Operation castCmOneOperation = this.getSchema().getOperationMap().get(OperationName.CAST_CM_ONE_OPERATION);

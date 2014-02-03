@@ -1,5 +1,6 @@
 package ru.org.icad.mishka.app.process.casting;
 
+import com.google.common.collect.Queues;
 import ru.org.icad.mishka.app.model.Cast;
 
 import java.util.List;
@@ -10,5 +11,7 @@ public interface Schema {
 
     public List<? extends Operation> getInitOperations();
 
-    public void addToSchemeCasts(Cast cast);
+    public void addToSchemeCasts(CastWrapper castWrapper);
+
+    public Queue<CastWrapper> getQueueCastWrapper();
 }

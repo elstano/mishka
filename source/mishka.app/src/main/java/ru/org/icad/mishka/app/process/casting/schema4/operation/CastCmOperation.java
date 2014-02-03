@@ -8,11 +8,6 @@ import java.sql.Date;
 public class CastCmOperation extends Operation {
 
     @Override
-    public void init(CastWrapper castWrapper) {
-
-    }
-
-    @Override
     public boolean activate() {
         return false;
     }

@@ -6,10 +6,6 @@ import ru.org.icad.mishka.app.process.casting.Operation;
 import java.sql.Date;
 
 public class PeriodicCMOperation extends Operation {
-    @Override
-    public void init(CastWrapper castWrapper) {
-
-    }
 
     @Override
     public boolean activate() {

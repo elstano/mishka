@@ -7,10 +7,6 @@ import java.sql.Date;
 
 public class CleanMixerOperation extends Operation {
 
-    @Override
-    public void init(CastWrapper castWrapper) {
-
-    }
 
     @Override
     public boolean activate() {

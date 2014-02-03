@@ -4,6 +4,8 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import org.jetbrains.annotations.Nullable;
 import ru.org.icad.mishka.app.model.Cast;
+import ru.org.icad.mishka.app.process.casting.CastWrapper;
+import ru.org.icad.mishka.app.process.casting.Operation;
 import ru.org.icad.mishka.app.process.casting.Schema;
 import ru.org.icad.mishka.app.process.casting.schema1_2.Schema1_2;
 import ru.org.icad.mishka.app.process.casting.schema3.Schema3;
@@ -53,8 +55,15 @@ public class CastingDev {
         }
 
         for (Cast cast : casts) {
-        Schema schema = CAST_UNIT_SCHEMA_MAP.get(cast.getCastingUnit().getId());
-            schema.addToSchemeCasts(cast);
+            Schema schema = CAST_UNIT_SCHEMA_MAP.get(cast.getCastingUnit().getId());
+            schema.addToSchemeCasts(new CastWrapper(cast));
+        }
+
+        for (Schema schema : CAST_UNIT_SCHEMA_MAP.values()) {
+            final Operation operation = schema.getInitOperations().iterator().next();
+            operation.init(schema.getQueueCastWrapper());
+
+            operation.activate();
         }
 
     }

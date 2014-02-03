@@ -1,6 +1,7 @@
 package ru.org.icad.mishka.app.process.casting;
 
 import java.sql.Date;
+import java.util.Queue;
 
 public abstract class Operation {
 
@@ -8,6 +9,7 @@ public abstract class Operation {
     private int activationCount;
     private int activationMaxCount;
     private Date activationDate;
+    private Queue<CastWrapper> castWrappers;
 
     public int getCastId() {
         return castId;
@@ -41,7 +43,9 @@ public abstract class Operation {
         this.activationDate = activationDate;
     }
 
-    public abstract void init(CastWrapper castWrapper);
+    public void init(Queue<CastWrapper> castWrappers) {
+        this.castWrappers = castWrappers;
+    }
 
     public abstract boolean activate();
 
