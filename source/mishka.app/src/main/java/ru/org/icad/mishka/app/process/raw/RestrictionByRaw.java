@@ -31,7 +31,7 @@ public class RestrictionByRaw {
 
         for (Map.Entry<Cast, List<ElectrolizerPrognosis>> entry : currentCastMap.entrySet()) {
             Cast currentCast = entry.getKey();
-            int castCapacity = currentCast.getOrder().getTonnage();
+            int castCapacity = currentCast.getCustomerOrder().getTonnage();
             int electrolyzersCapacity = 0;
 
             List<ElectrolizerPrognosis> electrolyzerList = entry.getValue();
@@ -93,7 +93,7 @@ public class RestrictionByRaw {
 
         for (Cast cast : casts) {
             List<ElectrolizerPrognosis> suitableElectrolyzers = Lists.newArrayList();
-            final Product product = cast.getOrder().getProduct();
+            final Product product = cast.getCustomerOrder().getProduct();
 
             for (ElectrolizerPrognosis electrolyzer : electrolyzers) {
                 if (product.isSuit(electrolyzer)) {
@@ -117,7 +117,7 @@ public class RestrictionByRaw {
             List<Cast> suitableCasts = Lists.newArrayList();
 
             for (Cast cast : casts) {
-                if (!electrolyzer.isSuit(cast.getOrder().getProduct())) {
+                if (!electrolyzer.isSuit(cast.getCustomerOrder().getProduct())) {
                     suitableCasts.add(cast);
                 }
             }
