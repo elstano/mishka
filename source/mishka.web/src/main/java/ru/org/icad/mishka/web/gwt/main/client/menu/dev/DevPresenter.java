@@ -80,6 +80,22 @@ public class DevPresenter implements OptionPresenter {
                             }
                         });
 
+                        Button cleanCastButton = new Button("Очистить таблицу ходок");
+                        cleanCastButton.addClickHandler(new ClickHandler() {
+                            @Override
+                            public void onClick(ClickEvent clickEvent) {
+                                devServiceAsync.cleanTable(TableName.CAST, new AsyncCallback<Void>() {
+                                    @Override
+                                    public void onFailure(Throwable throwable) {
+                                    }
+
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                    }
+                                });
+                            }
+                        });
+
                         Button showResultRestriction = new Button("Показать результат расчета");
                         showResultRestriction.addClickHandler(new ClickHandler() {
                             @Override
@@ -102,8 +118,27 @@ public class DevPresenter implements OptionPresenter {
                             }
                         });
 
+                        Button cleanCastElectrolizerButton = new Button("Очистить таблицу результата");
+                        cleanCastElectrolizerButton.addClickHandler(new ClickHandler() {
+                            @Override
+                            public void onClick(ClickEvent clickEvent) {
+                                devServiceAsync.cleanTable(TableName.CAST_ELECTROLIZER, new AsyncCallback<Void>() {
+                                    @Override
+                                    public void onFailure(Throwable throwable) {
+                                    }
+
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                    }
+                                });
+                            }
+                        });
+
                         verticalPanel.add(startCalcRestriction);
+                        verticalPanel.add(cleanCastButton);
                         verticalPanel.add(showResultRestriction);
+                        verticalPanel.add(cleanCastElectrolizerButton);
+
 
                         popupPanel.add(verticalPanel);
                         popupPanel.setPopupPositionAndShow(new PopupPanel.PositionCallback() {

@@ -58,6 +58,7 @@ public class DbToolDev {
             .put(TableName.PLANT, Plant.class)
             .put(TableName.CAST_HOUSE, CastHouse.class)
             .put(TableName.CAST, Cast.class)
+            .put(TableName.CAST_ELECTROLIZER, CastElectrolizer.class)
             .put(TableName.PERIODIC_OPERATION, PeriodicOperation.class)
             .put(TableName.TRANSPORT_LOAD, TransportLoad.class)
             .build();
@@ -81,6 +82,7 @@ public class DbToolDev {
     public String getTableContent(String tableName) {
         List objects = Collections.emptyList();
 
+        final long startTime = System.currentTimeMillis();
         try {
             UserTransaction transaction = (UserTransaction) new InitialContext().lookup("java:comp/UserTransaction");
             transaction.begin();
@@ -95,7 +97,7 @@ public class DbToolDev {
         } catch (Exception e) {
             LOGGER.error("Can't get table:" + tableName, e);
         }
-
+        LOGGER.info("Load table "+ tableName + " time: "+ (System.currentTimeMillis() - startTime));
 
         if (objects.isEmpty()) {
             return "<table><tr><td>Table is empty</td></tr></table>";
@@ -118,7 +120,6 @@ public class DbToolDev {
             transaction.begin();
             EntityManagerFactory emf = Persistence.createEntityManagerFactory("MishkaService");
             EntityManager em = emf.createEntityManager();
-            transaction.begin();
 
             Query query = em.createNativeQuery("DELETE FROM " + tableName);
             query.executeUpdate();

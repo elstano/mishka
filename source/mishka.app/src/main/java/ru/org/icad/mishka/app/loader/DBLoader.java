@@ -69,7 +69,9 @@ public class DBLoader {
         for (String sheetName : sheetNames) {
             ExcelLoader excelLoader = EXCEL_LOADER_MAP.get(sheetName);
             if (excelLoader != null) {
+                final long startTime = System.currentTimeMillis();
                 saveOrUpdate(excelLoader.load(filePath, sheetName));
+                LOGGER.info("Save or update table " + sheetName + " time: " + (System.currentTimeMillis() - startTime));
             }
         }
 

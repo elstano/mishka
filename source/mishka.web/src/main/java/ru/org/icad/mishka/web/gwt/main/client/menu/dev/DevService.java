@@ -12,5 +12,7 @@ public interface DevService extends RemoteService {
 
     String getTableContent(String tableName);
 
+    void cleanTable(String tableName);
+
     void restrictionProcess();
 }

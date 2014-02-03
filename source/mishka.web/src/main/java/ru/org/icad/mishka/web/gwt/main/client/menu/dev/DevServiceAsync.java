@@ -11,4 +11,6 @@ public interface DevServiceAsync {
     void getTableContent(String tableName, AsyncCallback<String> async);
 
     void restrictionProcess(AsyncCallback<Void> async);
+
+    void cleanTable(String tableName, AsyncCallback<Void> async);
 }
