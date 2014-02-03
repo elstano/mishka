@@ -1,6 +1,7 @@
 package ru.org.icad.mishka.web.gwt.main.server.dev;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import ru.org.icad.mishka.app.dev.CastingDev;
 import ru.org.icad.mishka.app.dev.DbToolDev;
 import ru.org.icad.mishka.app.dev.RestrictionDev;
 import ru.org.icad.mishka.web.gwt.main.client.menu.dev.DevService;
@@ -36,5 +37,12 @@ public class DevServiceImp extends RemoteServiceServlet implements DevService {
         RestrictionDev restrictionDev = new RestrictionDev();
 
         restrictionDev.restrictionProcess();
+    }
+
+    @Override
+    public void castingProcess() {
+        CastingDev castingDev = new CastingDev();
+
+        castingDev.castingProcess();
     }
 }

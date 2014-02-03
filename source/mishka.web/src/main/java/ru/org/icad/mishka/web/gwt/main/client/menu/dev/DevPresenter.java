@@ -171,6 +171,22 @@ public class DevPresenter implements OptionPresenter {
                         VerticalPanel verticalPanel = new VerticalPanel();
 
                         Button startCalcCasting = new Button("Начать расчет");
+                        startCalcCasting.addClickHandler(new ClickHandler() {
+                            @Override
+                            public void onClick(ClickEvent clickEvent) {
+                                devServiceAsync.castingProcess(new AsyncCallback<Void>() {
+                                    @Override
+                                    public void onFailure(Throwable throwable) {
+                                    }
+
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                    }
+                                });
+                            }
+                        });
+
+
                         Button showResultCasting = new Button("Показать результат расчета");
                         showResultCasting.addClickHandler(new ClickHandler() {
                             @Override

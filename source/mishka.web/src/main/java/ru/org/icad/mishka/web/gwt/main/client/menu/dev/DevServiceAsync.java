@@ -13,4 +13,6 @@ public interface DevServiceAsync {
     void restrictionProcess(AsyncCallback<Void> async);
 
     void cleanTable(String tableName, AsyncCallback<Void> async);
+
+    void castingProcess(AsyncCallback<Void> async);
 }
