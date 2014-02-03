@@ -55,8 +55,8 @@ public class PlantLoader implements ExcelLoader<Plant> {
             plant.setId(plantId);
             plant.setName(plantName);
             plant.setPremiumA7(premiumA7);
-            plant.setClipAddCost(clipAddCost);
-            plant.setClipMeltLoss(clipMeltLoss);
+            plant.setAddCost(clipAddCost);
+            plant.setMeltLoss(clipMeltLoss);
 
             plants.add(plant);
         }

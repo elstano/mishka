@@ -18,7 +18,7 @@ public class Mould {
     @Column(name = "CH_ID")
     private int castHouseId;
     @Column(name = "START_CAST_MACH_ID")
-    private int startCastMachId;
+    private Integer startCastMachId;
     @Column(name = "FORM_ID")
     private int formId;
     @Column(name = "WIDTH")
@@ -28,13 +28,13 @@ public class Mould {
     @Column(name = "DIAMETER")
     private int diameter;
     @Column(name = "RESOURCE_CURRENT")
-    private int resource;
+    private Integer resource;
     @Column(name = "RESOURCE_MAX")
-    private int resourceMax;
+    private Integer resourceMax;
     @Column(name = "PREPARE_TIME")
-    private int prepareTime;
+    private Integer prepareTime;
     @Column(name = "NUM_BLANKS_MAX")
-    private int numBlanksMax;
+    private Integer numBlanksMax;
 
     public Mould() {
     }
@@ -59,11 +59,11 @@ public class Mould {
         this.castHouseId = castHouseId;
     }
 
-    public int getStartCastMachId() {
+    public Integer getStartCastMachId() {
         return startCastMachId;
     }
 
-    public void setStartCastMachId(int startCastMachId) {
+    public void setStartCastMachId(Integer startCastMachId) {
         this.startCastMachId = startCastMachId;
     }
 
@@ -99,35 +99,35 @@ public class Mould {
         this.diameter = diameter;
     }
 
-    public int getResource() {
+    public Integer getResource() {
         return resource;
     }
 
-    public void setResource(int resource) {
+    public void setResource(Integer resource) {
         this.resource = resource;
     }
 
-    public int getResourceMax() {
+    public Integer getResourceMax() {
         return resourceMax;
     }
 
-    public void setResourceMax(int resourceMax) {
+    public void setResourceMax(Integer resourceMax) {
         this.resourceMax = resourceMax;
     }
 
-    public int getPrepareTime() {
+    public Integer getPrepareTime() {
         return prepareTime;
     }
 
-    public void setPrepareTime(int prepareTime) {
+    public void setPrepareTime(Integer prepareTime) {
         this.prepareTime = prepareTime;
     }
 
-    public int getNumBlanksMax() {
+    public Integer getNumBlanksMax() {
         return numBlanksMax;
     }
 
-    public void setNumBlanksMax(int numBlanksMax) {
+    public void setNumBlanksMax(Integer numBlanksMax) {
         this.numBlanksMax = numBlanksMax;
     }
 

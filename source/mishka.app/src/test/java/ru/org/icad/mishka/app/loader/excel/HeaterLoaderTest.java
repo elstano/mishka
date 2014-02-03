@@ -14,7 +14,7 @@ public class HeaterLoaderTest {
 
     @Test
     public void testLoad() throws Exception {
-        URL url = HeaterLoaderTest.class.getResource("/init/dictionaries/" + TableName.HEATER + ".xlsx");
+        URL url = HeaterLoaderTest.class.getResource("/init/dictionaries/excelTables.xlsx");
         String filePath = URLDecoder.decode(url.getPath(), "UTF-8");
 
         HeaterLoader heaterLoader = new HeaterLoader();

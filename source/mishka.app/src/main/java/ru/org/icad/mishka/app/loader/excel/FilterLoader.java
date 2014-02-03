@@ -47,15 +47,16 @@ public class FilterLoader implements ExcelLoader<Filter> {
             }
 
             final int filterId = Double.valueOf(filterIdCell.getNumericCellValue()).intValue();
-            final int castHouseId = ExcelUtil.getIntCellValue(row, 1);
-            final int state = ExcelUtil.getIntCellValue(row, 2);
-            final int startCastingUnitId = ExcelUtil.getIntCellValue(row, 3);
-            final int startHeaterId = ExcelUtil.getIntCellValue(row, 4);
+            final int castHouseId = ExcelUtil.getIntegerCellValue(row, 1);
+            final String state = ExcelUtil.getStringCellValue(row, 2);
+            final Integer startCastingUnitId = ExcelUtil.getIntegerCellValue(row, 3);
+            final Integer startHeaterId = ExcelUtil.getIntegerCellValue(row, 4);
             final Date startTime = ExcelUtil.getDateCellValue(row, 5);
-            final int resource = ExcelUtil.getIntCellValue(row, 6);
-            final int resourceOver = ExcelUtil.getIntCellValue(row, 7);
-            final int heatTime = ExcelUtil.getIntCellValue(row, 8);
-            final int installTime = ExcelUtil.getIntCellValue(row, 9);
+            final int resource = ExcelUtil.getIntegerCellValue(row, 6);
+            final int resourceOver = ExcelUtil.getIntegerCellValue(row, 7);
+            final int heatTime = ExcelUtil.getIntegerCellValue(row, 8);
+            final int installTime = ExcelUtil.getIntegerCellValue(row, 9);
+            final String type = ExcelUtil.getStringCellValue(row, 10);
 
             Filter filter = new Filter();
             filter.setId(filterId);
@@ -68,6 +69,7 @@ public class FilterLoader implements ExcelLoader<Filter> {
             filter.setResourceOver(resourceOver);
             filter.setHeatTime(heatTime);
             filter.setInstallTime(installTime);
+            filter.setType(type);
 
             filters.add(filter);
         }

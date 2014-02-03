@@ -19,7 +19,7 @@ public class ElectrolizerPrognosis {
     @JoinColumn(name = ColumnName.CH_ID)
     private CastHouse castHouse;
     @Column(name = "PROGNOS_DATE")
-    private Date date;
+    private Date prognosDate;
     @Column(name = "SHIFT")
     private int shift;
     @Column(name = "TONNAGE")
@@ -61,12 +61,12 @@ public class ElectrolizerPrognosis {
         this.castHouse = castHouse;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getPrognosDate() {
+        return prognosDate;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setPrognosDate(Date date) {
+        this.prognosDate = date;
     }
 
     public int getShift() {

@@ -18,8 +18,6 @@ public class CuttingLine {
     private CastingUnitHomogenCuttingLine castingUnitHomogenCuttingLine;
     @Column(name = "DIAMETER")
     private int diameter;
-    @Column(name = "LENGTH")
-    private int length;
     @Column(name = "SPEED")
     private int speed;
 
@@ -45,14 +43,6 @@ public class CuttingLine {
 
     public void setDiameter(int diameter) {
         this.diameter = diameter;
-    }
-
-    public int getLength() {
-        return length;
-    }
-
-    public void setLength(int length) {
-        this.length = length;
     }
 
     public int getSpeed() {

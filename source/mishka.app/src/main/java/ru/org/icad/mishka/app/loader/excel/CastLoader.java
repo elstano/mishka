@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import ru.org.icad.mishka.app.util.ExcelUtil;
 import ru.org.icad.mishka.app.model.Cast;
 import ru.org.icad.mishka.app.model.CastingUnit;
-import ru.org.icad.mishka.app.model.Order;
+import ru.org.icad.mishka.app.model.CustomerOrder;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -69,22 +69,21 @@ public class CastLoader implements ExcelLoader<Cast> {
             castingUnit.setId(castingUnitId);
 
             final Date date = ExcelUtil.getDateCellValue(row, 1);
-            final int shift = ExcelUtil.getIntCellValue(row, 2);
-            final int castNumber = ExcelUtil.getIntCellValue(row, 3);
-            final int orderId = ExcelUtil.getIntCellValue(row, 4);
-            Order order = new Order();
-            order.setId(orderId);
+            final int shift = ExcelUtil.getIntegerCellValue(row, 2);
+            final int castNumber = ExcelUtil.getIntegerCellValue(row, 3);
+            final int orderId = ExcelUtil.getIntegerCellValue(row, 4);
+            CustomerOrder customerOrder = new CustomerOrder();
+            customerOrder.setId(String.valueOf(orderId));
 
-            final int ingotCount = ExcelUtil.getIntCellValue(row, 5);
-            final int ingotInBlankCount = ExcelUtil.getIntCellValue(row, 6);
-
+            final int ingotCount = ExcelUtil.getIntegerCellValue(row, 5);
+            final int ingotInBlankCount = ExcelUtil.getIntegerCellValue(row, 6);
 
             Cast cast = new Cast();
             cast.setCastingUnit(castingUnit);
-            cast.setDate(date);
+            cast.setCastDate(date);
             cast.setShift(shift);
             cast.setCastNumber(castNumber);
-            cast.setOrder(order);
+            cast.setCustomerOrder(customerOrder);
             cast.setIngotCount(ingotCount);
             cast.setIngotInBlankCount(ingotInBlankCount);
 

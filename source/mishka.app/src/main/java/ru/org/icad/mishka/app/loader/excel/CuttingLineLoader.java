@@ -36,24 +36,22 @@ public class CuttingLineLoader implements ExcelLoader<CuttingLine> {
                 continue;
             }
 
-            Cell diameterCell = row.getCell(0);
-            if (diameterCell == null) {
+            Cell orderIdCell = row.getCell(0);
+            if (orderIdCell == null) {
                 continue;
             }
 
-            if (Cell.CELL_TYPE_NUMERIC != diameterCell.getCellType()) {
+            if (row.getRowNum() == 0) {
                 continue;
             }
 
-            final int diameter = Double.valueOf(diameterCell.getNumericCellValue()).intValue();
-            final int length = ExcelUtil.getIntCellValue(row, 1);
-            final int speed = ExcelUtil.getIntCellValue(row, 2);
-            final int castingUnitHomogenCuttingLineId = ExcelUtil.getIntCellValue(row, 3);
+            final int castingUnitHomogenCuttingLineId = ExcelUtil.getIntegerCellValue(row, 0);
+            final int diameter = ExcelUtil.getIntegerCellValue(row, 1);
+            final int speed = ExcelUtil.getIntegerCellValue(row, 2);
 
             CuttingLine cuttingLine = new CuttingLine();
             cuttingLine.setCastingUnitHomogenCuttingLine(new CastingUnitHomogenCuttingLine(castingUnitHomogenCuttingLineId));
             cuttingLine.setDiameter(diameter);
-            cuttingLine.setLength(length);
             cuttingLine.setSpeed(speed);
 
             cuttingLines.add(cuttingLine);

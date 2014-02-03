@@ -26,8 +26,8 @@ public class PlantService {
     ) {
         Plant plant = new Plant(id);
         plant.setName(name);
-        plant.setClipAddCost(clipAddCost);
-        plant.setClipMeltLoss(clipMeltLoss);
+        plant.setAddCost(clipAddCost);
+        plant.setMeltLoss(clipMeltLoss);
         plant.setPremiumA7(premiumA7);
 
         entityManager.persist(plant);

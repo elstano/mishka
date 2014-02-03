@@ -46,19 +46,31 @@ public class CastingUnitProductChangeLoader implements ExcelLoader<CastingUnitPr
             }
 
             final int castingUnitId = Double.valueOf(castingUnitIdCell.getNumericCellValue()).intValue();
-            final int markId1 = ExcelUtil.getIntCellValue(row, 1);
-            final int markId2 = ExcelUtil.getIntCellValue(row, 2);
-            final int time = ExcelUtil.getIntCellValue(row, 3);
-            final int tonnage = ExcelUtil.getIntCellValue(row, 4);
-            final int cleanNecessity = ExcelUtil.getIntCellValue(row, 5);
+            final int markId1 = ExcelUtil.getIntegerCellValue(row, 1);
+            final int markId2 = ExcelUtil.getIntegerCellValue(row, 2);
+            final Integer tonnage = ExcelUtil.getIntegerCellValue(row, 3);
+            final String cleanNecessity = ExcelUtil.getStringCellValue(row, 4);
+            final Integer timePrepareCollector = ExcelUtil.getIntegerCellValue(row, 5);
+            final Integer timePourCollectorDistributor = ExcelUtil.getIntegerCellValue(row, 6);
+            final Integer timePrepareDistributor = ExcelUtil.getIntegerCellValue(row, 7);
+            final Integer timePrepareCastingMachine = ExcelUtil.getIntegerCellValue(row, 8);
+            final Integer timeCast = ExcelUtil.getIntegerCellValue(row, 9);
+            final Integer timePourCollectorTwo = ExcelUtil.getIntegerCellValue(row, 10);
+            final Integer timePrepareCollectorTwo = ExcelUtil.getIntegerCellValue(row, 11);
 
             CastingUnitProductChange castingUnitProductChange = new CastingUnitProductChange();
             castingUnitProductChange.setCastingUnit(new CastingUnit(castingUnitId));
             castingUnitProductChange.setMarkId1(markId1);
             castingUnitProductChange.setMarkId2(markId2);
-            castingUnitProductChange.setTime(time);
             castingUnitProductChange.setTonnage(tonnage);
             castingUnitProductChange.setCleanNecessity(cleanNecessity);
+            castingUnitProductChange.setTimePrepareCollector(timePrepareCollector);
+            castingUnitProductChange.setTimePourCollectorDistributor(timePourCollectorDistributor);
+            castingUnitProductChange.setTimePrepareDistributor(timePrepareDistributor);
+            castingUnitProductChange.setTimePrepareCastingMachine(timePrepareCastingMachine);
+            castingUnitProductChange.setTimeCast(timeCast);
+            castingUnitProductChange.setTimePourCollectorTwo(timePourCollectorTwo);
+            castingUnitProductChange.setTimePrepareCollectorTwo(timePrepareCollectorTwo);
 
             castingUnitProductChanges.add(castingUnitProductChange);
         }

@@ -13,7 +13,7 @@ import static org.testng.Assert.assertTrue;
 public class MarkLoaderTest {
     @Test
     public void testLoad() throws Exception {
-        URL url = MarkLoaderTest.class.getResource("/init/dictionaries/MARK.xlsx");
+        URL url = MarkLoaderTest.class.getResource("/init/dictionaries/excelTables.xlsx");
         String filePath = URLDecoder.decode(url.getPath(), "UTF-8");
 
         MarkLoader markLoader = new MarkLoader();

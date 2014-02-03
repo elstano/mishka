@@ -13,7 +13,7 @@ public class CastHouseLoaderTest {
 
     @Test
     public void testLoad() throws Exception {
-        URL url = MarkLoaderTest.class.getResource("/init/dictionaries/CAST_HOUSE.xlsx");
+        URL url = MarkLoaderTest.class.getResource("/init/dictionaries/excelTables.xlsx");
         String filePath = URLDecoder.decode(url.getPath(), "UTF-8");
 
         CastHouseLoader castHouseLoader = new CastHouseLoader();

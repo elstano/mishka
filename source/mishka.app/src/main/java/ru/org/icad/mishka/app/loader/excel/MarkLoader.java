@@ -46,11 +46,12 @@ public class MarkLoader implements ExcelLoader<Mark> {
 
             final int markId = Double.valueOf(markIdCell.getNumericCellValue()).intValue();
             final String markName = ExcelUtil.getStringCellValue(row, 1);
-
+            final Integer parentMarkId = ExcelUtil.getIntegerCellValue(row, 2);
 
             Mark mark = new Mark();
             mark.setId(markId);
             mark.setName(markName);
+            mark.setParentMarkId(parentMarkId);
 
             marks.add(mark);
         }

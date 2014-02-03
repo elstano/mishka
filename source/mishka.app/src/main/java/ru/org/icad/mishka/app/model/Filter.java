@@ -17,11 +17,11 @@ public class Filter {
     @JoinColumn(name = ColumnName.CH_ID)
     private CastHouse castHouse;
     @Column(name = "STATE")
-    private int state;
+    private String state;
     @Column(name = "START_CU_ID")
-    private int startCastingUnitId;
+    private Integer startCastingUnitId;
     @Column(name = "START_HEATER_ID")
-    private int startHeaterId;
+    private Integer startHeaterId;
     @Column(name = "START_TIME")
     private Date startTime;
     @Column(name = "RESOURCE_CURRENT")
@@ -34,6 +34,8 @@ public class Filter {
     private int heatTime;
     @Column(name = "INSTALL_TIME")
     private int installTime;
+    @Column(name = "TYPE")
+    private String type;
 
     public Filter() {
     }
@@ -58,27 +60,27 @@ public class Filter {
         this.castHouse = castHouse;
     }
 
-    public int getState() {
+    public String getState() {
         return state;
     }
 
-    public void setState(int state) {
+    public void setState(String state) {
         this.state = state;
     }
 
-    public int getStartCastingUnitId() {
+    public Integer getStartCastingUnitId() {
         return startCastingUnitId;
     }
 
-    public void setStartCastingUnitId(int startCastingUnitId) {
+    public void setStartCastingUnitId(Integer startCastingUnitId) {
         this.startCastingUnitId = startCastingUnitId;
     }
 
-    public int getStartHeaterId() {
+    public Integer getStartHeaterId() {
         return startHeaterId;
     }
 
-    public void setStartHeaterId(int startHeaterId) {
+    public void setStartHeaterId(Integer startHeaterId) {
         this.startHeaterId = startHeaterId;
     }
 
@@ -128,6 +130,14 @@ public class Filter {
 
     public void setInstallTime(int installTime) {
         this.installTime = installTime;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     @Override

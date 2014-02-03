@@ -10,7 +10,6 @@ import ru.org.icad.mishka.app.model.*;
 import ru.org.icad.mishka.app.util.ExcelUtil;
 
 import java.math.BigDecimal;
-import java.sql.Date;
 import java.util.Collections;
 import java.util.List;
 
@@ -47,9 +46,9 @@ public class TransportCostLoader implements ExcelLoader<TransportCost> {
             }
 
             final int plantId = Double.valueOf(plantIdCell.getNumericCellValue()).intValue();
-            final int transportDestinationId = ExcelUtil.getIntCellValue(row, 1);
-            final int  containerTypeId = ExcelUtil.getIntCellValue(row, 2);
-            final int formId = ExcelUtil.getIntCellValue(row, 3);
+            final int transportDestinationId = ExcelUtil.getIntegerCellValue(row, 1);
+            final int  containerTypeId = ExcelUtil.getIntegerCellValue(row, 2);
+            final int formId = ExcelUtil.getIntegerCellValue(row, 3);
             final BigDecimal cost = ExcelUtil.getBigDecimalCellValue(row, 4);
 
             TransportCost transportCost = new TransportCost();

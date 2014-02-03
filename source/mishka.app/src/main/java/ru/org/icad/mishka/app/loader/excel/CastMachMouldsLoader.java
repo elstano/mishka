@@ -49,7 +49,7 @@ public class CastMachMouldsLoader implements ExcelLoader<CastMachMoulds> {
 
             final int castMachId
                     = Double.valueOf(castMachIdCell.getNumericCellValue()).intValue();
-            final int mouldId = ExcelUtil.getIntCellValue(row, 1);
+            final int mouldId = ExcelUtil.getIntegerCellValue(row, 1);
 
 
             CastMachMoulds castMachMoulds = new CastMachMoulds();

@@ -1,6 +1,8 @@
 package ru.org.icad.mishka.app.loader;
 
 import com.google.common.collect.ImmutableMap;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.org.icad.mishka.app.TableName;
 import ru.org.icad.mishka.app.loader.excel.*;
 import ru.org.icad.mishka.app.util.ExcelUtil;
@@ -8,6 +10,7 @@ import ru.org.icad.mishka.app.util.ExcelUtil;
 import javax.naming.InitialContext;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.transaction.UserTransaction;
 import java.io.File;
@@ -15,10 +18,10 @@ import java.util.List;
 import java.util.Map;
 
 public class DBLoader {
+    private static final Logger LOGGER = LoggerFactory.getLogger(DBLoader.class);
 
     private static final Map<String, ExcelLoader> EXCEL_LOADER_MAP = ImmutableMap.<String, ExcelLoader>builder()
-            .put(TableName.CAST_MACH_CLEAN, new CastingMachineCleanLoader())
-            .put(TableName.CM_OPERATION, new CastingMachineOperationLoader())
+            .put(TableName.OPERATION, new OperationLoader())
             .put(TableName.CASTING_SPEED, new CastingSpeedLoader())
             .put(TableName.CASTING_UNIT, new CastingUnitLoader())
             .put(TableName.CU_CASTING_MACHINE, new CastingUnitCastingMachineLoader())
@@ -30,11 +33,12 @@ public class DBLoader {
             .put(TableName.CU_MARKS, new CastingUnitMarksLoader())
             .put(TableName.CU_PRODUCT_CHANGE, new CastingUnitProductChangeLoader())
             .put(TableName.CU_REPAIR, new CastingUnitRepairLoader())
+            .put(TableName.PERIODIC_OPERATION, new PeriodicOperationLoader())
             .put(TableName.CAST_MACH_MOULDS, new CastMachMouldsLoader())
             .put(TableName.CONTAINER_TYPE, new ContainerTypeLoader())
             .put(TableName.CUTTING_LINE, new CuttingLineLoader())
             .put(TableName.ELECTROLIZER_PROGNOSIS, new ElectrolizerPrognosisLoader())
-            .put(TableName.CU_FILTER, new CastingUnitFiltersLoader())
+            .put(TableName.CU_FILTER, new FilterLoader())
             .put(TableName.FILTER_CHANGE_MARK, new FilterChangeMarkLoader())
             .put(TableName.FILTER_CONS, new FilterConsLoader())
             .put(TableName.FILTRATION, new FiltrationLoader())
@@ -42,10 +46,9 @@ public class DBLoader {
             .put(TableName.HEATER, new HeaterLoader())
             .put(TableName.HOMOGENIZATION_LINE, new HomogenizationLineLoader())
             .put(TableName.MARK, new MarkLoader())
-            .put(TableName.MIXER_CLEAN, new MixerCleanLoader())
             .put(TableName.MOULD, new MouldLoader())
             .put(TableName.MOULD_BLANKS, new MouldBlanksLoader())
-            .put(TableName.CUSTOMER_ORDER, new OrderLoader())
+            .put(TableName.CUSTOMER_ORDER, new CustomerOrderLoader())
             .put(TableName.ORDER_CU_DIRECTIVE, new OrderCastingUnitDirectiveLoader())
             .put(TableName.PLANT_CONTAINERS, new PlantContainersLoader())
             .put(TableName.PREPARE_TIME_CONST, new PrepareTimeConstLoader())
@@ -54,6 +57,7 @@ public class DBLoader {
             .put(TableName.PRODUCT_COST, new ProductCostLoader())
             .put(TableName.TRANSPORT_COST, new TransportCostLoader())
             .put(TableName.TRANSPORT_DESTINATION, new TransportDestinationLoader())
+            .put(TableName.TRANSPORT_LOAD, new TransportLoadLoader())
             .put(TableName.PLANT, new PlantLoader())
             .put(TableName.CAST_HOUSE, new CastHouseLoader())
             .put(TableName.CAST, new CastLoader())
@@ -65,7 +69,9 @@ public class DBLoader {
         for (String sheetName : sheetNames) {
             ExcelLoader excelLoader = EXCEL_LOADER_MAP.get(sheetName);
             if (excelLoader != null) {
+                final long startTime = System.currentTimeMillis();
                 saveOrUpdate(excelLoader.load(filePath, sheetName));
+                LOGGER.info("Save or update table " + sheetName + " time: " + (System.currentTimeMillis() - startTime));
             }
         }
 
@@ -85,11 +91,10 @@ public class DBLoader {
                 for (T t : data) {
                     em.merge(t);
                 }
-//            em.flush();
 
             transaction.commit();
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.error("CAn't merge: " + data, e);
         }
     }
 }

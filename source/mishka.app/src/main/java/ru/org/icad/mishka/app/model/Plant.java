@@ -1,6 +1,7 @@
 package ru.org.icad.mishka.app.model;
 
 import org.eclipse.persistence.annotations.Customizer;
+import ru.org.icad.mishka.app.ColumnName;
 import ru.org.icad.mishka.app.OrderCustomizer;
 import ru.org.icad.mishka.app.TableName;
 
@@ -13,24 +14,24 @@ import java.math.BigDecimal;
 @Customizer(OrderCustomizer.class)
 public class Plant {
 
+    @Id
+    @Column(name = ColumnName.PLANT_ID)
+    private int id;
+    @Column(name = "PLANT_NAME")
+    private String name;
+    @Column(name = "PREMIUM_A7")
+    private BigDecimal premiumA7;
+    @Column(name = "ADD_COST")
+    private BigDecimal addCost;
+    @Column(name = "MELT_LOSS")
+    private BigDecimal meltLoss;
+
     public Plant() {
     }
 
     public Plant(int id) {
         this.id = id;
     }
-
-    @Id
-    @Column(name = "PLANT_ID")
-    private int id;
-    @Column(name = "PLANT_NAME")
-    private String name;
-    @Column(name = "PREMIUM_A7")
-    private BigDecimal premiumA7;
-    @Column(name = "CLIP_ADD_COST")
-    private BigDecimal clipAddCost;
-    @Column(name = "CLIP_MELT_LOSS")
-    private BigDecimal clipMeltLoss;
 
     public int getId() {
         return id;
@@ -56,20 +57,20 @@ public class Plant {
         this.premiumA7 = premiumA7;
     }
 
-    public BigDecimal getClipAddCost() {
-        return clipAddCost;
+    public BigDecimal getAddCost() {
+        return addCost;
     }
 
-    public void setClipAddCost(BigDecimal clipAddCost) {
-        this.clipAddCost = clipAddCost;
+    public void setAddCost(BigDecimal clipAddCost) {
+        this.addCost = clipAddCost;
     }
 
-    public BigDecimal getClipMeltLoss() {
-        return clipMeltLoss;
+    public BigDecimal getMeltLoss() {
+        return meltLoss;
     }
 
-    public void setClipMeltLoss(BigDecimal clipMeltLoss) {
-        this.clipMeltLoss = clipMeltLoss;
+    public void setMeltLoss(BigDecimal clipMeltLoss) {
+        this.meltLoss = clipMeltLoss;
     }
 
     @Override

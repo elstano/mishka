@@ -25,6 +25,13 @@ public class DevServiceImp extends RemoteServiceServlet implements DevService {
     }
 
     @Override
+    public void cleanTable(String tableName) {
+        DbToolDev dbToolDev = new DbToolDev();
+
+        dbToolDev.cleanTable(tableName);
+    }
+
+    @Override
     public void restrictionProcess() {
         RestrictionDev restrictionDev = new RestrictionDev();
 

@@ -17,14 +17,14 @@ public class Cast {
     @JoinColumn(name = ColumnName.CU_ID)
     private CastingUnit castingUnit;
     @Column(name = "CAST_DATE")
-    private Date date;
+    private Date castDate;
     @Column(name = "SHIFT")
     private int shift;
     @Column(name = "CAST_NUMBER")
     private int castNumber;
     @OneToOne
     @JoinColumn(name = ColumnName.ORDER_ID)
-    private Order order;
+    private CustomerOrder customerOrder;
     @Column(name = "INGOT_COUNT")
     private int ingotCount;
     @Column(name = "INGOT_IN_BLANK_COUNT")
@@ -46,12 +46,12 @@ public class Cast {
         this.castingUnit = castingUnit;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getCastDate() {
+        return castDate;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setCastDate(Date date) {
+        this.castDate = date;
     }
 
     public int getShift() {
@@ -70,12 +70,12 @@ public class Cast {
         this.castNumber = castNumber;
     }
 
-    public Order getOrder() {
-        return order;
+    public CustomerOrder getCustomerOrder() {
+        return customerOrder;
     }
 
-    public void setOrder(Order order) {
-        this.order = order;
+    public void setCustomerOrder(CustomerOrder customerOrder) {
+        this.customerOrder = customerOrder;
     }
 
     public int getIngotCount() {

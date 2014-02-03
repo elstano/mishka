@@ -46,12 +46,10 @@ public class ContainerTypeLoader implements ExcelLoader<ContainerType> {
 
             final int containerTypeId = Double.valueOf(containerTypeIdCell.getNumericCellValue()).intValue();
             final String name = ExcelUtil.getStringCellValue(row, 1);
-            final int capacity = ExcelUtil.getIntCellValue(row, 2);
 
             ContainerType containerType = new ContainerType();
             containerType.setId(containerTypeId);
             containerType.setName(name);
-            containerType.setCapacity(capacity);
 
             containerTypes.add(containerType);
         }

@@ -4,7 +4,6 @@ import ru.org.icad.mishka.app.ColumnName;
 import ru.org.icad.mishka.app.TableName;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
 @Table(name = TableName.CU_DISTRIBUTOR)
@@ -16,10 +15,15 @@ public class CastingUnitDistributor {
     @OneToOne
     @JoinColumn(name = ColumnName.CU_ID)
     private CastingUnit castingUnit;
-    @Column(name = "NUM_CLEANS")
-    private int numCleans;
-    @Column(name = "CLEAN_TIME")
-    private int cleanTime;
+    @Column(name = "POUR_SPEED")
+    private int pourSpeed;
+
+    public CastingUnitDistributor() {
+    }
+
+    public CastingUnitDistributor(int id) {
+        this.id = id;
+    }
 
     public int getId() {
         return id;
@@ -37,20 +41,12 @@ public class CastingUnitDistributor {
         this.castingUnit = castingUnit;
     }
 
-    public int getNumCleans() {
-        return numCleans;
+    public int getPourSpeed() {
+        return pourSpeed;
     }
 
-    public void setNumCleans(int numCleans) {
-        this.numCleans = numCleans;
-    }
-
-    public int getCleanTime() {
-        return cleanTime;
-    }
-
-    public void setCleanTime(int cleanTime) {
-        this.cleanTime = cleanTime;
+    public void setPourSpeed(int pourSpeed) {
+        this.pourSpeed = pourSpeed;
     }
 
     @Override

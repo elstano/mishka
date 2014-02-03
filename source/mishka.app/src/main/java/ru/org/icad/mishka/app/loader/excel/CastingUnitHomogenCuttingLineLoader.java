@@ -46,8 +46,8 @@ public class CastingUnitHomogenCuttingLineLoader implements ExcelLoader<CastingU
 
             final int castingUnitHomogenCuttingLineId
                     = Double.valueOf(castingUnitHomogenCuttingLineIdCell.getNumericCellValue()).intValue();
-            final int lengthBlankMin = ExcelUtil.getIntCellValue(row, 1);
-            final int lengthBlankMax = ExcelUtil.getIntCellValue(row, 2);
+            final int lengthBlankMin = ExcelUtil.getIntegerCellValue(row, 1);
+            final int lengthBlankMax = ExcelUtil.getIntegerCellValue(row, 2);
 
 
             CastingUnitHomogenCuttingLine castingUnitHomogenCuttingLine

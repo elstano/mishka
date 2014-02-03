@@ -4,7 +4,6 @@ import ru.org.icad.mishka.app.ColumnName;
 import ru.org.icad.mishka.app.TableName;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.sql.Date;
 
 @Entity
@@ -18,7 +17,7 @@ public class Heater {
     @JoinColumn(name = ColumnName.CH_ID)
     private CastHouse castHouse;
     @Column(name = "STATE")
-    private int state;
+    private String state;
     @Column(name = "START_TIME")
     private Date startTime;
 
@@ -38,11 +37,11 @@ public class Heater {
         this.castHouse = castHouse;
     }
 
-    public int getState() {
+    public String getState() {
         return state;
     }
 
-    public void setState(int state) {
+    public void setState(String state) {
         this.state = state;
     }
 

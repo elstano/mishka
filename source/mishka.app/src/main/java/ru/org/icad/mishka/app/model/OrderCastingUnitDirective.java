@@ -4,7 +4,6 @@ import ru.org.icad.mishka.app.ColumnName;
 import ru.org.icad.mishka.app.TableName;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
 @Table(name = TableName.ORDER_CU_DIRECTIVE)
@@ -14,7 +13,7 @@ public class OrderCastingUnitDirective {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
     @OneToOne
-    private Order order;
+    private CustomerOrder customerOrder;
     @OneToOne
     @JoinColumn(name = ColumnName.PLANT_ID)
     private Plant plant;
@@ -30,12 +29,12 @@ public class OrderCastingUnitDirective {
         this.id = id;
     }
 
-    public Order getOrder() {
-        return order;
+    public CustomerOrder getCustomerOrder() {
+        return customerOrder;
     }
 
-    public void setOrder(Order order) {
-        this.order = order;
+    public void setCustomerOrder(CustomerOrder customerOrder) {
+        this.customerOrder = customerOrder;
     }
 
     public Plant getPlant() {

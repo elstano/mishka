@@ -4,7 +4,6 @@ import ru.org.icad.mishka.app.ColumnName;
 import ru.org.icad.mishka.app.TableName;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
 @Table(name = TableName.CU_COLLECTOR)
@@ -20,12 +19,13 @@ public class CastingUnitCollector {
     private int mixerTonnageMax;
     @Column(name = "MIXER_REST_TONNAGE")
     private int mixerRestTonnage;
-    @Column(name = "POUR_SPEED")
-    private int pourSpeed;
-    @Column(name = "NUM_CLEANS")
-    private int numCleans;
-    @Column(name = "CLEAN_TIME")
-    private int cleanTime;
+
+    public CastingUnitCollector() {
+    }
+
+    public CastingUnitCollector(int id) {
+        this.id = id;
+    }
 
     public int getId() {
         return id;
@@ -57,30 +57,6 @@ public class CastingUnitCollector {
 
     public void setMixerRestTonnage(int mixerRestTonnage) {
         this.mixerRestTonnage = mixerRestTonnage;
-    }
-
-    public int getPourSpeed() {
-        return pourSpeed;
-    }
-
-    public void setPourSpeed(int pourSpeed) {
-        this.pourSpeed = pourSpeed;
-    }
-
-    public int getNumCleans() {
-        return numCleans;
-    }
-
-    public void setNumCleans(int numCleans) {
-        this.numCleans = numCleans;
-    }
-
-    public int getCleanTime() {
-        return cleanTime;
-    }
-
-    public void setCleanTime(int cleanTime) {
-        this.cleanTime = cleanTime;
     }
 
     @Override

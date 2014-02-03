@@ -5,6 +5,7 @@ import com.google.common.collect.Maps;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.org.icad.mishka.app.model.Cast;
+import ru.org.icad.mishka.app.model.CustomerOrder;
 import ru.org.icad.mishka.app.model.ElectrolizerPrognosis;
 import ru.org.icad.mishka.app.model.Product;
 
@@ -17,21 +18,21 @@ public class RestrictionByRaw {
     private RestrictionByRaw() {
     }
 
-    public static Map<Cast, List<ElectrolizerPrognosis>> checkRestriction(List<Cast> orders, List<ElectrolizerPrognosis> electrolyzers) {
+    public static Map<Cast, List<ElectrolizerPrognosis>> checkRestriction(List<Cast> casts, List<ElectrolizerPrognosis> electrolyzers) {
         final Map<Cast, List<ElectrolizerPrognosis>> resultOrderMap = Maps.newHashMap();
         final List<ElectrolizerPrognosis> usedElectrolyzer = Lists.newArrayList();
 
         Collections.sort(electrolyzers, ELECTROLYZER_COMPARATOR);
 
-        final Map<ElectrolizerPrognosis, Cast> electrolyzerMap = getElectolyzerMap(orders, electrolyzers);
+        final Map<ElectrolizerPrognosis, Cast> electrolyzerMap = getElectolyzerMap(casts, electrolyzers);
 
-        final Map<Cast, List<ElectrolizerPrognosis>> tempCastMap = getOrderMap(orders, electrolyzers);
+        final Map<Cast, List<ElectrolizerPrognosis>> tempCastMap = getOrderMap(casts, electrolyzers);
         final Map<Cast, List<ElectrolizerPrognosis>> currentCastMap = sortByElectrolyzerCapacity(tempCastMap);
 
 
         for (Map.Entry<Cast, List<ElectrolizerPrognosis>> entry : currentCastMap.entrySet()) {
             Cast currentCast = entry.getKey();
-            int castCapacity = currentCast.getOrder().getTonnage();
+            int castCapacity = currentCast.getCustomerOrder().getTonnage();
             int electrolyzersCapacity = 0;
 
             List<ElectrolizerPrognosis> electrolyzerList = entry.getValue();
@@ -93,10 +94,10 @@ public class RestrictionByRaw {
 
         for (Cast cast : casts) {
             List<ElectrolizerPrognosis> suitableElectrolyzers = Lists.newArrayList();
-            final Product product = cast.getOrder().getProduct();
+            final Product product = cast.getCustomerOrder().getProduct();
 
             for (ElectrolizerPrognosis electrolyzer : electrolyzers) {
-                if (product.isSuit(electrolyzer)) {
+                if (product != null && product.isSuit(electrolyzer)) {
                     suitableElectrolyzers.add(electrolyzer);
                 }
             }
@@ -117,7 +118,8 @@ public class RestrictionByRaw {
             List<Cast> suitableCasts = Lists.newArrayList();
 
             for (Cast cast : casts) {
-                if (!electrolyzer.isSuit(cast.getOrder().getProduct())) {
+                final CustomerOrder customerOrder = cast.getCustomerOrder();
+                if (customerOrder.getProduct() != null && !electrolyzer.isSuit(customerOrder.getProduct())) {
                     suitableCasts.add(cast);
                 }
             }

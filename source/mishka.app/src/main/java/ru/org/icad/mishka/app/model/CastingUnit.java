@@ -16,10 +16,12 @@ public class CastingUnit {
     private int id;
     @OneToOne
     private CastHouse castHouse;
+    @Column(name = "SCHEME")
+    private int scheme;
     @Column(name = "START_TIME")
     private Date startTime;
     @Column(name = "PREVIOUS_PRODUCT_ID")
-    private int previousProductId;
+    private Integer previousProductId;
     @Column(name = "LADLE_POUR_TIME_MAX")
     private int ladlePourTimeMax;
     @Column(name = "CLEAN_COST")
@@ -60,6 +62,14 @@ public class CastingUnit {
         this.castHouse = castHouse;
     }
 
+    public int getScheme() {
+        return scheme;
+    }
+
+    public void setScheme(int scheme) {
+        this.scheme = scheme;
+    }
+
     public Date getStartTime() {
         return startTime;
     }
@@ -68,11 +78,11 @@ public class CastingUnit {
         this.startTime = startTime;
     }
 
-    public int getPreviousProductId() {
+    public Integer getPreviousProductId() {
         return previousProductId;
     }
 
-    public void setPreviousProductId(int previousProductId) {
+    public void setPreviousProductId(Integer previousProductId) {
         this.previousProductId = previousProductId;
     }
 

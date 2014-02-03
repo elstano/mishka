@@ -47,8 +47,8 @@ public class HeaterLoader implements ExcelLoader<Heater> {
             }
 
             final int heaterId = Double.valueOf(heaterIdCell.getNumericCellValue()).intValue();
-            final int castHouseId = ExcelUtil.getIntCellValue(row, 1);
-            final int state = ExcelUtil.getIntCellValue(row, 2);
+            final int castHouseId = ExcelUtil.getIntegerCellValue(row, 1);
+            final String state = ExcelUtil.getStringCellValue(row, 2);
             final Date startTime = ExcelUtil.getDateCellValue(row, 3);
 
             Heater heater = new Heater();
