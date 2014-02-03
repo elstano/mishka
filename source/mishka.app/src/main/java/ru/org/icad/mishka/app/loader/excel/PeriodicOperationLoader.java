@@ -46,21 +46,25 @@ public class PeriodicOperationLoader implements ExcelLoader<PeriodicOperation> {
                 continue;
             }
 
-            final int castingUnitCollectorId = ExcelUtil.getIntegerCellValue(row, 0);
-            final int castingUnitDistributorId = ExcelUtil.getIntegerCellValue(row, 1);
-            final int castingUnitCastingMachineId = ExcelUtil.getIntegerCellValue(row, 2);
+            final Integer castingUnitCollectorId = ExcelUtil.getIntegerCellValue(row, 0);
+            final Integer castingUnitDistributorId = ExcelUtil.getIntegerCellValue(row, 1);
+            final Integer castingUnitCastingMachineId = ExcelUtil.getIntegerCellValue(row, 2);
             final int operationId = ExcelUtil.getIntegerCellValue(row, 3);
             final Date operationDate = ExcelUtil.getDateCellValue(row, 4);
-            final int shift = ExcelUtil.getIntegerCellValue(row,5 );
+            final int shift = ExcelUtil.getIntegerCellValue(row, 5);
             final Date durationTime = ExcelUtil.getDateCellValue(row, 6);
 
 
-
-
             PeriodicOperation periodicOperation = new PeriodicOperation();
-            periodicOperation.setCastingUnitCollector(new CastingUnitCollector(castingUnitCollectorId));
-            periodicOperation.setCastingUnitDistributor(new CastingUnitDistributor(castingUnitDistributorId));
-            periodicOperation.setCastingUnitCastingMachine(new CastingUnitCastingMachine(castingUnitCastingMachineId));
+            if (castingUnitCollectorId != null) {
+                periodicOperation.setCastingUnitCollector(new CastingUnitCollector(castingUnitCollectorId));
+            }
+            if (castingUnitDistributorId != null) {
+                periodicOperation.setCastingUnitDistributor(new CastingUnitDistributor(castingUnitDistributorId));
+            }
+            if (castingUnitCastingMachineId != null) {
+                periodicOperation.setCastingUnitCastingMachine(new CastingUnitCastingMachine(castingUnitCastingMachineId));
+            }
             periodicOperation.setOperation(new Operation(operationId));
             periodicOperation.setOperationDate(operationDate);
             periodicOperation.setShift(shift);

@@ -37,16 +37,16 @@ public class PlantContainersLoader implements ExcelLoader<PlantContainer> {
                 continue;
             }
 
-            Cell containerTypeIdCell = row.getCell(0);
-            if (containerTypeIdCell == null) {
+            Cell orderIdCell = row.getCell(0);
+            if (orderIdCell == null) {
                 continue;
             }
 
-            if (Cell.CELL_TYPE_NUMERIC != containerTypeIdCell.getCellType()) {
+            if (row.getRowNum() == 0) {
                 continue;
             }
 
-            final int containerTypeId = Double.valueOf(containerTypeIdCell.getNumericCellValue()).intValue();
+            final int containerTypeId = ExcelUtil.getIntegerCellValue(row, 0);
             final int plantId = ExcelUtil.getIntegerCellValue(row, 1);
             final int numContainers = ExcelUtil.getIntegerCellValue(row, 2);
 

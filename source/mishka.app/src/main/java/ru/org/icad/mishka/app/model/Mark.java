@@ -18,7 +18,7 @@ public class Mark {
     @Column(name = "MARK_NAME")
     private String name;
     @Column(name = "PARENT_MARK_ID")
-    private int parentMarkId;
+    private Integer parentMarkId;
 
     public Mark() {
     }
@@ -43,11 +43,11 @@ public class Mark {
         this.name = name;
     }
 
-    public int getParentMarkId() {
+    public Integer getParentMarkId() {
         return parentMarkId;
     }
 
-    public void setParentMarkId(int parentMarkId) {
+    public void setParentMarkId(Integer parentMarkId) {
         this.parentMarkId = parentMarkId;
     }
 

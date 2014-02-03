@@ -48,19 +48,19 @@ public class TransportLoadLoader implements ExcelLoader<TransportLoad> {
             }
 
             final int plantId = Double.valueOf(plantIdCell.getNumericCellValue()).intValue();
-            final int containerTypeId = ExcelUtil.getIntegerCellValue(row, 2);
-            final int formId = ExcelUtil.getIntegerCellValue(row, 3);
-            final int diameter = ExcelUtil.getIntegerCellValue(row, 4);
-            final int width = ExcelUtil.getIntegerCellValue(row, 5);
-            final int height = ExcelUtil.getIntegerCellValue(row, 6);
-            final int weight = ExcelUtil.getIntegerCellValue(row, 7);
-            final int lengthMin = ExcelUtil.getIntegerCellValue(row, 8);
-            final int lengthMax = ExcelUtil.getIntegerCellValue(row, 9);
-            final String scheme = ExcelUtil.getStringCellValue(row, 10);
-            final int numIngotsMin = ExcelUtil.getIntegerCellValue(row, 11);
-            final int numIngotsMax = ExcelUtil.getIntegerCellValue(row, 12);
-            final int tonnageMin = ExcelUtil.getIntegerCellValue(row, 13);
-            final int tonnageMax = ExcelUtil.getIntegerCellValue(row, 14);
+            final int containerTypeId = ExcelUtil.getIntegerCellValue(row, 1);
+            final int formId = ExcelUtil.getIntegerCellValue(row, 2);
+            final Integer diameter = ExcelUtil.getIntegerCellValue(row, 3);
+            final Integer width = ExcelUtil.getIntegerCellValue(row, 4);
+            final Integer height = ExcelUtil.getIntegerCellValue(row, 5);
+            final Integer weight = ExcelUtil.getIntegerCellValue(row, 6);
+            final int lengthMin = ExcelUtil.getIntegerCellValue(row, 7);
+            final int lengthMax = ExcelUtil.getIntegerCellValue(row, 8);
+            final String scheme = ExcelUtil.getStringCellValue(row, 9);
+            final Integer numIngotsMin = ExcelUtil.getIntegerCellValue(row, 10);
+            final Integer numIngotsMax = ExcelUtil.getIntegerCellValue(row, 11);
+            final Integer tonnageMin = ExcelUtil.getIntegerCellValue(row, 12);
+            final Integer tonnageMax = ExcelUtil.getIntegerCellValue(row, 13);
 
             TransportLoad transportLoad = new TransportLoad();
             transportLoad.setPlant(new Plant(plantId));

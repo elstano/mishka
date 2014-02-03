@@ -19,9 +19,9 @@ public class Filter {
     @Column(name = "STATE")
     private String state;
     @Column(name = "START_CU_ID")
-    private int startCastingUnitId;
+    private Integer startCastingUnitId;
     @Column(name = "START_HEATER_ID")
-    private int startHeaterId;
+    private Integer startHeaterId;
     @Column(name = "START_TIME")
     private Date startTime;
     @Column(name = "RESOURCE_CURRENT")
@@ -68,19 +68,19 @@ public class Filter {
         this.state = state;
     }
 
-    public int getStartCastingUnitId() {
+    public Integer getStartCastingUnitId() {
         return startCastingUnitId;
     }
 
-    public void setStartCastingUnitId(int startCastingUnitId) {
+    public void setStartCastingUnitId(Integer startCastingUnitId) {
         this.startCastingUnitId = startCastingUnitId;
     }
 
-    public int getStartHeaterId() {
+    public Integer getStartHeaterId() {
         return startHeaterId;
     }
 
-    public void setStartHeaterId(int startHeaterId) {
+    public void setStartHeaterId(Integer startHeaterId) {
         this.startHeaterId = startHeaterId;
     }
 

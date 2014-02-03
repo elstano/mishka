@@ -24,7 +24,7 @@ public class Cast {
     private int castNumber;
     @OneToOne
     @JoinColumn(name = ColumnName.ORDER_ID)
-    private Order order;
+    private CustomerOrder customerOrder;
     @Column(name = "INGOT_COUNT")
     private int ingotCount;
     @Column(name = "INGOT_IN_BLANK_COUNT")
@@ -70,12 +70,12 @@ public class Cast {
         this.castNumber = castNumber;
     }
 
-    public Order getOrder() {
-        return order;
+    public CustomerOrder getCustomerOrder() {
+        return customerOrder;
     }
 
-    public void setOrder(Order order) {
-        this.order = order;
+    public void setCustomerOrder(CustomerOrder customerOrder) {
+        this.customerOrder = customerOrder;
     }
 
     public int getIngotCount() {

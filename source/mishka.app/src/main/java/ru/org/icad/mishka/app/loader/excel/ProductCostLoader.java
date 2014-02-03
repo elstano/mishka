@@ -12,6 +12,7 @@ import ru.org.icad.mishka.app.model.Plant;
 import ru.org.icad.mishka.app.model.ProductCost;
 import ru.org.icad.mishka.app.util.ExcelUtil;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.Collections;
 import java.util.List;
@@ -49,14 +50,18 @@ public class ProductCostLoader implements ExcelLoader<ProductCost> {
             }
 
             final int plantId = Double.valueOf(plantIdCell.getNumericCellValue()).intValue();
-            final int markId = ExcelUtil.getIntegerCellValue(row, 1);
+            final Integer markId = ExcelUtil.getIntegerCellValue(row, 1);
             final int formId = ExcelUtil.getIntegerCellValue(row, 2);
-            final Date date = ExcelUtil.getDateCellValue(row, 3);
+            final BigDecimal cost = ExcelUtil.getBigDecimalCellValue(row, 3);
+            final Date date = ExcelUtil.getDateCellValue(row, 4);
 
             ProductCost productCost = new ProductCost();
             productCost.setPlant(new Plant(plantId));
-            productCost.setMark(new Mark(markId));
+            if (markId != null) {
+                productCost.setMark(new Mark(markId));
+            }
             productCost.setForm(new Form(formId));
+            productCost.setCost(cost);
             productCost.setDate(date);
 
             productCosts.add(productCost);

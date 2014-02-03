@@ -19,10 +19,6 @@ public class CastingUnitCollector {
     private int mixerTonnageMax;
     @Column(name = "MIXER_REST_TONNAGE")
     private int mixerRestTonnage;
-    @Column(name = "NUM_CLEANS")
-    private int numCleans;
-    @Column(name = "CLEAN_TIME")
-    private int cleanTime;
 
     public CastingUnitCollector() {
     }
@@ -61,22 +57,6 @@ public class CastingUnitCollector {
 
     public void setMixerRestTonnage(int mixerRestTonnage) {
         this.mixerRestTonnage = mixerRestTonnage;
-    }
-
-    public int getNumCleans() {
-        return numCleans;
-    }
-
-    public void setNumCleans(int numCleans) {
-        this.numCleans = numCleans;
-    }
-
-    public int getCleanTime() {
-        return cleanTime;
-    }
-
-    public void setCleanTime(int cleanTime) {
-        this.cleanTime = cleanTime;
     }
 
     @Override

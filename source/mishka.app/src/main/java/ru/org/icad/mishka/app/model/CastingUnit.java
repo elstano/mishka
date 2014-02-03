@@ -21,7 +21,7 @@ public class CastingUnit {
     @Column(name = "START_TIME")
     private Date startTime;
     @Column(name = "PREVIOUS_PRODUCT_ID")
-    private int previousProductId;
+    private Integer previousProductId;
     @Column(name = "LADLE_POUR_TIME_MAX")
     private int ladlePourTimeMax;
     @Column(name = "CLEAN_COST")
@@ -78,11 +78,11 @@ public class CastingUnit {
         this.startTime = startTime;
     }
 
-    public int getPreviousProductId() {
+    public Integer getPreviousProductId() {
         return previousProductId;
     }
 
-    public void setPreviousProductId(int previousProductId) {
+    public void setPreviousProductId(Integer previousProductId) {
         this.previousProductId = previousProductId;
     }
 

@@ -22,13 +22,13 @@ public class TransportLoad {
     @JoinColumn(name = ColumnName.FORM_ID)
     private Form form;
     @Column(name = "DIAMETER")
-    private int diameter;
+    private Integer diameter;
     @Column(name = "WIDTH")
-    private int width;
+    private Integer width;
     @Column(name = "HEIGHT")
-    private int height;
+    private Integer height;
     @Column(name = "WEIGHT")
-    private int weight;
+    private Integer weight;
     @Column(name = "LENGTH_MIN")
     private int lengthMin;
     @Column(name = "LENGTH_MAX")
@@ -36,13 +36,13 @@ public class TransportLoad {
     @Column(name = "SCHEME")
     private String scheme;
     @Column(name = "NUM_INGOTS_MIN")
-    private int numIngotsMin;
+    private Integer numIngotsMin;
     @Column(name = "NUM_INGOTS_MAX")
-    private int numIngotsMax;
+    private Integer numIngotsMax;
     @Column(name = "TONNAGE_MIN")
-    private int tonnageMin;
+    private Integer tonnageMin;
     @Column(name = "TONNAGE_MAX")
-    private int tonnageMax;
+    private Integer tonnageMax;
 
     public int getId() {
         return id;
@@ -76,35 +76,35 @@ public class TransportLoad {
         this.form = form;
     }
 
-    public int getDiameter() {
+    public Integer getDiameter() {
         return diameter;
     }
 
-    public void setDiameter(int diameter) {
+    public void setDiameter(Integer diameter) {
         this.diameter = diameter;
     }
 
-    public int getWidth() {
+    public Integer getWidth() {
         return width;
     }
 
-    public void setWidth(int width) {
+    public void setWidth(Integer width) {
         this.width = width;
     }
 
-    public int getHeight() {
+    public Integer getHeight() {
         return height;
     }
 
-    public void setHeight(int height) {
+    public void setHeight(Integer height) {
         this.height = height;
     }
 
-    public int getWeight() {
+    public Integer getWeight() {
         return weight;
     }
 
-    public void setWeight(int weight) {
+    public void setWeight(Integer weight) {
         this.weight = weight;
     }
 
@@ -132,35 +132,35 @@ public class TransportLoad {
         this.scheme = scheme;
     }
 
-    public int getNumIngotsMin() {
+    public Integer getNumIngotsMin() {
         return numIngotsMin;
     }
 
-    public void setNumIngotsMin(int numIngotsMin) {
+    public void setNumIngotsMin(Integer numIngotsMin) {
         this.numIngotsMin = numIngotsMin;
     }
 
-    public int getNumIngotsMax() {
+    public Integer getNumIngotsMax() {
         return numIngotsMax;
     }
 
-    public void setNumIngotsMax(int numIngotsMax) {
+    public void setNumIngotsMax(Integer numIngotsMax) {
         this.numIngotsMax = numIngotsMax;
     }
 
-    public int getTonnageMin() {
+    public Integer getTonnageMin() {
         return tonnageMin;
     }
 
-    public void setTonnageMin(int tonnageMin) {
+    public void setTonnageMin(Integer tonnageMin) {
         this.tonnageMin = tonnageMin;
     }
 
-    public int getTonnageMax() {
+    public Integer getTonnageMax() {
         return tonnageMax;
     }
 
-    public void setTonnageMax(int tonnageMax) {
+    public void setTonnageMax(Integer tonnageMax) {
         this.tonnageMax = tonnageMax;
     }
 

@@ -1,6 +1,8 @@
 package ru.org.icad.mishka.app.loader;
 
 import com.google.common.collect.ImmutableMap;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.org.icad.mishka.app.TableName;
 import ru.org.icad.mishka.app.loader.excel.*;
 import ru.org.icad.mishka.app.util.ExcelUtil;
@@ -8,6 +10,7 @@ import ru.org.icad.mishka.app.util.ExcelUtil;
 import javax.naming.InitialContext;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.transaction.UserTransaction;
 import java.io.File;
@@ -15,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 public class DBLoader {
+    private static final Logger LOGGER = LoggerFactory.getLogger(DBLoader.class);
 
     private static final Map<String, ExcelLoader> EXCEL_LOADER_MAP = ImmutableMap.<String, ExcelLoader>builder()
             .put(TableName.OPERATION, new OperationLoader())
@@ -44,7 +48,7 @@ public class DBLoader {
             .put(TableName.MARK, new MarkLoader())
             .put(TableName.MOULD, new MouldLoader())
             .put(TableName.MOULD_BLANKS, new MouldBlanksLoader())
-            .put(TableName.CUSTOMER_ORDER, new OrderLoader())
+            .put(TableName.CUSTOMER_ORDER, new CustomerOrderLoader())
             .put(TableName.ORDER_CU_DIRECTIVE, new OrderCastingUnitDirectiveLoader())
             .put(TableName.PLANT_CONTAINERS, new PlantContainersLoader())
             .put(TableName.PREPARE_TIME_CONST, new PrepareTimeConstLoader())
@@ -53,6 +57,7 @@ public class DBLoader {
             .put(TableName.PRODUCT_COST, new ProductCostLoader())
             .put(TableName.TRANSPORT_COST, new TransportCostLoader())
             .put(TableName.TRANSPORT_DESTINATION, new TransportDestinationLoader())
+            .put(TableName.TRANSPORT_LOAD, new TransportLoadLoader())
             .put(TableName.PLANT, new PlantLoader())
             .put(TableName.CAST_HOUSE, new CastHouseLoader())
             .put(TableName.CAST, new CastLoader())
@@ -84,11 +89,10 @@ public class DBLoader {
                 for (T t : data) {
                     em.merge(t);
                 }
-//            em.flush();
 
             transaction.commit();
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.error("CAn't merge: " + data, e);
         }
     }
 }

@@ -4,14 +4,13 @@ import ru.org.icad.mishka.app.ColumnName;
 import ru.org.icad.mishka.app.TableName;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
 @Table(name = TableName.PRODUCED_PRODUCT)
 public class ProducedProduct {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     @OneToOne
     @JoinColumn(name = ColumnName.PLANT_ID)
@@ -19,10 +18,20 @@ public class ProducedProduct {
     @OneToOne
     @JoinColumn(name = ColumnName.PRODUCT_ID)
     private Product product;
+    @Column(name = "WEIGHT")
+    private Integer weight;
+    @Column(name = "DIAMETER")
+    private Integer diameter;
+    @Column(name = "LENGTH")
+    private Integer length;
+    @Column(name = "WIDTH")
+    private Integer width;
+    @Column(name = "HEIGHT")
+    private Integer height;
     @Column(name = "TONNAGE")
     private int tonnage;
-    @Column(name = "LENGTH")
-    private int length;
+    @Column(name = "PERIOD")
+    private int period;
 
     public int getId() {
         return id;
@@ -48,6 +57,46 @@ public class ProducedProduct {
         this.product = product;
     }
 
+    public Integer getWeight() {
+        return weight;
+    }
+
+    public void setWeight(Integer weight) {
+        this.weight = weight;
+    }
+
+    public Integer getDiameter() {
+        return diameter;
+    }
+
+    public void setDiameter(Integer diameter) {
+        this.diameter = diameter;
+    }
+
+    public Integer getLength() {
+        return length;
+    }
+
+    public void setLength(Integer length) {
+        this.length = length;
+    }
+
+    public Integer getWidth() {
+        return width;
+    }
+
+    public void setWidth(Integer width) {
+        this.width = width;
+    }
+
+    public Integer getHeight() {
+        return height;
+    }
+
+    public void setHeight(Integer height) {
+        this.height = height;
+    }
+
     public int getTonnage() {
         return tonnage;
     }
@@ -56,12 +105,12 @@ public class ProducedProduct {
         this.tonnage = tonnage;
     }
 
-    public int getLength() {
-        return length;
+    public int getPeriod() {
+        return period;
     }
 
-    public void setLength(int length) {
-        this.length = length;
+    public void setPeriod(int period) {
+        this.period = period;
     }
 
     @Override

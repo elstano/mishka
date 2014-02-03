@@ -17,10 +17,6 @@ public class CastingUnitDistributor {
     private CastingUnit castingUnit;
     @Column(name = "POUR_SPEED")
     private int pourSpeed;
-    @Column(name = "NUM_CLEANS")
-    private int numCleans;
-    @Column(name = "CLEAN_TIME")
-    private int cleanTime;
 
     public CastingUnitDistributor() {
     }
@@ -51,22 +47,6 @@ public class CastingUnitDistributor {
 
     public void setPourSpeed(int pourSpeed) {
         this.pourSpeed = pourSpeed;
-    }
-
-    public int getNumCleans() {
-        return numCleans;
-    }
-
-    public void setNumCleans(int numCleans) {
-        this.numCleans = numCleans;
-    }
-
-    public int getCleanTime() {
-        return cleanTime;
-    }
-
-    public void setCleanTime(int cleanTime) {
-        this.cleanTime = cleanTime;
     }
 
     @Override

@@ -9,7 +9,7 @@ import java.sql.Date;
 
 @Entity
 @Table(name = TableName.CUSTOMER_ORDER)
-public class Order {
+public class CustomerOrder {
 
     @Id
     @Column(name = ColumnName.ORDER_ID)
@@ -24,18 +24,29 @@ public class Order {
     private Date dueDate;
     @Column(name = "SHIPPING_DATE")
     private Date shippingDate;
-  // @OneToOne
-   // @JoinColumn(name = ColumnName.DESTINATION_ID)
-   // private TransportDestination transportDestination;
+    @OneToOne
+    @JoinColumn(name = ColumnName.DESTINATION_ID)
+    private TransportDestination transportDestination;
     @OneToOne
     @JoinColumn(name = ColumnName.PRODUCT_ID)
     private Product product;
+    @Column(name = "DIAMETER")
+    private Integer diameter;
+    @Column(name = "WIDTH")
+    private Integer width;
+    @Column(name = "HEIGHT")
+    private Integer height;
     @Column(name = "LENGTH")
-    private int length;
+    private Integer length;
+    @Column(name = "WEIGHT")
+    private Integer weight;
     @Column(name = "PREMIUM")
     private BigDecimal premium;
-    @Column(name = "CONTAINER_TYPE_DIRECTIVE")
-    private int containerTypeDirective;
+    @OneToOne
+    @JoinColumn(name = ColumnName.CONTAINER_TYPE_ID)
+    private ContainerType containerType;
+    @Column(name = "TRANSPORT_CAPACITY")
+    private Integer transportCapacity;
     @Column(name = "TIME_PRIORITY")
     private int timePriority;
     @Column(name = "TONNAGE_PRIORITY")
@@ -43,7 +54,11 @@ public class Order {
     @Column(name = "DIRECTIVE_DATE")
     private Date directiveDate;
     @Column(name = "DIRECTIVE_SHIFT")
-    private int directiveShift;
+    private Integer directiveShift;
+    @Column(name = "CUSTOMER")
+    private String customer;
+    @Column(name = "PERIOD")
+    private Date period;
 
     public String getId() {
         return id;
@@ -93,13 +108,13 @@ public class Order {
         this.shippingDate = shippingDate;
     }
 
- //   public TransportDestination getTransportDestination() {
-//        return transportDestination;
-//    }
-//
-//    public void setTransportDestination(TransportDestination transportDestination) {
-//        this.transportDestination = transportDestination;
-//    }
+    public TransportDestination getTransportDestination() {
+        return transportDestination;
+    }
+
+    public void setTransportDestination(TransportDestination transportDestination) {
+        this.transportDestination = transportDestination;
+    }
 
     public Product getProduct() {
         return product;
@@ -109,12 +124,44 @@ public class Order {
         this.product = product;
     }
 
-    public int getLength() {
+    public Integer getDiameter() {
+        return diameter;
+    }
+
+    public void setDiameter(Integer diameter) {
+        this.diameter = diameter;
+    }
+
+    public Integer getWidth() {
+        return width;
+    }
+
+    public void setWidth(Integer width) {
+        this.width = width;
+    }
+
+    public Integer getHeight() {
+        return height;
+    }
+
+    public void setHeight(Integer height) {
+        this.height = height;
+    }
+
+    public Integer getLength() {
         return length;
     }
 
-    public void setLength(int length) {
+    public void setLength(Integer length) {
         this.length = length;
+    }
+
+    public Integer getWeight() {
+        return weight;
+    }
+
+    public void setWeight(Integer weight) {
+        this.weight = weight;
     }
 
     public BigDecimal getPremium() {
@@ -125,12 +172,20 @@ public class Order {
         this.premium = premium;
     }
 
-    public int getContainerTypeDirective() {
-        return containerTypeDirective;
+    public ContainerType getContainerType() {
+        return containerType;
     }
 
-    public void setContainerTypeDirective(int containerTypeDirective) {
-        this.containerTypeDirective = containerTypeDirective;
+    public void setContainerType(ContainerType containerTypeId) {
+        this.containerType = containerTypeId;
+    }
+
+    public Integer getTransportCapacity() {
+        return transportCapacity;
+    }
+
+    public void setTransportCapacity(Integer transportCapacity) {
+        this.transportCapacity = transportCapacity;
     }
 
     public int getTimePriority() {
@@ -157,12 +212,28 @@ public class Order {
         this.directiveDate = directiveDate;
     }
 
-    public int getDirectiveShift() {
+    public Integer getDirectiveShift() {
         return directiveShift;
     }
 
-    public void setDirectiveShift(int directiveShift) {
+    public void setDirectiveShift(Integer directiveShift) {
         this.directiveShift = directiveShift;
+    }
+
+    public String getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(String customer) {
+        this.customer = customer;
+    }
+
+    public Date getPeriod() {
+        return period;
+    }
+
+    public void setPeriod(Date period) {
+        this.period = period;
     }
 
     @Override

@@ -25,7 +25,7 @@ public class CastElectrolizer {
     private int castNumber;
     @OneToOne
     @JoinColumn(name = ColumnName.ORDER_ID)
-    private Order order;
+    private CustomerOrder customerOrder;
     @Column(name = "INGOT_COUNT")
     private int ingotCount;
     @Column(name = "INGOT_IN_BLANK_COUNT")
@@ -41,7 +41,7 @@ public class CastElectrolizer {
         this.setDate(cast.getDate());
         this.setShift(cast.getShift());
         this.setCastNumber(cast.getCastNumber());
-        this.setOrder(cast.getOrder());
+        this.setCustomerOrder(cast.getCustomerOrder());
         this.setIngotCount(cast.getIngotCount());
         this.setIngotInBlankCount(cast.getIngotInBlankCount());
     }
@@ -51,7 +51,7 @@ public class CastElectrolizer {
         this.setDate(cast.getDate());
         this.setShift(cast.getShift());
         this.setCastNumber(cast.getCastNumber());
-        this.setOrder(cast.getOrder());
+        this.setCustomerOrder(cast.getCustomerOrder());
         this.setIngotCount(cast.getIngotCount());
         this.setIngotInBlankCount(cast.getIngotInBlankCount());
         this.setEnough(isEnough);
@@ -97,12 +97,12 @@ public class CastElectrolizer {
         this.castNumber = castNumber;
     }
 
-    public Order getOrder() {
-        return order;
+    public CustomerOrder getCustomerOrder() {
+        return customerOrder;
     }
 
-    public void setOrder(Order order) {
-        this.order = order;
+    public void setCustomerOrder(CustomerOrder customerOrder) {
+        this.customerOrder = customerOrder;
     }
 
     public int getIngotCount() {

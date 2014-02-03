@@ -22,8 +22,6 @@ public class PlantContainer {
     private Plant plant;
     @Column(name = "NUM_CONTAINERS")
     private int numContainers;
-    @Column(name = "ADMISSION_DATE")
-    private Date date;
 
     public int getId() {
         return id;
@@ -55,14 +53,6 @@ public class PlantContainer {
 
     public void setNumContainers(int numContainers) {
         this.numContainers = numContainers;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
     }
 
     @Override

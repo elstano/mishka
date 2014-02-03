@@ -49,16 +49,12 @@ public class CastingUnitCollectorLoader implements ExcelLoader<CastingUnitCollec
             final int castingUnitId = ExcelUtil.getIntegerCellValue(row, 1);
             final int mixerTonnageMax = ExcelUtil.getIntegerCellValue(row, 2);
             final int mixerRestTonnage = ExcelUtil.getIntegerCellValue(row, 3);
-            final int numCleans = ExcelUtil.getIntegerCellValue(row, 5);
-            final int cleanTime = ExcelUtil.getIntegerCellValue(row, 6);
 
             CastingUnitCollector castingUnitCollector = new CastingUnitCollector();
             castingUnitCollector.setId(castingUnitCollectorId);
             castingUnitCollector.setCastingUnit(new CastingUnit(castingUnitId));
             castingUnitCollector.setMixerTonnageMax(mixerTonnageMax);
             castingUnitCollector.setMixerRestTonnage(mixerRestTonnage);
-            castingUnitCollector.setNumCleans(numCleans);
-            castingUnitCollector.setCleanTime(cleanTime);
 
             castingUnitCollectors.add(castingUnitCollector);
         }

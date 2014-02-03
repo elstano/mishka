@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import ru.org.icad.mishka.app.util.ExcelUtil;
 import ru.org.icad.mishka.app.model.Cast;
 import ru.org.icad.mishka.app.model.CastingUnit;
-import ru.org.icad.mishka.app.model.Order;
+import ru.org.icad.mishka.app.model.CustomerOrder;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -72,8 +72,8 @@ public class CastLoader implements ExcelLoader<Cast> {
             final int shift = ExcelUtil.getIntegerCellValue(row, 2);
             final int castNumber = ExcelUtil.getIntegerCellValue(row, 3);
             final int orderId = ExcelUtil.getIntegerCellValue(row, 4);
-            Order order = new Order();
-            order.setId(String.valueOf(orderId));
+            CustomerOrder customerOrder = new CustomerOrder();
+            customerOrder.setId(String.valueOf(orderId));
 
             final int ingotCount = ExcelUtil.getIntegerCellValue(row, 5);
             final int ingotInBlankCount = ExcelUtil.getIntegerCellValue(row, 6);
@@ -83,7 +83,7 @@ public class CastLoader implements ExcelLoader<Cast> {
             cast.setDate(date);
             cast.setShift(shift);
             cast.setCastNumber(castNumber);
-            cast.setOrder(order);
+            cast.setCustomerOrder(customerOrder);
             cast.setIngotCount(ingotCount);
             cast.setIngotInBlankCount(ingotInBlankCount);
 

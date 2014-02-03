@@ -23,7 +23,7 @@ public class ProductCost {
     private Form form;
     @Column(name = "COST")
     private BigDecimal cost;
-    @Column(name = "COST_DATE")
+    @Column(name = "PERIOD")
     private Date date;
 
     public int getId() {

@@ -4,14 +4,13 @@ import ru.org.icad.mishka.app.ColumnName;
 import ru.org.icad.mishka.app.TableName;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
 @Table(name = TableName.CU_PRODUCT_CHANGE)
 public class CastingUnitProductChange {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     @OneToOne
     @JoinColumn(name = ColumnName.CU_ID)
@@ -20,12 +19,24 @@ public class CastingUnitProductChange {
     private int markId1;
     @Column(name = "MARK_ID_2")
     private int markId2;
-    @Column(name = "TIME")
-    private int time;
     @Column(name = "TONNAGE")
-    private int tonnage;
+    private Integer tonnage;
     @Column(name = "CLEAN_NECESSITY")
-    private int cleanNecessity;
+    private String cleanNecessity;
+    @Column(name = "TIME_PREPARE_C")
+    private Integer timePrepareCollector;
+    @Column(name = "TIME_POUR_C_D")
+    private Integer timePourCollectorDistributor;
+    @Column(name = "TIME_PREPARE_D")
+    private Integer timePrepareDistributor;
+    @Column(name = "TIME_PREPARE_CM")
+    private Integer timePrepareCastingMachine;
+    @Column(name = "TIME_CAST")
+    private Integer timeCast;
+    @Column(name = "TIME_POUR_C_C2")
+    private Integer timePourCollectorTwo;
+    @Column(name = "TIME_PREPARE_C2")
+    private Integer timePrepareCollectorTwo;
 
     public int getId() {
         return id;
@@ -59,28 +70,76 @@ public class CastingUnitProductChange {
         this.markId2 = markId2;
     }
 
-    public int getTime() {
-        return time;
-    }
-
-    public void setTime(int time) {
-        this.time = time;
-    }
-
-    public int getTonnage() {
+    public Integer getTonnage() {
         return tonnage;
     }
 
-    public void setTonnage(int tonnage) {
+    public void setTonnage(Integer tonnage) {
         this.tonnage = tonnage;
     }
 
-    public int getCleanNecessity() {
+    public String getCleanNecessity() {
         return cleanNecessity;
     }
 
-    public void setCleanNecessity(int cleanNecessity) {
+    public void setCleanNecessity(String cleanNecessity) {
         this.cleanNecessity = cleanNecessity;
+    }
+
+    public Integer getTimePrepareCollector() {
+        return timePrepareCollector;
+    }
+
+    public void setTimePrepareCollector(Integer timePrepareCollector) {
+        this.timePrepareCollector = timePrepareCollector;
+    }
+
+    public Integer getTimePourCollectorDistributor() {
+        return timePourCollectorDistributor;
+    }
+
+    public void setTimePourCollectorDistributor(Integer timePourCollectorDistributor) {
+        this.timePourCollectorDistributor = timePourCollectorDistributor;
+    }
+
+    public Integer getTimePrepareDistributor() {
+        return timePrepareDistributor;
+    }
+
+    public void setTimePrepareDistributor(Integer timePrepareDistributor) {
+        this.timePrepareDistributor = timePrepareDistributor;
+    }
+
+    public Integer getTimePrepareCastingMachine() {
+        return timePrepareCastingMachine;
+    }
+
+    public void setTimePrepareCastingMachine(Integer timePrepareCastingMachine) {
+        this.timePrepareCastingMachine = timePrepareCastingMachine;
+    }
+
+    public Integer getTimeCast() {
+        return timeCast;
+    }
+
+    public void setTimeCast(Integer timeCast) {
+        this.timeCast = timeCast;
+    }
+
+    public Integer getTimePourCollectorTwo() {
+        return timePourCollectorTwo;
+    }
+
+    public void setTimePourCollectorTwo(Integer timePourCollectorTwo) {
+        this.timePourCollectorTwo = timePourCollectorTwo;
+    }
+
+    public Integer getTimePrepareCollectorTwo() {
+        return timePrepareCollectorTwo;
+    }
+
+    public void setTimePrepareCollectorTwo(Integer timePrepareCollectorTwo) {
+        this.timePrepareCollectorTwo = timePrepareCollectorTwo;
     }
 
     @Override

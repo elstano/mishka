@@ -49,8 +49,8 @@ public class FilterLoader implements ExcelLoader<Filter> {
             final int filterId = Double.valueOf(filterIdCell.getNumericCellValue()).intValue();
             final int castHouseId = ExcelUtil.getIntegerCellValue(row, 1);
             final String state = ExcelUtil.getStringCellValue(row, 2);
-            final int startCastingUnitId = ExcelUtil.getIntegerCellValue(row, 3);
-            final int startHeaterId = ExcelUtil.getIntegerCellValue(row, 4);
+            final Integer startCastingUnitId = ExcelUtil.getIntegerCellValue(row, 3);
+            final Integer startHeaterId = ExcelUtil.getIntegerCellValue(row, 4);
             final Date startTime = ExcelUtil.getDateCellValue(row, 5);
             final int resource = ExcelUtil.getIntegerCellValue(row, 6);
             final int resourceOver = ExcelUtil.getIntegerCellValue(row, 7);
