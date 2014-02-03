@@ -13,9 +13,4 @@ public class PrepareDistrOperation extends Operation {
 
         return false;
     }
-
-    @Override
-    public Date getProcessTime() {
-        return null;
-    }
 }

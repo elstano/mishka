@@ -63,7 +63,6 @@ public class CastingDev {
             operation.setCastWrappers(schema.getQueueCastWrapper());
             operation.activate();
         }
-
     }
 
     @Nullable
