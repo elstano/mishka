@@ -81,7 +81,7 @@ public class ElectrolizerPrognosisLoader implements ExcelLoader<ElectrolizerProg
             ElectrolizerPrognosis electrolizerPrognosis = new ElectrolizerPrognosis();
             electrolizerPrognosis.setCastHouse(castHouse);
             electrolizerPrognosis.setElectrolizerId(electrolizerId);
-            electrolizerPrognosis.setDate(date);
+            electrolizerPrognosis.setPrognosDate(date);
             electrolizerPrognosis.setShift(shift);
             electrolizerPrognosis.setTonnage(tonnage);
             electrolizerPrognosis.setFe(contentFe);

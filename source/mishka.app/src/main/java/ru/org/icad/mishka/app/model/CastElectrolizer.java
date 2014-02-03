@@ -18,7 +18,7 @@ public class CastElectrolizer {
     @JoinColumn(name = ColumnName.CU_ID)
     private CastingUnit castingUnit;
     @Column(name = "CAST_DATE")
-    private Date date;
+    private Date castDate;
     @Column(name = "SHIFT")
     private int shift;
     @Column(name = "CAST_NUMBER")
@@ -38,7 +38,7 @@ public class CastElectrolizer {
 
     public CastElectrolizer(Cast cast) {
         this.setCastingUnit(cast.getCastingUnit());
-        this.setDate(cast.getDate());
+        this.setCastDate(cast.getCastDate());
         this.setShift(cast.getShift());
         this.setCastNumber(cast.getCastNumber());
         this.setCustomerOrder(cast.getCustomerOrder());
@@ -48,7 +48,7 @@ public class CastElectrolizer {
 
     public CastElectrolizer(Cast cast, boolean isEnough) {
         this.setCastingUnit(cast.getCastingUnit());
-        this.setDate(cast.getDate());
+        this.setCastDate(cast.getCastDate());
         this.setShift(cast.getShift());
         this.setCastNumber(cast.getCastNumber());
         this.setCustomerOrder(cast.getCustomerOrder());
@@ -73,12 +73,12 @@ public class CastElectrolizer {
         this.castingUnit = castingUnit;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getCastDate() {
+        return castDate;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setCastDate(Date date) {
+        this.castDate = date;
     }
 
     public int getShift() {

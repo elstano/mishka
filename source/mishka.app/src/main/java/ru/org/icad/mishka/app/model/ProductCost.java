@@ -24,7 +24,7 @@ public class ProductCost {
     @Column(name = "COST")
     private BigDecimal cost;
     @Column(name = "PERIOD")
-    private Date date;
+    private Date period;
 
     public int getId() {
         return id;
@@ -66,12 +66,12 @@ public class ProductCost {
         this.cost = cost;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getPeriod() {
+        return period;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setPeriod(Date date) {
+        this.period = date;
     }
 
     @Override

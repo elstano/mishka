@@ -62,7 +62,7 @@ public class ProductCostLoader implements ExcelLoader<ProductCost> {
             }
             productCost.setForm(new Form(formId));
             productCost.setCost(cost);
-            productCost.setDate(date);
+            productCost.setPeriod(date);
 
             productCosts.add(productCost);
         }

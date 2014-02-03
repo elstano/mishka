@@ -17,7 +17,7 @@ public class Cast {
     @JoinColumn(name = ColumnName.CU_ID)
     private CastingUnit castingUnit;
     @Column(name = "CAST_DATE")
-    private Date date;
+    private Date castDate;
     @Column(name = "SHIFT")
     private int shift;
     @Column(name = "CAST_NUMBER")
@@ -46,12 +46,12 @@ public class Cast {
         this.castingUnit = castingUnit;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getCastDate() {
+        return castDate;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setCastDate(Date date) {
+        this.castDate = date;
     }
 
     public int getShift() {

@@ -29,7 +29,7 @@ public class CastService {
     ) {
         Cast cast = new Cast();
         cast.setCastingUnit(new CastingUnit(castingUnitId));
-        cast.setDate(date);
+        cast.setCastDate(date);
         cast.setShift(shift);
         cast.setCastNumber(castNumber);
         cast.setCustomerOrder(customerOrder);

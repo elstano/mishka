@@ -80,7 +80,7 @@ public class CastLoader implements ExcelLoader<Cast> {
 
             Cast cast = new Cast();
             cast.setCastingUnit(castingUnit);
-            cast.setDate(date);
+            cast.setCastDate(date);
             cast.setShift(shift);
             cast.setCastNumber(castNumber);
             cast.setCustomerOrder(customerOrder);

@@ -23,8 +23,8 @@ import java.util.Set;
 
 public class RestrictionDev {
 
-    private static final String CAST_QUERY = "SELECT c FROM Cast c  WHERE c.date >= ?1 AND c.date < ?2 ORDER BY c.castNumber DESC";
-    private static final String ELECTROLIZER_QUERY = "SELECT e FROM ElectrolizerPrognosis e  WHERE e.date >= ?1 AND e.date < ?2 ORDER BY e.date DESC";
+    private static final String CAST_QUERY = "SELECT c FROM Cast c  WHERE c.castDate >= :startDate AND c.castDate < :endDate ORDER BY c.castNumber DESC";
+    private static final String ELECTROLIZER_QUERY = "SELECT e FROM ElectrolizerPrognosis e  WHERE e.prognosDate >= :startDate AND e.prognosDate < :endDate ORDER BY e.prognosDate DESC";
     private static final String START_DATE ="01/05/2013";
     private static final String END_DATE = "01/06/2013";
 
@@ -35,8 +35,8 @@ public class RestrictionDev {
             EntityManagerFactory emf = Persistence.createEntityManagerFactory("MishkaService");
             EntityManager em = emf.createEntityManager();
             if (data != null)
-                for (T plant : data) {
-                    em.merge(plant);
+                for (T t : data) {
+                    em.merge(t);
                 }
 //            em.flush();
 
@@ -57,8 +57,8 @@ public class RestrictionDev {
             EntityManagerFactory emf = Persistence.createEntityManagerFactory("MishkaService");
             EntityManager em = emf.createEntityManager();
             TypedQuery<Cast> typedQuery = em.createQuery(CAST_QUERY, Cast.class);
-            typedQuery.setParameter(1, startDate, TemporalType.DATE);
-            typedQuery.setParameter(2, endDate, TemporalType.DATE);
+            typedQuery.setParameter("startDate", startDate, TemporalType.DATE);
+            typedQuery.setParameter("endDate", endDate, TemporalType.DATE);
 
             casts = typedQuery.getResultList();
             transaction.commit();
@@ -74,8 +74,8 @@ public class RestrictionDev {
             EntityManagerFactory emf = Persistence.createEntityManagerFactory("MishkaService");
             EntityManager em = emf.createEntityManager();
             TypedQuery<ElectrolizerPrognosis> typedQuery = em.createQuery(ELECTROLIZER_QUERY, ElectrolizerPrognosis.class);
-            typedQuery.setParameter(1, startDate, TemporalType.DATE);
-            typedQuery.setParameter(2, endDate, TemporalType.DATE);
+            typedQuery.setParameter("startDate", startDate, TemporalType.DATE);
+            typedQuery.setParameter("endDate", endDate, TemporalType.DATE);
 
             electrolizerPrognosises = typedQuery.getResultList();
             transaction.commit();
@@ -101,7 +101,6 @@ public class RestrictionDev {
         }
 
         saveOrUpdate(castElectrolizers);
-
     }
 
     @Nullable
