@@ -9,6 +9,8 @@ public class PrepareDistrOperation extends Operation {
 
     @Override
     public boolean activate() {
+        CastWrapper castWrapper = getCastWrappers().poll();
+
         return false;
     }
 

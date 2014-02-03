@@ -12,9 +12,4 @@ public class PrepareMixerOperation extends Operation {
 
         return false;
     }
-
-    @Override
-    public Date getProcessTime() {
-        return null;
-    }
 }

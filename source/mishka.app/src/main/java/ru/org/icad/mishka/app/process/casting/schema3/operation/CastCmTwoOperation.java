@@ -12,9 +12,4 @@ public class CastCmTwoOperation extends Operation {
     public boolean activate() {
         return false;
     }
-
-    @Override
-    public Date getProcessTime() {
-        return null;
-    }
 }

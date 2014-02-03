@@ -43,11 +43,13 @@ public abstract class Operation {
         this.activationDate = activationDate;
     }
 
-    public void init(Queue<CastWrapper> castWrappers) {
+    public void setCastWrappers(Queue<CastWrapper> castWrappers) {
         this.castWrappers = castWrappers;
     }
 
-    public abstract boolean activate();
+    public Queue<CastWrapper> getCastWrappers() {
+        return castWrappers;
+    }
 
-    public abstract Date getProcessTime();
+    public abstract boolean activate();
 }

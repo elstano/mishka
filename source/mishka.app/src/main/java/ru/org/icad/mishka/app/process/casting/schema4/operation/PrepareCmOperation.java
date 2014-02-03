@@ -20,9 +20,4 @@ public class PrepareCmOperation extends Operation {
 
         return true;
     }
-
-    @Override
-    public Date getProcessTime() {
-        return null;
-    }
 }

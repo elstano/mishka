@@ -34,7 +34,6 @@ public class CastingDev {
             .build();
 
     public void castingProcess() {
-
         List<Cast> casts = Lists.newArrayList();
         Date startDate = stringToDate(START_DATE);
         Date endDate = stringToDate(END_DATE);
@@ -61,8 +60,7 @@ public class CastingDev {
 
         for (Schema schema : CAST_UNIT_SCHEMA_MAP.values()) {
             final Operation operation = schema.getInitOperations().iterator().next();
-            operation.init(schema.getQueueCastWrapper());
-
+            operation.setCastWrappers(schema.getQueueCastWrapper());
             operation.activate();
         }
 

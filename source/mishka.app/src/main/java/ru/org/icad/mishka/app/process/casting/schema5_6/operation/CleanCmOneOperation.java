@@ -11,9 +11,4 @@ public class CleanCmOneOperation extends Operation {
     public boolean activate() {
         return false;
     }
-
-    @Override
-    public Date getProcessTime() {
-        return null;
-    }
 }
