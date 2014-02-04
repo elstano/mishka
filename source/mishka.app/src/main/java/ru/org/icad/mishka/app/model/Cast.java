@@ -6,6 +6,14 @@ import ru.org.icad.mishka.app.TableName;
 import javax.persistence.*;
 import java.sql.Date;
 
+@NamedQueries({
+        @NamedQuery(name = "Cast.findAll",
+                query = "SELECT c FROM Cast c"),
+        @NamedQuery(name = "Cast.findByPrimaryKey",
+                query = "SELECT c FROM Cast c WHERE c.id = :id"),
+        @NamedQuery(name = "Cast.getCastsBetweenDate",
+                query = "SELECT c FROM Cast c  WHERE c.castDate >= :startDate AND c.castDate < :endDate ORDER BY c.castNumber ASC")
+})
 @Entity
 @Table(name = TableName.CAST)
 public class Cast {

@@ -7,6 +7,12 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Date;
 
+@NamedQueries({
+        @NamedQuery(name = "CastingUnit.findAll",
+                query = "SELECT c FROM CastingUnit c"),
+        @NamedQuery(name = "CastingUnit.findByPrimaryKey",
+                query = "SELECT c FROM CastingUnit c WHERE c.id = :id")
+})
 @Entity
 @Table(name = TableName.CASTING_UNIT)
 public class CastingUnit {

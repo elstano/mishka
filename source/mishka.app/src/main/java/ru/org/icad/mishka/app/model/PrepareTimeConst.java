@@ -4,16 +4,26 @@ import ru.org.icad.mishka.app.ColumnName;
 import ru.org.icad.mishka.app.TableName;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
+@NamedQueries({
+        @NamedQuery(name = "PrepareTimeConst.findAll",
+                query = "SELECT p FROM PrepareTimeConst p"),
+        @NamedQuery(name = "PrepareTimeConst.findAllWhereCastingUnitCollectorIsNotNull",
+                query = "SELECT p FROM PrepareTimeConst p WHERE p.castingUnitCollector.id IS NOT NULL"),
+        @NamedQuery(name = "PrepareTimeConst.findAllWhereCastingUnitDistributorIsNotNull",
+                query = "SELECT p FROM PrepareTimeConst p WHERE p.castingUnitDistributor.id IS NOT NULL"),
+        @NamedQuery(name = "PrepareTimeConst.findAllWhereCastingUnitCastingMachineIsNotNull",
+                query = "SELECT p FROM PrepareTimeConst p WHERE p.castingUnitCastingMachine.id IS NOT NULL")
+})
 @Entity
 @Table(name = TableName.PREPARE_TIME_CONST)
 public class PrepareTimeConst {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     @OneToOne
+    @JoinColumn(name = ColumnName.COLLE_ID)
     private CastingUnitCollector castingUnitCollector;
     @OneToOne
     @JoinColumn(name = ColumnName.DISTR_ID)
