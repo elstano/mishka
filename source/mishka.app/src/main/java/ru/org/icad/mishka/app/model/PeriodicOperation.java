@@ -6,6 +6,13 @@ import ru.org.icad.mishka.app.TableName;
 import javax.persistence.*;
 import java.sql.Date;
 
+
+@NamedQueries({
+        @NamedQuery(name = "PeriodicOperation.findAll",
+                query = "SELECT p FROM PeriodicOperation p"),
+        @NamedQuery(name = "PeriodicOperation.findAllWhereCastingUnitCollectorIsNotNull",
+                query = "SELECT p FROM PeriodicOperation p WHERE p.castingUnitCollector.id IS NOT NULL")
+})
 @Entity
 @Table(name = TableName.PERIODIC_OPERATION)
 public class PeriodicOperation {
