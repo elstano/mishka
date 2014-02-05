@@ -2,7 +2,6 @@ package ru.org.icad.mishka.app.cache;
 
 import ru.org.icad.mishka.app.model.PrepareTimeConst;
 
-import javax.annotation.PostConstruct;
 import javax.inject.Singleton;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -12,12 +11,21 @@ import java.util.concurrent.ConcurrentMap;
 
 @Singleton
 public class PrepareTimeConstCache {
+
     @PersistenceContext(unitName = "MishkaService")
     private EntityManager em;
 
     private ConcurrentMap<Integer, PrepareTimeConst> prepareTimeConstCollectorConcurrentMap;
     private ConcurrentMap<Integer, PrepareTimeConst> prepareTimeConstDistributorConcurrentMap;
     private ConcurrentMap<Integer, PrepareTimeConst> prepareTimeConstCastingMachineConcurrentMap;
+
+    public PrepareTimeConstCache() {
+        prepareTimeConstCollectorConcurrentMap = new ConcurrentHashMap<>();
+        prepareTimeConstDistributorConcurrentMap = new ConcurrentHashMap<>();
+        prepareTimeConstCastingMachineConcurrentMap = new ConcurrentHashMap<>();
+
+        loadPrepareTimeConsts();
+    }
 
     private void loadPrepareTimeConsts() {
         List<PrepareTimeConst> collectorPrepareTimeConsts
@@ -50,14 +58,5 @@ public class PrepareTimeConstCache {
 
     public PrepareTimeConst getPrepareTimeConstForCastingMachine(Integer id) {
         return prepareTimeConstCastingMachineConcurrentMap.get(id);
-    }
-
-    @PostConstruct
-    public void init() {
-        prepareTimeConstCollectorConcurrentMap = new ConcurrentHashMap<>();
-        prepareTimeConstDistributorConcurrentMap = new ConcurrentHashMap<>();
-        prepareTimeConstCastingMachineConcurrentMap = new ConcurrentHashMap<>();
-
-        loadPrepareTimeConsts();
     }
 }
