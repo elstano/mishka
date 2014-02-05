@@ -1,5 +1,6 @@
 package ru.org.icad.mishka.app.process.casting.schema1_2;
 
+import com.google.common.collect.Maps;
 import com.google.common.collect.Queues;
 import ru.org.icad.mishka.app.process.casting.CastWrapper;
 import ru.org.icad.mishka.app.process.casting.Operation;
@@ -8,11 +9,16 @@ import ru.org.icad.mishka.app.process.casting.schema1_2.operation.PrepareDistrOp
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Queue;
 
 public class Schema1_2 implements Schema {
 
     private static final Queue<CastWrapper> CAST_WRAPPERS = Queues.newSynchronousQueue();
+    private static final Map<String, Operation> OPERATION_MAP = Maps.newConcurrentMap();
+
+    public Schema1_2() {
+    }
 
     @Override
     public List<? extends Operation> getInitOperations() {

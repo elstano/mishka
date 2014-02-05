@@ -1,9 +1,9 @@
-package ru.org.icad.mishka.ejb.cache;
+package ru.org.icad.mishka.app.cache;
 
 import ru.org.icad.mishka.app.model.CastingUnit;
 
 import javax.annotation.PostConstruct;
-import javax.ejb.*;
+import javax.inject.Singleton;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
@@ -11,9 +11,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 @Singleton
-@LocalBean
-@Startup
-public class CastingUnitCacheBean {
+public class CastingUnitCache {
     @PersistenceContext(unitName = "MishkaService")
     private EntityManager em;
 
@@ -26,7 +24,6 @@ public class CastingUnitCacheBean {
         }
     }
 
-    @Lock(LockType.READ)
     public CastingUnit getCastingUnit(Integer id) {
         return castingUnitConcurrentMap.get(id);
     }

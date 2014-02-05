@@ -1,9 +1,9 @@
-package ru.org.icad.mishka.ejb.cache;
+package ru.org.icad.mishka.app.cache;
 
 import ru.org.icad.mishka.app.model.PrepareTimeConst;
 
 import javax.annotation.PostConstruct;
-import javax.ejb.*;
+import javax.inject.Singleton;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
@@ -11,9 +11,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 @Singleton
-@LocalBean
-@Startup
-public class PrepareTimeConstCacheBean {
+public class PrepareTimeConstCache {
     @PersistenceContext(unitName = "MishkaService")
     private EntityManager em;
 
@@ -42,17 +40,14 @@ public class PrepareTimeConstCacheBean {
         }
     }
 
-    @Lock(LockType.READ)
     public PrepareTimeConst getPrepareTimeConstForCollector(Integer id) {
         return prepareTimeConstCollectorConcurrentMap.get(id);
     }
 
-    @Lock(LockType.READ)
     public PrepareTimeConst getPrepareTimeConstForDistributor(Integer id) {
         return prepareTimeConstDistributorConcurrentMap.get(id);
     }
 
-    @Lock(LockType.READ)
     public PrepareTimeConst getPrepareTimeConstForCastingMachine(Integer id) {
         return prepareTimeConstCastingMachineConcurrentMap.get(id);
     }
