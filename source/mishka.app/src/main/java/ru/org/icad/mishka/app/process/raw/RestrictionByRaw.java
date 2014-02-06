@@ -2,8 +2,6 @@ package ru.org.icad.mishka.app.process.raw;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import ru.org.icad.mishka.app.model.Cast;
 import ru.org.icad.mishka.app.model.CustomerOrder;
 import ru.org.icad.mishka.app.model.ElectrolizerPrognosis;
@@ -12,8 +10,21 @@ import ru.org.icad.mishka.app.model.Product;
 import java.util.*;
 
 public class RestrictionByRaw {
-    private static final Logger LOGGER = LoggerFactory.getLogger(RestrictionByRaw.class);
 
+    private static final Comparator<ElectrolizerPrognosis> ELECTROLYZER_COMPARATOR = new Comparator<ElectrolizerPrognosis>() {
+        @Override
+        public int compare(ElectrolizerPrognosis o1, ElectrolizerPrognosis o2) {
+            if (o1.getShift() > o2.getShift()) {
+                return 1;
+            }
+
+            if (o1.getShift() == o2.getShift()) {
+                return 0;
+            }
+
+            return -1;
+        }
+    };
 
     private RestrictionByRaw() {
     }
@@ -32,7 +43,7 @@ public class RestrictionByRaw {
 
         for (Map.Entry<Cast, List<ElectrolizerPrognosis>> entry : currentCastMap.entrySet()) {
             Cast currentCast = entry.getKey();
-            int castCapacity = currentCast.getCustomerOrder().getTonnage();
+            int castCapacity = currentCast.getIngotCount() * currentCast.getIngotInBlankCount() * 15 / 1000;
             int electrolyzersCapacity = 0;
 
             List<ElectrolizerPrognosis> electrolyzerList = entry.getValue();
@@ -77,7 +88,6 @@ public class RestrictionByRaw {
 
             if (electrolyzersCapacity >= castCapacity) {
                 resultOrderMap.put(currentCast, usedElectrolyzer);
-                LOGGER.info("Cast: id=" + currentCast.getId() + " ,usedElectrolyzer=" + listToString(usedElectrolyzer));
             }
         }
 
@@ -143,7 +153,6 @@ public class RestrictionByRaw {
         return electrolyzerMap;
     }
 
-
     private static Map<Cast, List<ElectrolizerPrognosis>> sortByElectrolyzerCapacity(Map<Cast, List<ElectrolizerPrognosis>> unsortMap) {
         final LinkedList<Map.Entry<Cast, List<ElectrolizerPrognosis>>> entries = Lists.newLinkedList(unsortMap.entrySet());
         Collections.sort(entries, new Comparator<Map.Entry<Cast, List<ElectrolizerPrognosis>>>() {
@@ -179,26 +188,10 @@ public class RestrictionByRaw {
         return capacity;
     }
 
-    private static final Comparator<ElectrolizerPrognosis> ELECTROLYZER_COMPARATOR = new Comparator<ElectrolizerPrognosis>() {
-        @Override
-        public int compare(ElectrolizerPrognosis o1, ElectrolizerPrognosis o2) {
-            if (o1.getShift() > o2.getShift()) {
-                return 1;
-            }
-
-            if (o1.getShift() == o2.getShift()) {
-                return 0;
-            }
-
-            return -1;
-        }
-    };
-
     private static String listToString(List<ElectrolizerPrognosis> electrolizerPrognosises) {
         String listString = "";
 
-        for (ElectrolizerPrognosis electrolizerPrognosis : electrolizerPrognosises)
-        {
+        for (ElectrolizerPrognosis electrolizerPrognosis : electrolizerPrognosises) {
             listString += electrolizerPrognosis + "\t";
         }
 
