@@ -2,8 +2,11 @@ package ru.org.icad.mishka.app.util;
 
 import ru.org.icad.mishka.app.model.Cast;
 import ru.org.icad.mishka.app.model.CustomerOrder;
+import ru.org.icad.mishka.app.model.Form;
 
 public class CastUtil {
+
+    private static final double RO = 2.741 * Math.pow(10, -9);
 
     private CastUtil() {
     }
@@ -14,28 +17,26 @@ public class CastUtil {
         return cast.getIngotInBlankCount() * customerOrder.getLength() + customerOrder.getProduct().getClipping();
     }
 
-    public static int getSlabsVolume(Cast cast)   {
-        return (int) (cast.getIngotCount() * getLengthBlank(cast) * cast.getCustomerOrder().getHeight() * cast.getCustomerOrder().getWidth() * 2.741 * Math.pow(10, 9));
+    public static double getTonnage(Cast cast) throws Exception {
+        final CustomerOrder customerOrder = cast.getCustomerOrder();
+        final int formId = customerOrder.getProduct().getForm().getId();
 
+        if (Form.SLAB == formId) {
+            return cast.getBlankCount() * getLengthBlank(cast) * customerOrder.getHeight() * customerOrder.getWidth() * RO;
+        }
+
+        if (Form.BILLET == formId) {
+            return cast.getBlankCount() * getLengthBlank(cast) * Math.PI / 4 * Math.pow(customerOrder.getDiameter(), 2) * RO;
+        }
+
+        if (Form.INGOT == formId) {
+            return cast.getBlankCount() * cast.getIngotInBlankCount() * customerOrder.getWeight();
+        }
+
+        throw new Exception();
     }
 
-    public static int getTbarsVolume(Cast cast) {
-        return cast.getIngotCount() * getLengthBlank(cast);
-    }
-
-    public static int getBillitsVolume(Cast cast) {
-        return (int) (cast.getIngotCount() * getLengthBlank(cast) * Math.PI / 4 * Math.sqrt(cast.getCustomerOrder().getDiameter()) * 2.741 * Math.pow(10, 9));
-}
-
-    public static int getSlabsCobVolume(Cast cast) {
-        return getSlabsVolume(cast) * cast.getCustomerOrder().getProduct().getCob();
-    }
-
-    public static int getTbarsCobVolume(Cast cast) {
-        return getTbarsVolume(cast) * cast.getCustomerOrder().getProduct().getCob();
-    }
-
-    public static int getBillitsCobVolume(Cast cast) {
-        return getBillitsVolume(cast) * cast.getCustomerOrder().getProduct().getCob();
+    public static double getCobTonnage(Cast cast) throws Exception {
+        return getTonnage(cast) * cast.getCustomerOrder().getProduct().getCob();
     }
 }

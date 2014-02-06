@@ -33,10 +33,12 @@ public class Cast {
     @OneToOne
     @JoinColumn(name = ColumnName.ORDER_ID)
     private CustomerOrder customerOrder;
-    @Column(name = "INGOT_COUNT")
-    private int ingotCount;
+    @Column(name = "BLANK_COUNT")
+    private int blankCount;
     @Column(name = "INGOT_IN_BLANK_COUNT")
     private int ingotInBlankCount;
+    @Column(name = "INGOT_COUNT")
+    private int ingotCount;
 
     public int getId() {
         return id;
@@ -58,8 +60,8 @@ public class Cast {
         return castDate;
     }
 
-    public void setCastDate(Date date) {
-        this.castDate = date;
+    public void setCastDate(Date castDate) {
+        this.castDate = castDate;
     }
 
     public int getShift() {
@@ -86,12 +88,12 @@ public class Cast {
         this.customerOrder = customerOrder;
     }
 
-    public int getIngotCount() {
-        return ingotCount;
+    public int getBlankCount() {
+        return blankCount;
     }
 
-    public void setIngotCount(int ingotCount) {
-        this.ingotCount = ingotCount;
+    public void setBlankCount(int blankCount) {
+        this.blankCount = blankCount;
     }
 
     public int getIngotInBlankCount() {
@@ -100,6 +102,14 @@ public class Cast {
 
     public void setIngotInBlankCount(int ingotInBlankCount) {
         this.ingotInBlankCount = ingotInBlankCount;
+    }
+
+    public int getIngotCount() {
+        return ingotCount;
+    }
+
+    public void setIngotCount(int ingotCount) {
+        this.ingotCount = ingotCount;
     }
 
     @Override

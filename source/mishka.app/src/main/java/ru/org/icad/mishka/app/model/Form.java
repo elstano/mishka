@@ -13,6 +13,10 @@ import javax.persistence.Table;
 @Table(name = TableName.FORM)
 public class Form {
 
+    public static int BILLET = 4;
+    public static int INGOT = 7;
+    public static int SLAB = 13;
+
     @Id
     @Column(name = ColumnName.FORM_ID)
     private int id;

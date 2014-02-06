@@ -7,10 +7,10 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.org.icad.mishka.app.util.ExcelUtil;
 import ru.org.icad.mishka.app.model.Cast;
 import ru.org.icad.mishka.app.model.CastingUnit;
 import ru.org.icad.mishka.app.model.CustomerOrder;
+import ru.org.icad.mishka.app.util.ExcelUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -84,7 +84,7 @@ public class CastLoader implements ExcelLoader<Cast> {
             cast.setShift(shift);
             cast.setCastNumber(castNumber);
             cast.setCustomerOrder(customerOrder);
-            cast.setIngotCount(ingotCount);
+            cast.setBlankCount(ingotCount);
             cast.setIngotInBlankCount(ingotInBlankCount);
 
             casts.add(cast);

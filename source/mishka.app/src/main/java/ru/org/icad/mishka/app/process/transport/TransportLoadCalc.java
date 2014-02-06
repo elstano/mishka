@@ -13,7 +13,7 @@ public class TransportLoadCalc {
 
         int transportCapacity = customerOrder.getTransportCapacity();
 
-        if ("BILLET".equals(form.getName()) || "SLAB".equals(form.getName())) {
+        if (Form.BILLET == form.getId() || Form.SLAB == form.getId()) {
             transportCapacity *= ingotWeight;
         }
 

@@ -5,6 +5,12 @@ import ru.org.icad.mishka.app.TableName;
 
 import javax.persistence.*;
 
+@NamedQueries({
+        @NamedQuery(name = "CastingUnitCastingMachine.findAll",
+                query = "SELECT c FROM CastingUnitCastingMachine c"),
+        @NamedQuery(name = "CastingUnitCastingMachine.findByPrimaryKey",
+                query = "SELECT c FROM CastingUnitCastingMachine c WHERE c.id = :id")
+})
 @Entity
 @Table(name = TableName.CU_CASTING_MACHINE)
 public class CastingUnitCastingMachine {
