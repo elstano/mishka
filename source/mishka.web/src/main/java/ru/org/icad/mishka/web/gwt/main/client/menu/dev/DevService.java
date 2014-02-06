@@ -17,4 +17,6 @@ public interface DevService extends RemoteService {
     void restrictionProcess();
 
     void castingProcess();
+
+    void transportProcess();
 }

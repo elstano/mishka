@@ -283,10 +283,72 @@ public class DevPresenter implements OptionPresenter {
             }
         });
 
+        Button transportButton = new Button("Расчет загрузки транспорта");
+        castingButton.addClickHandler(new ClickHandler() {
+            @Override
+            public void onClick(ClickEvent clickEvent) {
+                devServiceAsync.getTableContent("TEST", new AsyncCallback<String>() {
+
+                    @Override
+                    public void onFailure(Throwable throwable) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(final String tableContent) {
+                        final PopupPanel popupPanel = new PopupPanel(true);
+
+                        VerticalPanel verticalPanel = new VerticalPanel();
+
+                        Button startCalcRestriction = new Button("Начать расчет");
+                        Button showResultRestriction = new Button("Показать результат расчета");
+                        showResultRestriction.addClickHandler(new ClickHandler() {
+                            @Override
+                            public void onClick(ClickEvent clickEvent) {
+                                final PopupPanel popup = new PopupPanel(true);
+
+                                VerticalPanel verticalPanel = new VerticalPanel();
+                                HTML html = new HTML("<p>" + tableContent + "</p>");
+                                verticalPanel.add(html);
+
+                                popup.add(verticalPanel);
+                                popup.setPopupPositionAndShow(new PopupPanel.PositionCallback() {
+                                    @Override
+                                    public void setPosition(int offsetWidth, int offsetHeight) {
+                                        int left = (Window.getClientWidth() - offsetWidth) / 3;
+                                        int top = (Window.getClientHeight() - offsetHeight) / 3;
+                                        popup.setPopupPosition(left, top);
+                                    }
+                                });
+                            }
+                        });
+
+
+                        verticalPanel.add(startCalcRestriction);
+                        verticalPanel.add(showResultRestriction);
+
+                        popupPanel.add(verticalPanel);
+                        popupPanel.setPopupPositionAndShow(new PopupPanel.PositionCallback() {
+                            @Override
+                            public void setPosition(int offsetWidth, int offsetHeight) {
+                                int left = (Window.getClientWidth() - offsetWidth) / 3;
+                                int top = (Window.getClientHeight() - offsetHeight) / 3;
+                                popupPanel.setPopupPosition(left, top);
+                            }
+                        });
+
+                    }
+                });
+            }
+        });
+
+
         initializedPanel.setWidget(0, 4, showTablesButton);
         initializedPanel.setWidget(2, 4, restrictionByRawButton);
         initializedPanel.setWidget(4, 4, castingButton);
         initializedPanel.setWidget(6, 4, homogenizationButton);
+        initializedPanel.setWidget(8, 4, transportButton);
+
 
         MainView.instance.getMainLayout().add(initializedPanel);
 

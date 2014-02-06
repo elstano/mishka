@@ -4,6 +4,7 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import ru.org.icad.mishka.app.dev.CastingDev;
 import ru.org.icad.mishka.app.dev.DbToolDev;
 import ru.org.icad.mishka.app.dev.RestrictionDev;
+import ru.org.icad.mishka.app.dev.TransportDev;
 import ru.org.icad.mishka.web.gwt.main.client.menu.dev.DevService;
 
 import java.util.List;
@@ -44,5 +45,12 @@ public class DevServiceImp extends RemoteServiceServlet implements DevService {
         CastingDev castingDev = new CastingDev();
 
         castingDev.castingProcess();
+    }
+
+    @Override
+    public void transportProcess() {
+        TransportDev transportDev = new TransportDev();
+
+        transportDev.transportProcess();
     }
 }
