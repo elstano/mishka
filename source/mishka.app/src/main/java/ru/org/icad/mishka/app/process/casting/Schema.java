@@ -1,7 +1,8 @@
 package ru.org.icad.mishka.app.process.casting;
 
+import java.util.Deque;
 import java.util.List;
-import java.util.Queue;
+import java.util.Map;
 
 public interface Schema {
 
@@ -9,5 +10,10 @@ public interface Schema {
 
     public void addToSchemeCasts(CastWrapper castWrapper);
 
-    public Queue<CastWrapper> getQueueCastWrapper();
+    public Deque<CastWrapper> getDequeCastWrapper();
+
+    public Map<String, Operation> getOperationMap();
+
+
+    public Deque<CastWrapper> getCastingResult();
 }

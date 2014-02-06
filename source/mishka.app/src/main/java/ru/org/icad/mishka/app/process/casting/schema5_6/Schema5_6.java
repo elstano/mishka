@@ -8,12 +8,13 @@ import ru.org.icad.mishka.app.process.casting.schema5_6.operation.PrepareCmOneOp
 import ru.org.icad.mishka.app.process.casting.schema5_6.operation.PrepareCmTwoOperation;
 
 import java.util.Arrays;
+import java.util.Deque;
 import java.util.List;
-import java.util.Queue;
+import java.util.Map;
 
 public class Schema5_6 implements Schema {
 
-    private static final Queue<CastWrapper> CAST_WRAPPERS = Queues.newSynchronousQueue();
+    private Deque<CastWrapper> CAST_WRAPPERS = Queues.newLinkedBlockingDeque();
 
     @Override
     public List<? extends Operation> getInitOperations() {
@@ -26,7 +27,17 @@ public class Schema5_6 implements Schema {
     }
 
     @Override
-    public Queue<CastWrapper> getQueueCastWrapper() {
+    public Deque<CastWrapper> getDequeCastWrapper() {
         return CAST_WRAPPERS;
+    }
+
+    @Override
+    public Map<String, Operation> getOperationMap() {
+        return null;
+    }
+
+    @Override
+    public Deque<CastWrapper> getCastingResult() {
+        return null;
     }
 }

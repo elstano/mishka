@@ -7,6 +7,8 @@ import java.sql.Date;
 public class CastWrapper {
 
     private int castId;
+    private long prepareTime;
+    private long castTime;
     private Date startDate;
     private Date endDate;
     private Cast cast;
@@ -21,6 +23,22 @@ public class CastWrapper {
 
     public void setCastId(int castId) {
         this.castId = castId;
+    }
+
+    public long getPrepareTime() {
+        return prepareTime;
+    }
+
+    public void setPrepareTime(long prepareTime) {
+        this.prepareTime = prepareTime;
+    }
+
+    public long getCastTime() {
+        return castTime;
+    }
+
+    public void setCastTime(long castTime) {
+        this.castTime = castTime;
     }
 
     public Date getStartDate() {

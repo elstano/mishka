@@ -1,22 +1,26 @@
 package ru.org.icad.mishka.app.process.casting.schema4.operation;
 
-import ru.org.icad.mishka.app.process.casting.CastWrapper;
 import ru.org.icad.mishka.app.process.casting.Operation;
 import ru.org.icad.mishka.app.process.casting.Schema;
 
-public class CastCmOperation extends Operation {
+public class CleanCollectorOperation extends Operation {
 
     private Schema schema;
 
-    public CastCmOperation(Schema schema) {
+    public CleanCollectorOperation(Schema schema) {
         this.schema = schema;
     }
 
     @Override
     public boolean activate() {
-        CastWrapper castWrapper = schema.getDequeCastWrapper().poll();
+        if (isNeedClean()) {
 
-        schema.getCastingResult().addLast(castWrapper);
+        }
+
+        return true;
+    }
+
+    private boolean isNeedClean() {
         return false;
     }
 }

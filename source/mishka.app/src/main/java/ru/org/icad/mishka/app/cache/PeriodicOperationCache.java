@@ -2,25 +2,27 @@ package ru.org.icad.mishka.app.cache;
 
 import ru.org.icad.mishka.app.model.PeriodicOperation;
 
-import javax.inject.Singleton;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-@Singleton
 public class PeriodicOperationCache {
 
+    private static final PeriodicOperationCache INSTANCE = new PeriodicOperationCache();
     @PersistenceContext(unitName = "MishkaService")
     private EntityManager em;
-
     private ConcurrentMap<Integer, PeriodicOperation> periodicOperationCollectorConcurrentMap;
 
-    public PeriodicOperationCache() {
+    private PeriodicOperationCache() {
         periodicOperationCollectorConcurrentMap = new ConcurrentHashMap<>();
 
         loadPeriodicOperation();
+    }
+
+    public static PeriodicOperationCache getInstance() {
+        return INSTANCE;
     }
 
     private void loadPeriodicOperation() {
@@ -31,4 +33,7 @@ public class PeriodicOperationCache {
         }
     }
 
+    public PeriodicOperation getPeriodicOperationForCollector(Integer id) {
+        return periodicOperationCollectorConcurrentMap.get(id);
+    }
 }

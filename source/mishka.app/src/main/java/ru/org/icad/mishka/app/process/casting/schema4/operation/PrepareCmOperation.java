@@ -1,11 +1,15 @@
 package ru.org.icad.mishka.app.process.casting.schema4.operation;
 
-import ru.org.icad.mishka.app.process.casting.CastWrapper;
 import ru.org.icad.mishka.app.process.casting.Operation;
-
-import java.sql.Date;
+import ru.org.icad.mishka.app.process.casting.Schema;
 
 public class PrepareCmOperation extends Operation {
+
+    private Schema schema;
+
+    public PrepareCmOperation(Schema schema) {
+        this.schema = schema;
+    }
 
     @Override
     public boolean activate() {

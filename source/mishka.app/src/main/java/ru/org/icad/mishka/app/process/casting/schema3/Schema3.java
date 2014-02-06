@@ -7,12 +7,13 @@ import ru.org.icad.mishka.app.process.casting.Schema;
 import ru.org.icad.mishka.app.process.casting.schema3.operation.PrepareMixerOperation;
 
 import java.util.Arrays;
+import java.util.Deque;
 import java.util.List;
-import java.util.Queue;
+import java.util.Map;
 
 public class Schema3 implements Schema {
 
-    private static final Queue<CastWrapper> CAST_WRAPPERS = Queues.newSynchronousQueue();
+    private static final Deque<CastWrapper> CAST_WRAPPERS = Queues.newLinkedBlockingDeque();
 
     public Schema3() {
     }
@@ -30,8 +31,18 @@ public class Schema3 implements Schema {
     }
 
     @Override
-    public Queue<CastWrapper> getQueueCastWrapper() {
+    public Deque<CastWrapper> getDequeCastWrapper() {
         return CAST_WRAPPERS;
+    }
+
+    @Override
+    public Map<String, Operation> getOperationMap() {
+        return null;
+    }
+
+    @Override
+    public Deque<CastWrapper> getCastingResult() {
+        return null;
     }
 
 }
