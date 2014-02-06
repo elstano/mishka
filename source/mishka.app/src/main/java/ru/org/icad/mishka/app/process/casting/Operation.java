@@ -5,18 +5,18 @@ import java.util.Queue;
 
 public abstract class Operation {
 
-    private int castId;
+    private CastWrapper castWrapper;
     private int activationCount;
     private int activationMaxCount;
     private Date activationDate;
     private Queue<CastWrapper> castWrappers;
 
-    public int getCastId() {
-        return castId;
+    public CastWrapper getCastWrapper() {
+        return castWrapper;
     }
 
-    public void setCastId(int castId) {
-        this.castId = castId;
+    public void setCastWrapper(CastWrapper castWrapper) {
+        this.castWrapper = castWrapper;
     }
 
     public int getActivationCount() {

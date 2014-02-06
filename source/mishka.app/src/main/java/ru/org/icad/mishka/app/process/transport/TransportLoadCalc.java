@@ -2,12 +2,13 @@ package ru.org.icad.mishka.app.process.transport;
 
 import ru.org.icad.mishka.app.model.CustomerOrder;
 import ru.org.icad.mishka.app.model.Form;
+import ru.org.icad.mishka.app.util.CustomerOrderUtil;
 
 public class TransportLoadCalc {
 
-    public OrderTransport calculateOrderTransport(CustomerOrder customerOrder) {
+    public OrderTransport calculateOrderTransport(CustomerOrder customerOrder) throws Exception {
 
-        int ingotWeight = 10;
+        double ingotWeight = CustomerOrderUtil.getIngotWeight(customerOrder);
 
         Form form = customerOrder.getProduct().getForm();
 
@@ -23,7 +24,7 @@ public class TransportLoadCalc {
         // ToDo Обрезать остаток от деления
         orderTransport.setOrderContainers(orderTonnageMax / transportCapacity);
 
-        if ("BILLET".equals(form.getName()) || "SLAB".equals(form.getName())) {
+        if (Form.BILLET == form.getId() || Form.SLAB == form.getId()) {
             orderTransport.setOrderIngots(orderTransport.getOrderContainers() * customerOrder.getTransportCapacity());
         }
 

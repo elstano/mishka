@@ -14,6 +14,5 @@ public interface Schema {
 
     public Map<String, Operation> getOperationMap();
 
-
     public Deque<CastWrapper> getCastingResult();
 }

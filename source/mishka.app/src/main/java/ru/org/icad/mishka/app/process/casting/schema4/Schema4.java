@@ -28,7 +28,6 @@ public class Schema4 implements Schema {
         PeriodicCMOperation periodicCMOperation = new PeriodicCMOperation(this);
         PrepareCmOperation prepareCmOperation = new PrepareCmOperation(this);
 
-
         operationMap.put("cleanMixer", cleanCollectorOperation);
         operationMap.put("prepareMixer", prepareCollectorOperation);
         operationMap.put("castCm", castCmOperation);

@@ -5,7 +5,6 @@ import ru.org.icad.mishka.app.process.casting.CastWrapper;
 import ru.org.icad.mishka.app.process.casting.Operation;
 import ru.org.icad.mishka.app.process.casting.Schema;
 import ru.org.icad.mishka.app.process.casting.schema5_6.operation.PrepareCmOneOperation;
-import ru.org.icad.mishka.app.process.casting.schema5_6.operation.PrepareCmTwoOperation;
 
 import java.util.Arrays;
 import java.util.Deque;
@@ -18,7 +17,7 @@ public class Schema5_6 implements Schema {
 
     @Override
     public List<? extends Operation> getInitOperations() {
-        return Arrays.asList(new PrepareCmOneOperation(), new PrepareCmTwoOperation());
+        return Arrays.asList(new PrepareCmOneOperation());
     }
 
     @Override
