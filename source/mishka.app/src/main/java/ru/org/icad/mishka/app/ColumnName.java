@@ -1,6 +1,6 @@
 package ru.org.icad.mishka.app;
 
-public class ColumnName {
+public final class ColumnName {
 
     public static final String CU_ID = "CU_ID";
     public static final String ORDER_ID = "ORDER_ID";

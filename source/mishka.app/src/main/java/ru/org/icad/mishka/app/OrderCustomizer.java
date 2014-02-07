@@ -8,6 +8,5 @@ public class OrderCustomizer implements DescriptorCustomizer {
     @Override
     public void customize(ClassDescriptor descriptor) {
         descriptor.setShouldOrderMappings(false);
-
     }
 }

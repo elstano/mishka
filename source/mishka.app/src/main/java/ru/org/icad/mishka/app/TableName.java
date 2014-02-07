@@ -1,6 +1,6 @@
 package ru.org.icad.mishka.app;
 
-public class TableName {
+public final class TableName {
 
     public static final String OPERATION = "OPERATION";
     public static final String CASTING_SPEED = "CASTING_SPEED";
