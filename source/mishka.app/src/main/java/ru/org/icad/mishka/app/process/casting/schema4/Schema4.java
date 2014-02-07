@@ -2,6 +2,7 @@ package ru.org.icad.mishka.app.process.casting.schema4;
 
 import com.google.common.collect.Maps;
 import com.google.common.collect.Queues;
+import ru.org.icad.mishka.app.OperationName;
 import ru.org.icad.mishka.app.process.casting.CastWrapper;
 import ru.org.icad.mishka.app.process.casting.Operation;
 import ru.org.icad.mishka.app.process.casting.Schema;
@@ -25,14 +26,14 @@ public class Schema4 implements Schema {
         CleanCollectorOperation cleanCollectorOperation = new CleanCollectorOperation(this);
         PrepareCollectorOperation prepareCollectorOperation = new PrepareCollectorOperation(this);
         CastCmOperation castCmOperation = new CastCmOperation(this);
-        PeriodicCMOperation periodicCMOperation = new PeriodicCMOperation(this);
+        PeriodicCMOperation periodicCmOperation = new PeriodicCMOperation(this);
         PrepareCmOperation prepareCmOperation = new PrepareCmOperation(this);
 
-        operationMap.put("cleanMixer", cleanCollectorOperation);
-        operationMap.put("prepareMixer", prepareCollectorOperation);
-        operationMap.put("castCm", castCmOperation);
-        operationMap.put("periodicCM", periodicCMOperation);
-        operationMap.put("prepareCm", prepareCmOperation);
+        operationMap.put(OperationName.CLEAN_COLLECTOR, cleanCollectorOperation);
+        operationMap.put(OperationName.PREPARE_COLLECTOR, prepareCollectorOperation);
+        operationMap.put(OperationName.CAST_CM, castCmOperation);
+        operationMap.put(OperationName.PERIODIC_CM, periodicCmOperation);
+        operationMap.put(OperationName.PREPARE_CM, prepareCmOperation);
     }
 
     @Override
