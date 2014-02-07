@@ -8,7 +8,7 @@ public class PrepareCmOperation extends Operation {
     private static final Logger LOGGER = LoggerFactory.getLogger(PrepareCmOperation.class);
 
     @Override
-    public boolean activate() {
+    public void activate() {
 //        LOGGER.info("Activate: " + PrepareCmOperation.class.getName());
 //        CastWrapper castWrapper = getCastWrappers().poll();
 //
@@ -18,6 +18,5 @@ public class PrepareCmOperation extends Operation {
 //        castWrapper.getStartDate();
 //        LOGGER.info("Activate: " + PrepareCmOperation.class.getName() + " time: " + prepareTimeConst.getDurationTime());
 
-        return true;
     }
 }

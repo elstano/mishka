@@ -2,12 +2,12 @@ package ru.org.icad.mishka.app.process.casting.schema4.operation;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.org.icad.mishka.app.cache.PrepareTimeConstCache;
+import ru.org.icad.mishka.app.OperationName;
 import ru.org.icad.mishka.app.process.casting.CastWrapper;
 import ru.org.icad.mishka.app.process.casting.Operation;
 import ru.org.icad.mishka.app.process.casting.Schema;
 
-import java.util.Date;
+import java.util.Queue;
 
 public class PrepareCollectorOperation extends Operation {
     private static final Logger LOGGER = LoggerFactory.getLogger(PrepareCollectorOperation.class);
@@ -20,21 +20,29 @@ public class PrepareCollectorOperation extends Operation {
     }
 
     @Override
-    public boolean activate() {
-
-        CastWrapper castWrapper = schema.getDequeCastWrapper().pop();
-        long time = getActivationDate().getTime() + PrepareTimeConstCache.getInstance().getPrepareTimeConstForCollector(49).getDurationTime();
-        castWrapper.setPrepareTime(time);
-        Operation operation = schema.getOperationMap().get("castCm");
-        operation.setCastWrapper(castWrapper);
-
-        if(operation.getActivationCount() == 0) {
-
+    public void activate() {
+        final Queue<CastWrapper> sourceCastWrappers = schema.getSourceCastWrappers();
+        if(sourceCastWrappers.isEmpty()) {
+            return;
         }
 
+        CastWrapper castWrapper = sourceCastWrappers.poll();
 
-        LOGGER.debug("Operation type: PrepareCollectorOperation: " + castWrapper.getCastId() + " ,time: " + new Date(time));
+        Operation operation = schema.getOperationMap().get(OperationName.CAST_CM);
+        if (operation.getActivationDate() == null || (getActivationDate() != null && getActivationDate().compareTo(operation.getActivationDate()) == 1)) {
+            operation.setActivationDate(getActivationDate());
+        }
 
-        return true;
+        operation.setCastWrapper(castWrapper);
+
+        operation.setActivationCount(operation.getActivationCount() - 1);
+
+        if (operation.getActivationCount() == 0) {
+            schema.getOperations().add(operation);
+
+            return;
+        }
+
+        LOGGER.debug("Operation type: PrepareCollectorOperation");
     }
 }

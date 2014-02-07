@@ -11,8 +11,8 @@ import java.sql.Date;
                 query = "SELECT c FROM Cast c"),
         @NamedQuery(name = "Cast.findByPrimaryKey",
                 query = "SELECT c FROM Cast c WHERE c.id = :id"),
-        @NamedQuery(name = "Cast.getCastsBetweenDate",
-                query = "SELECT c FROM Cast c  WHERE c.castDate >= :startDate AND c.castDate < :endDate ORDER BY c.castNumber ASC")
+        @NamedQuery(name = "Cast.getCastsForCastingUnitBetweenDate",
+                query = "SELECT c FROM Cast c  WHERE c.castDate >= :startDate AND c.castDate < :endDate AND c.castingUnit.id = :castingUnitId")
 })
 @Entity
 @Table(name = TableName.CAST)
