@@ -30,13 +30,13 @@ public class CastUtil {
         }
 
         if (Form.INGOT == formId) {
-            return cast.getBlankCount() * cast.getIngotInBlankCount() * customerOrder.getWeight();
+            return Math.floor(cast.getBlankCount() * cast.getIngotInBlankCount() * customerOrder.getWeight() / 1000);
         }
 
         throw new Exception();
     }
 
     public static double getCobTonnage(Cast cast) throws Exception {
-        return getTonnage(cast) * cast.getCustomerOrder().getProduct().getCob();
+        return getTonnage(cast) * cast.getCustomerOrder().getProduct().getCob() / 1000;
     }
 }
