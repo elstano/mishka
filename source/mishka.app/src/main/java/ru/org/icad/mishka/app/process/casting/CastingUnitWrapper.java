@@ -99,7 +99,7 @@ public class CastingUnitWrapper {
             castWrappers.add(new CastWrapper(cast));
         }
 
-        Collections.sort((List<CastWrapper>) castWrappers, new Comparator<CastWrapper>() {
+        Collections.sort(castWrappers, new Comparator<CastWrapper>() {
             @Override
             public int compare(CastWrapper o1, CastWrapper o2) {
                 final Cast castFirst = o1.getCast();
