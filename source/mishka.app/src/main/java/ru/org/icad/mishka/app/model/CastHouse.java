@@ -5,6 +5,12 @@ import ru.org.icad.mishka.app.TableName;
 
 import javax.persistence.*;
 
+@NamedQueries({
+        @NamedQuery(name = "CastHouse.findAll",
+                query = "SELECT c FROM CastHouse c"),
+        @NamedQuery(name = "CastHouse.findByPrimaryKey",
+                query = "SELECT c FROM CastHouse c WHERE c.id = :id")
+})
 @Entity
 @Table(name = TableName.CAST_HOUSE)
 public class CastHouse {

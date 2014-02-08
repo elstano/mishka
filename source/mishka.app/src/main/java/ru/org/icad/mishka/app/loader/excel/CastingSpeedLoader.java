@@ -48,7 +48,7 @@ public class CastingSpeedLoader implements ExcelLoader<CastingSpeed> {
 
             final int mouldId = Double.valueOf(mouldIdCell.getNumericCellValue()).intValue();
             final int markId = ExcelUtil.getIntegerCellValue(row, 1);
-            final int speed = ExcelUtil.getIntegerCellValue(row, 1);
+            final double speed = ExcelUtil.getDoubleCellValue(row, 2);
 
             CastingSpeed castingSpeed = new CastingSpeed();
             castingSpeed.setMould(new Mould(mouldId));

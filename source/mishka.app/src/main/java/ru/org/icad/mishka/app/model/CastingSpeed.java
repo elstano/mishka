@@ -19,7 +19,7 @@ public class CastingSpeed {
     @JoinColumn(name = ColumnName.MARK_ID)
     private Mark mark;
     @Column(name = "SPEED")
-    private int speed;
+    private double speed;
 
     public int getId() {
         return id;
@@ -45,11 +45,11 @@ public class CastingSpeed {
         this.mark = mark;
     }
 
-    public int getSpeed() {
+    public double getSpeed() {
         return speed;
     }
 
-    public void setSpeed(int speed) {
+    public void setSpeed(double speed) {
         this.speed = speed;
     }
 

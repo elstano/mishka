@@ -1,15 +1,11 @@
 package ru.org.icad.mishka.app.loader.excel;
 
 import com.google.common.collect.Lists;
-import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.org.icad.mishka.app.model.CastingUnitCastingMachine;
-import ru.org.icad.mishka.app.model.CastingUnitCollector;
-import ru.org.icad.mishka.app.model.CastingUnitDistributor;
-import ru.org.icad.mishka.app.model.PrepareTimeConst;
+import ru.org.icad.mishka.app.model.*;
 import ru.org.icad.mishka.app.util.ExcelUtil;
 
 import java.util.Collections;
@@ -35,12 +31,6 @@ public class PrepareTimeConstLoader implements ExcelLoader<PrepareTimeConst> {
             Row row = sheet.getRow(rowCounter);
 
             if (row == null) {
-
-                continue;
-            }
-
-            Cell orderIdCell = row.getCell(0);
-            if (orderIdCell == null) {
                 continue;
             }
 
@@ -49,11 +39,10 @@ public class PrepareTimeConstLoader implements ExcelLoader<PrepareTimeConst> {
             }
 
             final Integer castingUnitCollectorId = ExcelUtil.getIntegerCellValue(row, 0);
-            final Integer castingUnitDistributor = ExcelUtil.getIntegerCellValue(row, 0);
-            final Integer castingUnitCastingMachine = ExcelUtil.getIntegerCellValue(row, 0);
-            final int mark = ExcelUtil.getIntegerCellValue(row, 0);
-            final int durationTime = ExcelUtil.getIntegerCellValue(row, 0);
-
+            final Integer castingUnitDistributor = ExcelUtil.getIntegerCellValue(row, 1);
+            final Integer castingUnitCastingMachine = ExcelUtil.getIntegerCellValue(row, 2);
+            final int markId = ExcelUtil.getIntegerCellValue(row, 3);
+            final int durationTime = ExcelUtil.getIntegerCellValue(row, 4);
 
             PrepareTimeConst prepareTimeConst = new PrepareTimeConst();
             if (castingUnitCollectorId != null) {
@@ -66,7 +55,7 @@ public class PrepareTimeConstLoader implements ExcelLoader<PrepareTimeConst> {
                 prepareTimeConst.setCastingUnitCastingMachine(new CastingUnitCastingMachine(castingUnitCastingMachine));
             }
 
-//            prepareTimeConst.setMark();
+            prepareTimeConst.setMark(new Mark(markId));
             prepareTimeConst.setDurationTime(durationTime);
 
             prepareTimeConsts.add(prepareTimeConst);
