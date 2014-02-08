@@ -2,6 +2,7 @@ package ru.org.icad.mishka.app.process.casting;
 
 import com.google.common.collect.Maps;
 import com.google.common.collect.Queues;
+import ru.org.icad.mishka.app.model.PeriodicOperation;
 
 import java.util.Collection;
 import java.util.Map;
@@ -14,6 +15,8 @@ public abstract class AbstractSchema implements Schema {
     private Map<String, Operation> operationMap = Maps.newConcurrentMap();
 
     private Queue<Operation> operations;
+    private Queue<PeriodicOperation> cleanCollectorOperations;
+    private Queue<PeriodicOperation> periodicOperations;
 
     @Override
     public Queue<CastWrapper> getSourceCastWrappers() {
@@ -53,4 +56,23 @@ public abstract class AbstractSchema implements Schema {
         this.operations = operations;
     }
 
+    @Override
+    public Queue<PeriodicOperation> getCleanCollectorOperations() {
+        return cleanCollectorOperations;
+    }
+
+    @Override
+    public void setCleanCollectorOperations(Queue<PeriodicOperation> cleanCollectorOperations) {
+        this.cleanCollectorOperations = cleanCollectorOperations;
+    }
+
+    @Override
+    public Queue<PeriodicOperation> getPeriodicOperations() {
+        return periodicOperations;
+    }
+
+    @Override
+    public void setPeriodicOperations(Queue<PeriodicOperation> periodicOperations) {
+        this.periodicOperations = periodicOperations;
+    }
 }

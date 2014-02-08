@@ -1,5 +1,7 @@
 package ru.org.icad.mishka.app.process.casting;
 
+import ru.org.icad.mishka.app.model.PeriodicOperation;
+
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -20,4 +22,12 @@ public interface Schema {
     public Queue<Operation> getOperations();
 
     public void setOperations(Queue<Operation> operations);
+
+    public Queue<PeriodicOperation> getCleanCollectorOperations();
+
+    public void setCleanCollectorOperations(Queue<PeriodicOperation> cleanCollectorOperations);
+
+    public Queue<PeriodicOperation> getPeriodicOperations();
+
+    public void setPeriodicOperations(Queue<PeriodicOperation> periodicOperations);
 }

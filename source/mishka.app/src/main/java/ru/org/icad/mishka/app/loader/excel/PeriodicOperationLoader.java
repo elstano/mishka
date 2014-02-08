@@ -1,7 +1,6 @@
 package ru.org.icad.mishka.app.loader.excel;
 
 import com.google.common.collect.Lists;
-import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.slf4j.Logger;
@@ -33,12 +32,6 @@ public class PeriodicOperationLoader implements ExcelLoader<PeriodicOperation> {
             Row row = sheet.getRow(rowCounter);
 
             if (row == null) {
-
-                continue;
-            }
-
-            Cell orderIdCell = row.getCell(0);
-            if (orderIdCell == null) {
                 continue;
             }
 
@@ -52,8 +45,7 @@ public class PeriodicOperationLoader implements ExcelLoader<PeriodicOperation> {
             final int operationId = ExcelUtil.getIntegerCellValue(row, 3);
             final Date operationDate = ExcelUtil.getDateCellValue(row, 4);
             final int shift = ExcelUtil.getIntegerCellValue(row, 5);
-            final Date durationTime = ExcelUtil.getDateCellValue(row, 6);
-
+            final double durationTime = ExcelUtil.getDoubleCellValue(row, 6);
 
             PeriodicOperation periodicOperation = new PeriodicOperation();
             if (castingUnitCollectorId != null) {

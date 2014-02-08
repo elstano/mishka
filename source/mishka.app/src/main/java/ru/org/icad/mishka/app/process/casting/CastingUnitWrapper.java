@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.org.icad.mishka.app.model.Cast;
 import ru.org.icad.mishka.app.model.CastingUnit;
+import ru.org.icad.mishka.app.model.PeriodicOperation;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -68,6 +69,24 @@ public class CastingUnitWrapper {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("MishkaService");
         EntityManager em = emf.createEntityManager();
 
+
+
+        TypedQuery<PeriodicOperation> cleanOperationQuery = em.createNamedQuery("PeriodicOperation.findCleanOperationForCollectorBetweenDate", PeriodicOperation.class);
+        cleanOperationQuery.setParameter("startDate", startDate, TemporalType.DATE);
+        cleanOperationQuery.setParameter("endDate", endDate, TemporalType.DATE);
+        cleanOperationQuery.setParameter("castingUnitCollectorId", 49);
+
+        Queue<PeriodicOperation> cleanCollectorOperations = Queues.newConcurrentLinkedQueue(cleanOperationQuery.getResultList());
+
+
+        TypedQuery<PeriodicOperation> periodicOperationQuery = em.createNamedQuery("PeriodicOperation.findPeriodicOperationForCastingMachineBetweenDate", PeriodicOperation.class);
+        periodicOperationQuery.setParameter("startDate", startDate, TemporalType.DATE);
+        periodicOperationQuery.setParameter("endDate", endDate, TemporalType.DATE);
+        periodicOperationQuery.setParameter("castingUnitCastingMachineId", 46);
+
+        Queue<PeriodicOperation> periodicOperations = Queues.newConcurrentLinkedQueue(periodicOperationQuery.getResultList());
+
+
         TypedQuery<Cast> typedQuery = em.createNamedQuery("Cast.getCastsForCastingUnitBetweenDate", Cast.class);
         typedQuery.setParameter("startDate", startDate, TemporalType.DATE);
         typedQuery.setParameter("endDate", endDate, TemporalType.DATE);
@@ -76,7 +95,7 @@ public class CastingUnitWrapper {
         List<Cast> casts = typedQuery.getResultList();
 
         List<CastWrapper> castWrappers = Lists.newArrayList();
-        for(Cast cast : casts) {
+        for (Cast cast : casts) {
             castWrappers.add(new CastWrapper(cast));
         }
 
@@ -100,6 +119,8 @@ public class CastingUnitWrapper {
         });
 
         schema.setOperations(operations);
+        schema.setCleanCollectorOperations(cleanCollectorOperations);
+        schema.setPeriodicOperations(periodicOperations);
         schema.setSourceCastWrappers(castWrappers);
 
         for (Operation operation : schema.getInitOperations()) {

@@ -11,7 +11,11 @@ import java.sql.Date;
         @NamedQuery(name = "PeriodicOperation.findAll",
                 query = "SELECT p FROM PeriodicOperation p"),
         @NamedQuery(name = "PeriodicOperation.findAllWhereCastingUnitCollectorIsNotNull",
-                query = "SELECT p FROM PeriodicOperation p WHERE p.castingUnitCollector.id IS NOT NULL")
+                query = "SELECT p FROM PeriodicOperation p WHERE p.castingUnitCollector.id IS NOT NULL"),
+        @NamedQuery(name = "PeriodicOperation.findCleanOperationForCollectorBetweenDate",
+                query = "SELECT p FROM PeriodicOperation p WHERE p.castingUnitCollector.id = :castingUnitCollectorId AND p.operation.id = 3 AND p.operationDate >= :startDate AND p.operationDate < :endDate"),
+        @NamedQuery(name = "PeriodicOperation.findPeriodicOperationForCastingMachineBetweenDate",
+                query = "SELECT p FROM PeriodicOperation p WHERE p.castingUnitCastingMachine.id = :castingUnitCastingMachineId AND p.operationDate >= :startDate AND p.operationDate < :endDate")
 })
 @Entity
 @Table(name = TableName.PERIODIC_OPERATION)
@@ -37,7 +41,7 @@ public class PeriodicOperation {
     @Column(name = "SHIFT")
     private int shift;
     @Column(name = "DURATION_TIME")
-    private Date durationTime;
+    private double durationTime;
 
     public int getId() {
         return id;
@@ -95,11 +99,11 @@ public class PeriodicOperation {
         this.shift = shift;
     }
 
-    public Date getDurationTime() {
+    public double getDurationTime() {
         return durationTime;
     }
 
-    public void setDurationTime(Date durationTime) {
+    public void setDurationTime(double durationTime) {
         this.durationTime = durationTime;
     }
 }
