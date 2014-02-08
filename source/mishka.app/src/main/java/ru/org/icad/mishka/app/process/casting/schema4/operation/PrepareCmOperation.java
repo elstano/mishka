@@ -3,8 +3,15 @@ package ru.org.icad.mishka.app.process.casting.schema4.operation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.org.icad.mishka.app.OperationName;
+import ru.org.icad.mishka.app.model.PrepareTimeConst;
 import ru.org.icad.mishka.app.process.casting.Operation;
 import ru.org.icad.mishka.app.process.casting.Schema;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
+import java.sql.Date;
 
 public class PrepareCmOperation extends Operation {
     private static final Logger LOGGER = LoggerFactory.getLogger(PrepareCmOperation.class);
@@ -18,9 +25,18 @@ public class PrepareCmOperation extends Operation {
 
     @Override
     public void activate() {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("MishkaService");
+        EntityManager em = emf.createEntityManager();
+
+        Query query = em.createNativeQuery("select * from PREPARE_TIME_CONST ptc where ptc.COLLE_ID = 46 and ROWNUM = 1", PrepareTimeConst.class);
+        PrepareTimeConst prepareTimeConst = (PrepareTimeConst) query.getSingleResult();
+        double durationTimeHour =  prepareTimeConst.getDurationTime() / 60;
+
+
+
         Operation operation = schema.getOperationMap().get(OperationName.CAST_CM);
         if (operation.getActivationDate() == null || (getActivationDate() != null && getActivationDate().compareTo(operation.getActivationDate()) == 1)) {
-            operation.setActivationDate(getActivationDate());
+            operation.setActivationDate(new Date(getActivationDate().getTime() + (long)(durationTimeHour * 3600 * 1000)));
         }
 
         operation.setActivationCount(operation.getActivationCount() - 1);

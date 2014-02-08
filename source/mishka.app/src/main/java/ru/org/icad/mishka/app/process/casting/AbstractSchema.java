@@ -15,8 +15,6 @@ public abstract class AbstractSchema implements Schema {
 
     private Queue<Operation> operations;
 
-
-
     @Override
     public Queue<CastWrapper> getSourceCastWrappers() {
         return sourceCastWrappers;

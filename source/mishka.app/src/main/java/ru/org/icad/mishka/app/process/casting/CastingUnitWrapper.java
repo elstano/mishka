@@ -1,8 +1,9 @@
 package ru.org.icad.mishka.app.process.casting;
 
 import com.google.common.base.Function;
-import com.google.common.collect.Collections2;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Queues;
+import org.apache.commons.lang3.ObjectUtils;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,15 +14,16 @@ import javax.persistence.*;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Queue;
 
 public class CastingUnitWrapper {
     private static final Logger LOGGER = LoggerFactory.getLogger(CastingUnitWrapper.class);
 
-    private static final String START_DATE = "01/05/2013";
-    private static final String END_DATE = "01/06/2013";
+    private static final String START_DATE = "01/05/2013 00:00:00";
+    private static final String END_DATE = "01/06/2013 00:00:00";
 
     private static final Function<Cast, CastWrapper> CAST_WRAPPER_FUNCTION = new Function<Cast, CastWrapper>() {
         @Override
@@ -73,7 +75,29 @@ public class CastingUnitWrapper {
 
         List<Cast> casts = typedQuery.getResultList();
 
-        Collection<CastWrapper> castWrappers = Collections2.transform(casts, CAST_WRAPPER_FUNCTION);
+        List<CastWrapper> castWrappers = Lists.newArrayList();
+        for(Cast cast : casts) {
+            castWrappers.add(new CastWrapper(cast));
+        }
+
+        Collections.sort((List<CastWrapper>) castWrappers, new Comparator<CastWrapper>() {
+            @Override
+            public int compare(CastWrapper o1, CastWrapper o2) {
+                final Cast castFirst = o1.getCast();
+                final Cast castSecond = o2.getCast();
+                int castDateCompareResult = castFirst.getCastDate().compareTo(castSecond.getCastDate());
+                if (castDateCompareResult != 0) {
+                    return castDateCompareResult;
+                }
+
+                int castShiftCompareResult = ObjectUtils.compare(castFirst.getShift(), castSecond.getShift());
+                if (castShiftCompareResult != 0) {
+                    return castShiftCompareResult;
+                }
+
+                return ObjectUtils.compare(castFirst.getCastNumber(), castSecond.getCastNumber());
+            }
+        });
 
         schema.setOperations(operations);
         schema.setSourceCastWrappers(castWrappers);
@@ -95,7 +119,7 @@ public class CastingUnitWrapper {
 
     @Nullable
     private Date stringToDate(String string) {
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         try {
             return new Date(format.parse(string).getTime());
         } catch (ParseException e) {
