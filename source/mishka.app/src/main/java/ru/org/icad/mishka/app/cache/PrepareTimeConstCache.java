@@ -3,62 +3,71 @@ package ru.org.icad.mishka.app.cache;
 import ru.org.icad.mishka.app.model.PrepareTimeConst;
 
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 public class PrepareTimeConstCache {
 
-    private static final PrepareTimeConstCache INSTANCE = new PrepareTimeConstCache();
-    @PersistenceContext(unitName = "MishkaService")
-    private EntityManager em;
-    private ConcurrentMap<Integer, PrepareTimeConst> prepareTimeConstCollectorConcurrentMap;
-    private ConcurrentMap<Integer, PrepareTimeConst> prepareTimeConstDistributorConcurrentMap;
-    private ConcurrentMap<Integer, PrepareTimeConst> prepareTimeConstCastingMachineConcurrentMap;
+    private static volatile PrepareTimeConstCache instance;
+
+    private ConcurrentMap<EquipmentKey, PrepareTimeConst> prepareTimeConstMap;
 
     private PrepareTimeConstCache() {
-        prepareTimeConstCollectorConcurrentMap = new ConcurrentHashMap<>();
-        prepareTimeConstDistributorConcurrentMap = new ConcurrentHashMap<>();
-        prepareTimeConstCastingMachineConcurrentMap = new ConcurrentHashMap<>();
+        prepareTimeConstMap = new ConcurrentHashMap<>();
 
         loadPrepareTimeConsts();
     }
 
     public static PrepareTimeConstCache getInstance() {
-        return INSTANCE;
+        PrepareTimeConstCache localInstance = instance;
+        if (localInstance == null) {
+            synchronized (PrepareTimeConstCache.class) {
+                localInstance = instance;
+                if (localInstance == null) {
+                    instance = localInstance = new PrepareTimeConstCache();
+                }
+            }
+        }
+
+        return localInstance;
     }
 
     private void loadPrepareTimeConsts() {
-        List<PrepareTimeConst> collectorPrepareTimeConsts
-                = em.createNamedQuery("PrepareTimeConst.findAllWhereCastingUnitCollectorIsNotNull", PrepareTimeConst.class).getResultList();
-        for (PrepareTimeConst prepareTimeConst : collectorPrepareTimeConsts) {
-            prepareTimeConstCollectorConcurrentMap.put(prepareTimeConst.getCastingUnitCollector().getId(), prepareTimeConst);
-        }
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("MishkaService");
+        EntityManager em = emf.createEntityManager();
 
-        List<PrepareTimeConst> distributorPrepareTimeConsts
-                = em.createNamedQuery("PrepareTimeConst.findAllWhereCastingUnitDistributorIsNotNull", PrepareTimeConst.class).getResultList();
-        for (PrepareTimeConst prepareTimeConst : distributorPrepareTimeConsts) {
-            prepareTimeConstDistributorConcurrentMap.put(prepareTimeConst.getCastingUnitDistributor().getId(), prepareTimeConst);
-        }
+        List<PrepareTimeConst> prepareTimeConsts
+                = em.createNamedQuery("PrepareTimeConst.findAll", PrepareTimeConst.class).getResultList();
+        for (PrepareTimeConst prepareTimeConst : prepareTimeConsts) {
 
+            if (prepareTimeConst.getCastingUnitCollector() != null) {
+                prepareTimeConstMap.put(
+                        new EquipmentKey(prepareTimeConst.getCastingUnitCollector().getId(), prepareTimeConst.getMark().getId())
+                        , prepareTimeConst
+                );
+            }
 
-        List<PrepareTimeConst> castingMachinePrepareTimeConsts
-                = em.createNamedQuery("PrepareTimeConst.findAllWhereCastingUnitCastingMachineIsNotNull", PrepareTimeConst.class).getResultList();
-        for (PrepareTimeConst prepareTimeConst : castingMachinePrepareTimeConsts) {
-            prepareTimeConstCastingMachineConcurrentMap.put(prepareTimeConst.getCastingUnitDistributor().getId(), prepareTimeConst);
+            if (prepareTimeConst.getCastingUnitDistributor() != null) {
+                prepareTimeConstMap.put(
+                        new EquipmentKey(prepareTimeConst.getCastingUnitDistributor().getId(), prepareTimeConst.getMark().getId())
+                        , prepareTimeConst
+                );
+            }
+
+            if (prepareTimeConst.getCastingUnitCastingMachine() != null) {
+
+                prepareTimeConstMap.put(
+                        new EquipmentKey(prepareTimeConst.getCastingUnitCastingMachine().getId(), prepareTimeConst.getMark().getId())
+                        , prepareTimeConst
+                );
+            }
         }
     }
 
-    public PrepareTimeConst getPrepareTimeConstForCollector(Integer id) {
-        return prepareTimeConstCollectorConcurrentMap.get(id);
-    }
-
-    public PrepareTimeConst getPrepareTimeConstForDistributor(Integer id) {
-        return prepareTimeConstDistributorConcurrentMap.get(id);
-    }
-
-    public PrepareTimeConst getPrepareTimeConstForCastingMachine(Integer id) {
-        return prepareTimeConstCastingMachineConcurrentMap.get(id);
+    public int getDurationTime(EquipmentKey equipmentKey) {
+        return prepareTimeConstMap.get(equipmentKey).getDurationTime();
     }
 }
