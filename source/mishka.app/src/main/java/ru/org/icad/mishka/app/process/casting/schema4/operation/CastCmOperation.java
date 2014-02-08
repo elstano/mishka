@@ -72,7 +72,7 @@ public class CastCmOperation extends Operation {
 
         setActivationCount(getActivationMaxCount());
 
-        LOGGER.debug("Operation type: CastCmOperation, customer order id: " + castWrapper.getCast().getCustomerOrder().getId()
+        LOGGER.debug("Result - Operation type: CastCmOperation, customer order id: " + castWrapper.getCast().getCustomerOrder().getId()
                 + ", startDate: " + convertTimeToString(startCastDate.getTime() - castWrapper.getPrepareTime())
                 + ", startCastDate: " + convertTimeToString(startCastDate.getTime())
                 + ", endCastDate: " + convertTimeToString(endCastDate.getTime())

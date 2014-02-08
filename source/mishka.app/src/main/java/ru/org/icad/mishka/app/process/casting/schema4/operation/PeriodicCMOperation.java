@@ -27,7 +27,7 @@ public class PeriodicCMOperation extends Operation {
             PeriodicOperation periodicOperation = schema.getPeriodicOperations().poll();
             time = periodicOperation.getDurationTime() / 60;
 
-            LOGGER.debug("Operation type: PeriodicCMOperation startDate: " + getActivationDate() + ", cleanTime" + time);
+            LOGGER.debug("Result - Operation type: PeriodicCMOperation startDate: " + getActivationDate() + ", cleanTime: " + time);
         }
 
         Operation operation = schema.getOperationMap().get(OperationName.PREPARE_CM);

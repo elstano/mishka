@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 import ru.org.icad.mishka.app.OperationName;
 import ru.org.icad.mishka.app.cache.CastHouseCache;
 import ru.org.icad.mishka.app.cache.CastingUnitCache;
-import ru.org.icad.mishka.app.model.CastingUnitProductChange;
 import ru.org.icad.mishka.app.model.PrepareTimeConst;
 import ru.org.icad.mishka.app.process.casting.CastWrapper;
 import ru.org.icad.mishka.app.process.casting.Operation;
@@ -88,19 +87,21 @@ public class PrepareCollectorOperation extends Operation {
             //ToDo Добавить проверку предущего продукта из БД
             return false;
         }
+//
+//        CastWrapper castWrapper = schema.getSourceCastWrappers().peek();
+//
+//
+//        EntityManagerFactory emf = Persistence.createEntityManagerFactory("MishkaService");
+//        EntityManager em = emf.createEntityManager();
+//
+//        Query query = em.createNativeQuery("select * FROM CU_PRODUCT_CHANGE cpc where cpc.CU_ID = 30 and cpc.MARK_ID_1 = "
+//                + doneCastWrapper.getCast().getCustomerOrder().getProduct().getMark().getId() + " and cpc.MARK_ID_2 = "
+//                + castWrapper.getCast().getCustomerOrder().getProduct().getMark().getId(), CastingUnitProductChange.class);
+//
+//        CastingUnitProductChange castingUnitProductChange = (CastingUnitProductChange) query.getSingleResult();
+//
+//        return castingUnitProductChange != null;
 
-        CastWrapper castWrapper = schema.getSourceCastWrappers().peek();
-
-
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("MishkaService");
-        EntityManager em = emf.createEntityManager();
-
-        Query query = em.createNativeQuery("select * FROM CU_PRODUCT_CHANGE cpc where cpc.CU_ID = 30 and cpc.MARK_ID_1 = "
-                + doneCastWrapper.getCast().getCustomerOrder().getProduct().getMark().getId() + " and cpc.MARK_ID_2 = "
-                + castWrapper.getCast().getCustomerOrder().getProduct().getMark().getId(), CastingUnitProductChange.class);
-
-        CastingUnitProductChange castingUnitProductChange = (CastingUnitProductChange) query.getSingleResult();
-
-        return castingUnitProductChange != null;
+        return false;
     }
 }
