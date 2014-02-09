@@ -60,6 +60,13 @@ public class CustomerOrder {
     @Column(name = "PERIOD")
     private Date period;
 
+    public CustomerOrder() {
+    }
+
+    public CustomerOrder(String id) {
+        this.id = id;
+    }
+
     public String getId() {
         return id;
     }
@@ -234,6 +241,21 @@ public class CustomerOrder {
 
     public void setPeriod(Date period) {
         this.period = period;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        CustomerOrder that = (CustomerOrder) o;
+
+        return id.equals(that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
     }
 
     @Override

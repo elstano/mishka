@@ -113,6 +113,40 @@ public class Cast {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Cast cast = (Cast) o;
+
+        if (blankCount != cast.blankCount) return false;
+        if (castNumber != cast.castNumber) return false;
+        if (id != cast.id) return false;
+        if (ingotCount != cast.ingotCount) return false;
+        if (ingotInBlankCount != cast.ingotInBlankCount) return false;
+        if (shift != cast.shift) return false;
+        if (!castDate.equals(cast.castDate)) return false;
+        if (!castingUnit.equals(cast.castingUnit)) return false;
+        if (!customerOrder.equals(cast.customerOrder)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + castingUnit.hashCode();
+        result = 31 * result + castDate.hashCode();
+        result = 31 * result + shift;
+        result = 31 * result + castNumber;
+        result = 31 * result + customerOrder.hashCode();
+        result = 31 * result + blankCount;
+        result = 31 * result + ingotInBlankCount;
+        result = 31 * result + ingotCount;
+        return result;
+    }
+
+    @Override
     public String toString() {
         return String.valueOf(getId());
     }

@@ -5,6 +5,14 @@ import ru.org.icad.mishka.app.TableName;
 
 import javax.persistence.*;
 
+@NamedQueries({
+        @NamedQuery(name = "CastingUnitProductChange.findAll",
+                query = "SELECT cupc FROM CastingUnitProductChange cupc"),
+        @NamedQuery(name = "CastingUnitProductChange.findByPrimaryKey",
+                query = "SELECT cupc FROM CastingUnitProductChange cupc WHERE cupc.id = :id"),
+        @NamedQuery(name = "CastingUnitProductChange.findByCastingUnitIdAndMarks",
+                query = "SELECT cupc FROM CastingUnitProductChange cupc WHERE cupc.castingUnit.id = :castingUnitId AND cupc.markId1 = :markId1 AND cupc.markId2 = :markId2")
+})
 @Entity
 @Table(name = TableName.CU_PRODUCT_CHANGE)
 public class CastingUnitProductChange {
