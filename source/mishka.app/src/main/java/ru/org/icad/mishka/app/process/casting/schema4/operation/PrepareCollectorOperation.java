@@ -35,37 +35,42 @@ public class PrepareCollectorOperation extends Operation {
             return;
         }
 
-        if (isNeedFlush()) {
-            // empty
-        }
-
         CastWrapper castWrapper = sourceCastWrappers.poll();
 
-        int ladlePourTimeMaxHour = CastingUnitCache.getInstance().getLadlePourTimeMax(30);
+        long time = 0;
+        if ("flush".equals(castWrapper.getCast().getCustomerOrder().getId())) {
+            time = castWrapper.getFlushCollectorPrepareTime();
+        } else {
 
-        double ladleTonnageMax = CastHouseCache.getInstance().getLadleTonnageMax(2);
+            if (castWrapper.getFlushCollectorPrepareTime() != 0) {
+                time += castWrapper.getFlushCollectorPrepareTime();
+            }
 
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("MishkaService");
-        EntityManager em = emf.createEntityManager();
+            int ladlePourTimeMaxHour = CastingUnitCache.getInstance().getLadlePourTimeMax(30);
 
-        int markId = castWrapper.getCast().getCustomerOrder().getProduct().getMark().getId();
-        Query query = em.createNativeQuery("select * from PREPARE_TIME_CONST ptc where ptc.COLLE_ID = 49 and ptc.MARK_ID in (SELECT m.mark_id FROM MARK m where m.mark_id = " + markId + " UNION SELECT m.PARENT_MARK_ID FROM MARK m where m.mark_id = " + markId + ") and ROWNUM = 1", PrepareTimeConst.class);
-        PrepareTimeConst prepareTimeConst = (PrepareTimeConst) query.getSingleResult();
+            double ladleTonnageMax = CastHouseCache.getInstance().getLadleTonnageMax(2);
 
-        double durationTimeHour = prepareTimeConst.getDurationTime() / 60;
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("MishkaService");
+            EntityManager em = emf.createEntityManager();
 
-        double time = 0;
-        try {
-            time = durationTimeHour + ladlePourTimeMaxHour / ladleTonnageMax * CastUtil.getCobTonnage(castWrapper.getCast()) / 60;
-        } catch (Exception e) {
-            e.printStackTrace();
+            int markId = castWrapper.getCast().getCustomerOrder().getProduct().getMark().getId();
+            Query query = em.createNativeQuery("select * from PREPARE_TIME_CONST ptc where ptc.COLLE_ID = 49 and ptc.MARK_ID in (SELECT m.mark_id FROM MARK m where m.mark_id = " + markId + " UNION SELECT m.PARENT_MARK_ID FROM MARK m where m.mark_id = " + markId + ") and ROWNUM = 1", PrepareTimeConst.class);
+            PrepareTimeConst prepareTimeConst = (PrepareTimeConst) query.getSingleResult();
+
+            long durationTimeHour = prepareTimeConst.getDurationTime() * 60 * 1000;
+
+            try {
+                time += durationTimeHour + ladlePourTimeMaxHour / ladleTonnageMax * CastUtil.getCobTonnage(castWrapper.getCast()) * 60 * 1000;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
-        castWrapper.setPrepareTime((long) (time * 3600 * 1000));
+        castWrapper.setPrepareCollectorTime(time);
 
         Operation operation = schema.getOperationMap().get(OperationName.CAST_CM);
         if (operation.getActivationDate() == null || (getActivationDate() != null && getActivationDate().compareTo(operation.getActivationDate()) == 1)) {
-            operation.setActivationDate(new Date(getActivationDate().getTime() + (long) (time * 3600 * 1000)));
+            operation.setActivationDate(new Date(getActivationDate().getTime() + time));
         }
 
         operation.setCastWrapper(castWrapper);
@@ -79,29 +84,5 @@ public class PrepareCollectorOperation extends Operation {
         }
 
         LOGGER.debug("Operation type: PrepareCollectorOperation");
-    }
-
-    private boolean isNeedFlush() {
-        CastWrapper doneCastWrapper = schema.getResultCastWrappers().peek();
-        if (doneCastWrapper == null) {
-            //ToDo Добавить проверку предущего продукта из БД
-            return false;
-        }
-//
-//        CastWrapper castWrapper = schema.getSourceCastWrappers().peek();
-//
-//
-//        EntityManagerFactory emf = Persistence.createEntityManagerFactory("MishkaService");
-//        EntityManager em = emf.createEntityManager();
-//
-//        Query query = em.createNativeQuery("select * FROM CU_PRODUCT_CHANGE cpc where cpc.CU_ID = 30 and cpc.MARK_ID_1 = "
-//                + doneCastWrapper.getCast().getCustomerOrder().getProduct().getMark().getId() + " and cpc.MARK_ID_2 = "
-//                + castWrapper.getCast().getCustomerOrder().getProduct().getMark().getId(), CastingUnitProductChange.class);
-//
-//        CastingUnitProductChange castingUnitProductChange = (CastingUnitProductChange) query.getSingleResult();
-//
-//        return castingUnitProductChange != null;
-
-        return false;
     }
 }

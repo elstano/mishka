@@ -36,31 +36,34 @@ public class CastCmOperation extends Operation {
         final CastWrapper castWrapper = getCastWrapper();
         schema.getResultCastWrappers().add(castWrapper);
 
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("MishkaService");
-        EntityManager em = emf.createEntityManager();
+        long time = 0;
+        if ("flush".equals(castWrapper.getCast().getCustomerOrder().getId())) {
+            time = castWrapper.getFlushCastTime();
+        } else {
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("MishkaService");
+            EntityManager em = emf.createEntityManager();
 
-        int markId = castWrapper.getCast().getCustomerOrder().getProduct().getMark().getId();
-        Query query = em.createNativeQuery("SELECT * from CASTING_SPEED cs where cs.MOULD_ID = 32 and cs.MARK_ID in (SELECT m.mark_id FROM MARK m where m.mark_id = " + markId + " UNION SELECT m.PARENT_MARK_ID FROM MARK m where m.mark_id = 191) and ROWNUM = 1", CastingSpeed.class);
-        CastingSpeed castingSpeed = (CastingSpeed) query.getSingleResult();
+            int markId = castWrapper.getCast().getCustomerOrder().getProduct().getMark().getId();
+            Query query = em.createNativeQuery("SELECT * from CASTING_SPEED cs where cs.MOULD_ID = 32 and cs.MARK_ID in (SELECT m.mark_id FROM MARK m where m.mark_id = " + markId + " UNION SELECT m.PARENT_MARK_ID FROM MARK m where m.mark_id = 191) and ROWNUM = 1", CastingSpeed.class);
+            CastingSpeed castingSpeed = (CastingSpeed) query.getSingleResult();
 
-        double time = 0;
-        if (Form.INGOT == castWrapper.getCast().getCustomerOrder().getProduct().getForm().getId()) {
-            try {
-                time = CastUtil.getTonnage(castWrapper.getCast()) / castingSpeed.getSpeed() / 60;
-            } catch (Exception e) {
-                e.printStackTrace();
+            if (Form.INGOT == castWrapper.getCast().getCustomerOrder().getProduct().getForm().getId()) {
+                try {
+                    time = (long) (CastUtil.getTonnage(castWrapper.getCast()) / castingSpeed.getSpeed() * 60 * 1000);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            if (Form.SLAB == castWrapper.getCast().getCustomerOrder().getProduct().getForm().getId() || Form.BILLET == castWrapper.getCast().getCustomerOrder().getProduct().getForm().getId()) {
+                time = (long) (CastUtil.getLengthBlank(castWrapper.getCast()) / castingSpeed.getSpeed() * 60 * 1000);
             }
         }
 
-        if (Form.SLAB == castWrapper.getCast().getCustomerOrder().getProduct().getForm().getId() || Form.BILLET == castWrapper.getCast().getCustomerOrder().getProduct().getForm().getId()) {
-            time = CastUtil.getLengthBlank(castWrapper.getCast()) / castingSpeed.getSpeed() / 60;
-        }
-
-        castWrapper.setCastTime((long) (time * 3600 * 1000));
+        castWrapper.setCastTime(time);
 
         final Date startCastDate = getActivationDate();
-        final Date endCastDate = new Date(startCastDate.getTime() + (long) (time * 3600 * 1000));
-
+        final Date endCastDate = new Date(startCastDate.getTime() + time);
 
         Operation cleanCollectorOperation = schema.getOperationMap().get(OperationName.CLEAN_COLLECTOR);
         cleanCollectorOperation.setActivationDate(endCastDate);
@@ -73,11 +76,11 @@ public class CastCmOperation extends Operation {
         setActivationCount(getActivationMaxCount());
 
         LOGGER.debug("Result - Operation type: CastCmOperation, customer order id: " + castWrapper.getCast().getCustomerOrder().getId()
-                + ", startDate: " + convertTimeToString(startCastDate.getTime() - castWrapper.getPrepareTime())
+                + ", startDate: " + convertTimeToString(startCastDate.getTime() - castWrapper.getPrepareCollectorTime())
                 + ", startCastDate: " + convertTimeToString(startCastDate.getTime())
                 + ", endCastDate: " + convertTimeToString(endCastDate.getTime())
-                + ", prepareTime: " + castWrapper.getPrepareTime() / 3600f / 1000f
-                + ", castTime: " + castWrapper.getCastTime() / 3600f / 1000f
+                + ", prepareTime: " + castWrapper.getPrepareCollectorTime() / 60 / 1000
+                + ", castTime: " + castWrapper.getCastTime() / 60 / 1000
         );
     }
 

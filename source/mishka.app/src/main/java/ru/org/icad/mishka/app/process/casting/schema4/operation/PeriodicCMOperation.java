@@ -22,18 +22,25 @@ public class PeriodicCMOperation extends Operation {
 
     @Override
     public void activate() {
-        double time = 0;
+        long time = 0;
         if (isNeedPeriodic()) {
             PeriodicOperation periodicOperation = schema.getPeriodicOperations().poll();
-            time = periodicOperation.getDurationTime() / 60;
+            time = (long) (periodicOperation.getDurationTime() * 60 * 1000);
 
-            LOGGER.debug("Result - Operation type: PeriodicCMOperation startDate: " + getActivationDate() + ", cleanTime: " + time);
-        }
+            Operation operation = schema.getOperationMap().get(OperationName.PERIODIC_CM);
+            operation.setActivationDate(new Date(getActivationDate().getTime() + time));
+
+            schema.getOperations().add(operation);
+
+            LOGGER.debug("Result - Operation type: PeriodicCMOperation startDate: " + getActivationDate() + ", cleanTime: " + time / 60 / 1000);
+        } else {
 
         Operation operation = schema.getOperationMap().get(OperationName.PREPARE_CM);
-        operation.setActivationDate(new Date(getActivationDate().getTime() + (long) (time * 3600 * 1000)));
+        operation.setActivationDate(new Date(getActivationDate().getTime()));
 
         schema.getOperations().add(operation);
+
+        }
     }
 
     private boolean isNeedPeriodic() {

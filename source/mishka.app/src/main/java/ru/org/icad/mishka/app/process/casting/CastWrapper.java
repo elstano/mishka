@@ -6,9 +6,11 @@ import java.sql.Date;
 
 public class CastWrapper {
 
-    private int castId;
-    private long prepareTime;
+    private long prepareCollectorTime;
     private long castTime;
+    private long flushCastTime;
+    private long flushCollectorPrepareTime;
+    private long flushCmPrepareTime;
     private Date startDate;
     private Date endDate;
     private Cast cast;
@@ -17,20 +19,12 @@ public class CastWrapper {
         this.cast = cast;
     }
 
-    public int getCastId() {
-        return castId;
+    public long getPrepareCollectorTime() {
+        return prepareCollectorTime;
     }
 
-    public void setCastId(int castId) {
-        this.castId = castId;
-    }
-
-    public long getPrepareTime() {
-        return prepareTime;
-    }
-
-    public void setPrepareTime(long prepareTime) {
-        this.prepareTime = prepareTime;
+    public void setPrepareCollectorTime(long prepareCollectorTime) {
+        this.prepareCollectorTime = prepareCollectorTime;
     }
 
     public long getCastTime() {
@@ -39,6 +33,30 @@ public class CastWrapper {
 
     public void setCastTime(long castTime) {
         this.castTime = castTime;
+    }
+
+    public long getFlushCastTime() {
+        return flushCastTime;
+    }
+
+    public void setFlushCastTime(long flushCastTime) {
+        this.flushCastTime = flushCastTime;
+    }
+
+    public long getFlushCollectorPrepareTime() {
+        return flushCollectorPrepareTime;
+    }
+
+    public void setFlushCollectorPrepareTime(long flushCollectorPrepareTime) {
+        this.flushCollectorPrepareTime = flushCollectorPrepareTime;
+    }
+
+    public long getFlushCmPrepareTime() {
+        return flushCmPrepareTime;
+    }
+
+    public void setFlushCmPrepareTime(long flushCmPrepareTime) {
+        this.flushCmPrepareTime = flushCmPrepareTime;
     }
 
     public Date getStartDate() {
@@ -63,5 +81,22 @@ public class CastWrapper {
 
     public void setCast(Cast cast) {
         this.cast = cast;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        CastWrapper that = (CastWrapper) o;
+
+        if (!cast.equals(that.cast)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return cast.hashCode();
     }
 }

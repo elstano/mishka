@@ -25,16 +25,16 @@ public class CleanCollectorOperation extends Operation {
     @Override
     public void activate() {
 
-        double time = 0;
+        long time = 0;
         if (isNeedClean()) {
             PeriodicOperation periodicOperation = schema.getCleanCollectorOperations().poll();
-            time = periodicOperation.getDurationTime() / 60;
+            time = (long) (periodicOperation.getDurationTime() * 60 * 1000);
 
-            LOGGER.debug("Result - Operation type: CleanCollectorOperation startDate: " + convertTimeToString(getActivationDate().getTime()) + ", cleanTime: " + time);
+            LOGGER.debug("Result - Operation type: CleanCollectorOperation startDate: " + convertTimeToString(getActivationDate().getTime()) + ", cleanTime: " + time / 60 / 1000);
         }
 
         Operation operation = schema.getOperationMap().get(OperationName.PREPARE_COLLECTOR);
-        operation.setActivationDate(new Date(getActivationDate().getTime() + (long) (time * 3600 * 1000)));
+        operation.setActivationDate(new Date(getActivationDate().getTime() + time));
 
         schema.getOperations().add(operation);
     }

@@ -7,9 +7,10 @@ import org.apache.commons.lang3.ObjectUtils;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.org.icad.mishka.app.model.Cast;
-import ru.org.icad.mishka.app.model.CastingUnit;
-import ru.org.icad.mishka.app.model.PeriodicOperation;
+import ru.org.icad.mishka.app.cache.CastingUnitProductChangeCache;
+import ru.org.icad.mishka.app.cache.key.ProductChangeKey;
+import ru.org.icad.mishka.app.model.*;
+import ru.org.icad.mishka.app.process.casting.schema4.Schema4;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -69,23 +70,35 @@ public class CastingUnitWrapper {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("MishkaService");
         EntityManager em = emf.createEntityManager();
 
-
-
         TypedQuery<PeriodicOperation> cleanOperationQuery = em.createNamedQuery("PeriodicOperation.findCleanOperationForCollectorBetweenDate", PeriodicOperation.class);
         cleanOperationQuery.setParameter("startDate", startDate, TemporalType.DATE);
         cleanOperationQuery.setParameter("endDate", endDate, TemporalType.DATE);
         cleanOperationQuery.setParameter("castingUnitCollectorId", 49);
 
-        Queue<PeriodicOperation> cleanCollectorOperations = Queues.newConcurrentLinkedQueue(cleanOperationQuery.getResultList());
+        List<PeriodicOperation> operationList = cleanOperationQuery.getResultList();
+        Collections.sort(operationList, new Comparator<PeriodicOperation>() {
+            @Override
+            public int compare(PeriodicOperation o1, PeriodicOperation o2) {
+                return o1.getOperationDate().compareTo(o2.getOperationDate());
+            }
+        });
 
+        Queue<PeriodicOperation> cleanCollectorOperations = Queues.newConcurrentLinkedQueue(operationList);
 
         TypedQuery<PeriodicOperation> periodicOperationQuery = em.createNamedQuery("PeriodicOperation.findPeriodicOperationForCastingMachineBetweenDate", PeriodicOperation.class);
         periodicOperationQuery.setParameter("startDate", startDate, TemporalType.DATE);
         periodicOperationQuery.setParameter("endDate", endDate, TemporalType.DATE);
         periodicOperationQuery.setParameter("castingUnitCastingMachineId", 46);
 
-        Queue<PeriodicOperation> periodicOperations = Queues.newConcurrentLinkedQueue(periodicOperationQuery.getResultList());
+        List<PeriodicOperation> periodicList = periodicOperationQuery.getResultList();
+        Collections.sort(periodicList, new Comparator<PeriodicOperation>() {
+            @Override
+            public int compare(PeriodicOperation o1, PeriodicOperation o2) {
+                return o1.getOperationDate().compareTo(o2.getOperationDate());
+            }
+        });
 
+        Queue<PeriodicOperation> periodicOperations = Queues.newConcurrentLinkedQueue(periodicList);
 
         TypedQuery<Cast> typedQuery = em.createNamedQuery("Cast.getCastsForCastingUnitBetweenDate", Cast.class);
         typedQuery.setParameter("startDate", startDate, TemporalType.DATE);
@@ -118,24 +131,77 @@ public class CastingUnitWrapper {
             }
         });
 
-        schema.setOperations(operations);
-        schema.setCleanCollectorOperations(cleanCollectorOperations);
-        schema.setPeriodicOperations(periodicOperations);
-        schema.setSourceCastWrappers(castWrappers);
+        if (schema instanceof Schema4) {
+            for (int i = 0; i < castWrappers.size(); i++) {
 
-        for (Operation operation : schema.getInitOperations()) {
-            operation.setActivationDate(startDate);
+                CastWrapper castWrapper = castWrappers.get(i);
+
+                if ((i + 1) >= castWrappers.size()) {
+                    continue;
+                }
+
+                CastWrapper castWrapperAfter = castWrappers.get(i + 1);
+
+                if (castWrapperAfter == null) {
+                    break;
+                }
+
+                int markId = castWrapper.getCast().getCustomerOrder().getProduct().getMark().getId();
+                int markIdAfter = castWrapperAfter.getCast().getCustomerOrder().getProduct().getMark().getId();
+
+                CastingUnitProductChange castingUnitProductChange = CastingUnitProductChangeCache.getInstance().getCastingUnitProduct(
+                        new ProductChangeKey(castingUnit.getId(), markId, markIdAfter)
+                );
+
+                if (castingUnitProductChange == null) {
+                    continue;
+                }
+
+                Integer timeCast = castingUnitProductChange.getTimeCast();
+                if (timeCast == null || timeCast == 0) {
+                    Integer timePrepareCollector = castingUnitProductChange.getTimePrepareCollector();
+
+                    if (timePrepareCollector == null || timePrepareCollector == 0) {
+                        continue;
+                    }
+
+                    castWrapperAfter.setFlushCollectorPrepareTime(timePrepareCollector);
+
+                    continue;
+                }
+
+                Cast flushCast = new Cast();
+                flushCast.setCastingUnit(new CastingUnit(30));
+                flushCast.setCustomerOrder(new CustomerOrder("flush"));
+
+                CastWrapper flushCastWrapper = new CastWrapper(flushCast);
+                flushCastWrapper.setFlushCastTime(timeCast * 60 * 1000);
+                flushCastWrapper.setFlushCollectorPrepareTime(castingUnitProductChange.getTimePrepareCollector() * 60 * 1000);
+                flushCastWrapper.setFlushCmPrepareTime(castingUnitProductChange.getTimePrepareCastingMachine() * 60 * 1000);
+
+                castWrappers.add(castWrappers.indexOf(castWrapper), new CastWrapper(new Cast()));
+            }
+
+            schema.setOperations(operations);
+            schema.setCleanCollectorOperations(cleanCollectorOperations);
+            schema.setPeriodicOperations(periodicOperations);
+            schema.setSourceCastWrappers(castWrappers);
+
+            for (Operation operation : schema.getInitOperations()) {
+                operation.setActivationDate(startDate);
+            }
+
+            operations.addAll(schema.getInitOperations());
+
+            final long startTime = System.currentTimeMillis();
+
+            while (!operations.isEmpty()) {
+                operations.poll().activate();
+            }
+
+            LOGGER.debug("Casting time: " + (System.currentTimeMillis() - startTime));
         }
 
-        operations.addAll(schema.getInitOperations());
-
-        final long startTime = System.currentTimeMillis();
-
-        while (!operations.isEmpty()) {
-            operations.poll().activate();
-        }
-
-        LOGGER.debug("Casting time: " + (System.currentTimeMillis() - startTime));
     }
 
     @Nullable
@@ -148,5 +214,4 @@ public class CastingUnitWrapper {
         }
         return null;
     }
-
 }
