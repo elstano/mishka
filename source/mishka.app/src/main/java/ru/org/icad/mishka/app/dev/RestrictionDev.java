@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 import ru.org.icad.mishka.app.model.Cast;
 import ru.org.icad.mishka.app.model.CastElectrolizer;
 import ru.org.icad.mishka.app.model.ElectrolizerPrognosis;
-import ru.org.icad.mishka.app.process.raw.RestrictionByRaw;
+import ru.org.icad.mishka.app.process.cob.RestrictionByCob;
 
 import javax.naming.InitialContext;
 import javax.persistence.*;
@@ -87,7 +87,7 @@ public class RestrictionDev {
         List<CastElectrolizer> castElectrolizers = Lists.newArrayList();
 
         final long startTime = System.currentTimeMillis();
-        Map<Cast, List<ElectrolizerPrognosis>> result = RestrictionByRaw.checkRestriction(casts, electrolizerPrognosises);
+        Map<Cast, List<ElectrolizerPrognosis>> result = RestrictionByCob.checkRestriction(casts, electrolizerPrognosises);
         LOGGER.info("Check restriction time: " + (System.currentTimeMillis() - startTime));
 
         Set<Cast> resultCasts = result.keySet();
