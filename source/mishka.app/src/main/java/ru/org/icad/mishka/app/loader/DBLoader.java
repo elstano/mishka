@@ -10,7 +10,6 @@ import ru.org.icad.mishka.app.util.ExcelUtil;
 import javax.naming.InitialContext;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.transaction.UserTransaction;
 import java.io.File;
@@ -94,7 +93,7 @@ public class DBLoader {
 
             transaction.commit();
         } catch (Exception e) {
-            LOGGER.error("CAn't merge: " + data, e);
+            LOGGER.error("Can't merge: " + data, e);
         }
     }
 }
