@@ -16,6 +16,8 @@ import java.sql.Date;
 @Table(name = TableName.CAST)
 public class Cast {
 
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    private int id;
     @Id
     @OneToOne
     @JoinColumn(name = ColumnName.CU_ID)
@@ -39,6 +41,14 @@ public class Cast {
     private int ingotInBlankCount;
     @Column(name = "INGOT_COUNT")
     private int ingotCount;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public CastingUnit getCastingUnit() {
         return castingUnit;
@@ -132,5 +142,10 @@ public class Cast {
         result = 31 * result + blankCount;
         result = 31 * result + ingotInBlankCount;
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(getId());
     }
 }

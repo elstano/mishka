@@ -9,12 +9,13 @@ import javax.persistence.*;
 @Table(name = TableName.CASTING_SPEED)
 public class CastingSpeed {
 
-    @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+    @Id
     @OneToOne
     @JoinColumn(name = ColumnName.MOULD_ID)
     private Mould mould;
+    @Id
     @OneToOne
     @JoinColumn(name = ColumnName.MARK_ID)
     private Mark mark;
@@ -51,10 +52,5 @@ public class CastingSpeed {
 
     public void setSpeed(double speed) {
         this.speed = speed;
-    }
-
-    @Override
-    public String toString() {
-        return String.valueOf(getId());
     }
 }
