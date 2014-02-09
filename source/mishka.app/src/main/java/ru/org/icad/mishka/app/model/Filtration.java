@@ -7,11 +7,16 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.io.Serializable;
 
 @Entity
 @Table(name = TableName.FILTRATION)
 public class Filtration {
+
+    @Id
+    @Column(name = ColumnName.FILTRATION_ID)
+    private int id;
+    @Column(name = "TYPE")
+    private String type;
 
     public Filtration() {
     }
@@ -19,12 +24,6 @@ public class Filtration {
     public Filtration(int id) {
         this.id = id;
     }
-
-    @Id
-    @Column(name = ColumnName.FILTRATION_ID)
-    private int id;
-    @Column(name = "TYPE")
-    private String type;
 
     public int getId() {
         return id;
@@ -40,6 +39,23 @@ public class Filtration {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Filtration that = (Filtration) o;
+
+        if (id != that.id) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return id;
     }
 
     @Override

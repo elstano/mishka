@@ -9,8 +9,6 @@ import java.sql.Date;
 @NamedQueries({
         @NamedQuery(name = "Cast.findAll",
                 query = "SELECT c FROM Cast c"),
-        @NamedQuery(name = "Cast.findByPrimaryKey",
-                query = "SELECT c FROM Cast c WHERE c.id = :id"),
         @NamedQuery(name = "Cast.getCastsForCastingUnitBetweenDate",
                 query = "SELECT c FROM Cast c  WHERE c.castDate >= :startDate AND c.castDate < :endDate AND c.castingUnit.id = :castingUnitId")
 })
@@ -19,17 +17,19 @@ import java.sql.Date;
 public class Cast {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
     @OneToOne
     @JoinColumn(name = ColumnName.CU_ID)
     private CastingUnit castingUnit;
+    @Id
     @Column(name = "CAST_DATE")
     private Date castDate;
+    @Id
     @Column(name = "SHIFT")
     private int shift;
+    @Id
     @Column(name = "CAST_NUMBER")
     private int castNumber;
+    @Id
     @OneToOne
     @JoinColumn(name = ColumnName.ORDER_ID)
     private CustomerOrder customerOrder;
@@ -39,14 +39,6 @@ public class Cast {
     private int ingotInBlankCount;
     @Column(name = "INGOT_COUNT")
     private int ingotCount;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public CastingUnit getCastingUnit() {
         return castingUnit;
@@ -121,8 +113,6 @@ public class Cast {
 
         if (blankCount != cast.blankCount) return false;
         if (castNumber != cast.castNumber) return false;
-        if (id != cast.id) return false;
-        if (ingotCount != cast.ingotCount) return false;
         if (ingotInBlankCount != cast.ingotInBlankCount) return false;
         if (shift != cast.shift) return false;
         if (!castDate.equals(cast.castDate)) return false;
@@ -134,20 +124,13 @@ public class Cast {
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + castingUnit.hashCode();
+        int result = castingUnit.hashCode();
         result = 31 * result + castDate.hashCode();
         result = 31 * result + shift;
         result = 31 * result + castNumber;
         result = 31 * result + customerOrder.hashCode();
         result = 31 * result + blankCount;
         result = 31 * result + ingotInBlankCount;
-        result = 31 * result + ingotCount;
         return result;
-    }
-
-    @Override
-    public String toString() {
-        return String.valueOf(getId());
     }
 }

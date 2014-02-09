@@ -141,6 +141,23 @@ public class Filter {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Filter filter = (Filter) o;
+
+        if (id != filter.id) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return id;
+    }
+
+    @Override
     public String toString() {
         return String.valueOf(getId());
     }

@@ -54,6 +54,23 @@ public class Heater {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Heater heater = (Heater) o;
+
+        if (id != heater.id) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return id;
+    }
+
+    @Override
     public String toString() {
         return String.valueOf(getId());
     }
