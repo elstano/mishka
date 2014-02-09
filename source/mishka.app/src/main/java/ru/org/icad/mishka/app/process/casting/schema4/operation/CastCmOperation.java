@@ -9,6 +9,7 @@ import ru.org.icad.mishka.app.process.casting.CastWrapper;
 import ru.org.icad.mishka.app.process.casting.Operation;
 import ru.org.icad.mishka.app.process.casting.Schema;
 import ru.org.icad.mishka.app.util.CastUtil;
+import ru.org.icad.mishka.app.util.GowkUtil;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -47,6 +48,16 @@ public class CastCmOperation extends Operation {
             Query query = em.createNativeQuery("SELECT * from CASTING_SPEED cs where cs.MOULD_ID = 32 and cs.MARK_ID in (SELECT m.mark_id FROM MARK m where m.mark_id = " + markId + " UNION SELECT m.PARENT_MARK_ID FROM MARK m where m.mark_id = 191) and ROWNUM = 1", CastingSpeed.class);
             CastingSpeed castingSpeed = (CastingSpeed) query.getSingleResult();
 
+            if(castWrapper.getBlankCountTwo() != null) {
+                double tonnageBoth = 0;
+                try {
+                    tonnageBoth = GowkUtil.getTonnage(castWrapper);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                time = (long) (tonnageBoth / castingSpeed.getSpeed() * 60 * 1000);
+            } else {
             if (Form.INGOT == castWrapper.getCast().getCustomerOrder().getProduct().getForm().getId()) {
                 try {
                     time = (long) (CastUtil.getTonnage(castWrapper.getCast()) / castingSpeed.getSpeed() * 60 * 1000);
@@ -57,6 +68,7 @@ public class CastCmOperation extends Operation {
 
             if (Form.SLAB == castWrapper.getCast().getCustomerOrder().getProduct().getForm().getId() || Form.BILLET == castWrapper.getCast().getCustomerOrder().getProduct().getForm().getId()) {
                 time = (long) (CastUtil.getLengthBlank(castWrapper.getCast()) / castingSpeed.getSpeed() * 60 * 1000);
+            }
             }
         }
 

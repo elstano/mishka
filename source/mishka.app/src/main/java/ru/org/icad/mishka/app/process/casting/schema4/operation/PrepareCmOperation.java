@@ -12,6 +12,8 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 public class PrepareCmOperation extends Operation {
     private static final Logger LOGGER = LoggerFactory.getLogger(PrepareCmOperation.class);
@@ -47,6 +49,11 @@ public class PrepareCmOperation extends Operation {
             return;
         }
 
-        LOGGER.debug("Operation type: PrepareCmOperation");
+        LOGGER.debug("Result - Operation type: PrepareCmOperation startDate: " + convertTimeToString(getActivationDate().getTime()));
+    }
+
+    private String convertTimeToString(long time) {
+        DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        return df.format(time);
     }
 }

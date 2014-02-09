@@ -9,6 +9,8 @@ import ru.org.icad.mishka.app.process.casting.Operation;
 import ru.org.icad.mishka.app.process.casting.Schema;
 
 import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 public class PeriodicCMOperation extends Operation {
     private static final Logger LOGGER = LoggerFactory.getLogger(PeriodicCMOperation.class);
@@ -32,7 +34,7 @@ public class PeriodicCMOperation extends Operation {
 
             schema.getOperations().add(operation);
 
-            LOGGER.debug("Result - Operation type: PeriodicCMOperation startDate: " + getActivationDate() + ", cleanTime: " + time / 60 / 1000);
+            LOGGER.debug("Result - Operation type: PeriodicCMOperation startDate: " + convertTimeToString(getActivationDate().getTime()) + ", cleanTime: " + time / 60 / 1000);
         } else {
 
         Operation operation = schema.getOperationMap().get(OperationName.PREPARE_CM);
@@ -53,5 +55,10 @@ public class PeriodicCMOperation extends Operation {
         DateTime periodicOperationStartShiftTime = periodicOperationTime.minusHours(1).plusHours((periodicOperation.getShift() - 1) * 8);
 
         return !getActivationDate().before(periodicOperationStartShiftTime.toDate());
+    }
+
+    private String convertTimeToString(long time) {
+        DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        return df.format(time);
     }
 }

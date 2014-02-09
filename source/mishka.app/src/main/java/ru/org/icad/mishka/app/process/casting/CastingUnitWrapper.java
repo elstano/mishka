@@ -1,6 +1,5 @@
 package ru.org.icad.mishka.app.process.casting;
 
-import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Queues;
 import org.apache.commons.lang3.ObjectUtils;
@@ -26,11 +25,22 @@ public class CastingUnitWrapper {
 
     private static final String START_DATE = "01/05/2013 00:00:00";
     private static final String END_DATE = "01/06/2013 00:00:00";
-
-    private static final Function<Cast, CastWrapper> CAST_WRAPPER_FUNCTION = new Function<Cast, CastWrapper>() {
+    private static final Comparator<CastWrapper> CAST_WRAPPER_COMPARATOR = new Comparator<CastWrapper>() {
         @Override
-        public CastWrapper apply(Cast cast) {
-            return new CastWrapper(cast);
+        public int compare(CastWrapper o1, CastWrapper o2) {
+            final Cast castFirst = o1.getCast();
+            final Cast castSecond = o2.getCast();
+            int castDateCompareResult = castFirst.getCastDate().compareTo(castSecond.getCastDate());
+            if (castDateCompareResult != 0) {
+                return castDateCompareResult;
+            }
+
+            int castShiftCompareResult = ObjectUtils.compare(castFirst.getShift(), castSecond.getShift());
+            if (castShiftCompareResult != 0) {
+                return castShiftCompareResult;
+            }
+
+            return ObjectUtils.compare(castFirst.getCastNumber(), castSecond.getCastNumber());
         }
     };
 
@@ -112,26 +122,41 @@ public class CastingUnitWrapper {
             castWrappers.add(new CastWrapper(cast));
         }
 
-        Collections.sort(castWrappers, new Comparator<CastWrapper>() {
-            @Override
-            public int compare(CastWrapper o1, CastWrapper o2) {
-                final Cast castFirst = o1.getCast();
-                final Cast castSecond = o2.getCast();
-                int castDateCompareResult = castFirst.getCastDate().compareTo(castSecond.getCastDate());
-                if (castDateCompareResult != 0) {
-                    return castDateCompareResult;
-                }
+        Collections.sort(castWrappers, CAST_WRAPPER_COMPARATOR);
 
-                int castShiftCompareResult = ObjectUtils.compare(castFirst.getShift(), castSecond.getShift());
-                if (castShiftCompareResult != 0) {
-                    return castShiftCompareResult;
-                }
-
-                return ObjectUtils.compare(castFirst.getCastNumber(), castSecond.getCastNumber());
-            }
-        });
+        List<CastWrapper> castWrappersWithoutGowk = Lists.newArrayList();
 
         if (schema instanceof Schema4) {
+            for (int i = 0; i < castWrappers.size(); i++) {
+                CastWrapper castWrapper = castWrappers.get(i);
+
+                if ((i + 1) >= castWrappers.size()) {
+                    continue;
+                }
+
+                CastWrapper castWrapperAfter = castWrappers.get(i + 1);
+
+                if (castWrapperAfter == null) {
+                    break;
+                }
+
+                if (CAST_WRAPPER_COMPARATOR.compare(castWrapper, castWrapperAfter) == 0) {
+                    Cast mergeCast = castWrapper.getCast();
+                    CastWrapper mergeCastWrapper = new CastWrapper(mergeCast);
+                    mergeCastWrapper.setBlankCountTwo(castWrapperAfter.getCast().getBlankCount());
+                    mergeCastWrapper.setIngotInBlankCountTwo(castWrapperAfter.getCast().getIngotInBlankCount());
+                    mergeCastWrapper.setLengthTwo(castWrapperAfter.getCast().getCustomerOrder().getLength());
+
+                    castWrappersWithoutGowk.add(mergeCastWrapper);
+
+
+                } else {
+                    castWrappersWithoutGowk.add(castWrapper);
+                }
+            }
+
+            castWrappers = castWrappersWithoutGowk;
+
             for (int i = 0; i < castWrappers.size(); i++) {
 
                 CastWrapper castWrapper = castWrappers.get(i);

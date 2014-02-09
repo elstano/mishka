@@ -10,12 +10,15 @@ import ru.org.icad.mishka.app.process.casting.CastWrapper;
 import ru.org.icad.mishka.app.process.casting.Operation;
 import ru.org.icad.mishka.app.process.casting.Schema;
 import ru.org.icad.mishka.app.util.CastUtil;
+import ru.org.icad.mishka.app.util.GowkUtil;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Queue;
 
 public class PrepareCollectorOperation extends Operation {
@@ -59,10 +62,19 @@ public class PrepareCollectorOperation extends Operation {
 
             long durationTimeHour = prepareTimeConst.getDurationTime() * 60 * 1000;
 
+            if(castWrapper.getBlankCountTwo() != null) {
+                try {
+                    time += durationTimeHour + ladlePourTimeMaxHour / ladleTonnageMax * GowkUtil.getCobTonnage(castWrapper) * 60 * 1000;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else {
+
             try {
                 time += durationTimeHour + ladlePourTimeMaxHour / ladleTonnageMax * CastUtil.getCobTonnage(castWrapper.getCast()) * 60 * 1000;
             } catch (Exception e) {
                 e.printStackTrace();
+            }
             }
         }
 
@@ -83,6 +95,11 @@ public class PrepareCollectorOperation extends Operation {
             return;
         }
 
-        LOGGER.debug("Operation type: PrepareCollectorOperation");
+        LOGGER.debug("Result - Operation type: PrepareCollectorOperation startDate: " + convertTimeToString(getActivationDate().getTime()));
+    }
+
+    private String convertTimeToString(long time) {
+        DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        return df.format(time);
     }
 }

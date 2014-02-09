@@ -15,6 +15,12 @@ public class CastWrapper {
     private Date endDate;
     private Cast cast;
 
+    // ToDo Убрать отсюда
+    private Integer blankCountTwo;
+    private Integer ingotInBlankCountTwo;
+    private Integer lengthTwo;
+
+
     public CastWrapper(Cast cast) {
         this.cast = cast;
     }
@@ -81,6 +87,30 @@ public class CastWrapper {
 
     public void setCast(Cast cast) {
         this.cast = cast;
+    }
+
+    public Integer getBlankCountTwo() {
+        return blankCountTwo;
+    }
+
+    public void setBlankCountTwo(Integer blankCountTwo) {
+        this.blankCountTwo = blankCountTwo;
+    }
+
+    public Integer getIngotInBlankCountTwo() {
+        return ingotInBlankCountTwo;
+    }
+
+    public void setIngotInBlankCountTwo(Integer ingotInBlankCountTwo) {
+        this.ingotInBlankCountTwo = ingotInBlankCountTwo;
+    }
+
+    public Integer getLengthTwo() {
+        return lengthTwo;
+    }
+
+    public void setLengthTwo(Integer lengthTwo) {
+        this.lengthTwo = lengthTwo;
     }
 
     @Override
