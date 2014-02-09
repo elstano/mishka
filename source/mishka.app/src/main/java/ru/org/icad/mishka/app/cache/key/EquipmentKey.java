@@ -1,4 +1,4 @@
-package ru.org.icad.mishka.app.cache;
+package ru.org.icad.mishka.app.cache.key;
 
 public class EquipmentKey {
 

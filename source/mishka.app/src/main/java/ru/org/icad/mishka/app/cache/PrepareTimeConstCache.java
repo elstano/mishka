@@ -1,5 +1,6 @@
 package ru.org.icad.mishka.app.cache;
 
+import ru.org.icad.mishka.app.cache.key.EquipmentKey;
 import ru.org.icad.mishka.app.model.PrepareTimeConst;
 
 import javax.persistence.EntityManager;
