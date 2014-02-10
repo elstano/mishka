@@ -3,6 +3,7 @@ package ru.org.icad.mishka.app.process.casting.schema5_6;
 import ru.org.icad.mishka.app.OperationName;
 import ru.org.icad.mishka.app.process.casting.AbstractSchema;
 import ru.org.icad.mishka.app.process.casting.Operation;
+import ru.org.icad.mishka.app.process.casting.SchemaConfiguration;
 import ru.org.icad.mishka.app.process.casting.schema4.operation.PrepareCmOperation;
 import ru.org.icad.mishka.app.process.casting.schema5_6.operation.*;
 
@@ -43,5 +44,10 @@ public class Schema5_6 extends AbstractSchema {
                 getOperationMap().get(OperationName.PERIODIC_CM),
                 getOperationMap().get(OperationName.REMOULD_CM)
                 );
+    }
+
+    @Override
+    public SchemaConfiguration getSchemaConfiguration() {
+        return null;
     }
 }

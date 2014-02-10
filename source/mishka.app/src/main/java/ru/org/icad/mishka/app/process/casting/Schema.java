@@ -30,4 +30,6 @@ public interface Schema {
     public Queue<PeriodicOperation> getPeriodicOperations();
 
     public void setPeriodicOperations(Queue<PeriodicOperation> periodicOperations);
+
+    public SchemaConfiguration getSchemaConfiguration();
 }

@@ -3,6 +3,7 @@ package ru.org.icad.mishka.app.process.casting.schema4;
 import ru.org.icad.mishka.app.OperationName;
 import ru.org.icad.mishka.app.process.casting.AbstractSchema;
 import ru.org.icad.mishka.app.process.casting.Operation;
+import ru.org.icad.mishka.app.process.casting.SchemaConfiguration;
 import ru.org.icad.mishka.app.process.casting.schema4.operation.*;
 
 import java.util.Arrays;
@@ -11,7 +12,11 @@ import java.util.Map;
 
 public class Schema4 extends AbstractSchema {
 
-    public Schema4() {
+    private final SchemaConfiguration schemaConfiguration;
+
+    public Schema4(SchemaConfiguration schemaConfiguration) {
+        this.schemaConfiguration = schemaConfiguration;
+
         CleanCollectorOperation cleanCollectorOperation = new CleanCollectorOperation(this);
         PrepareCollectorOperation prepareCollectorOperation = new PrepareCollectorOperation(this);
         CastCmOperation castCmOperation = new CastCmOperation(this, 2);
@@ -32,5 +37,9 @@ public class Schema4 extends AbstractSchema {
                 getOperationMap().get(OperationName.CLEAN_COLLECTOR),
                 getOperationMap().get(OperationName.PERIODIC_CM)
         );
+    }
+
+    public SchemaConfiguration getSchemaConfiguration() {
+        return schemaConfiguration;
     }
 }

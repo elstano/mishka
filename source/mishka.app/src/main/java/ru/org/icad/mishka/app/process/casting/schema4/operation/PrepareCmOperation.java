@@ -30,15 +30,16 @@ public class PrepareCmOperation extends Operation {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("MishkaService");
         EntityManager em = emf.createEntityManager();
 
-        Query query = em.createNativeQuery("select * from PREPARE_TIME_CONST ptc where ptc.COLLE_ID = 46 and ROWNUM = 1", PrepareTimeConst.class);
-        PrepareTimeConst prepareTimeConst = (PrepareTimeConst) query.getSingleResult();
-        double durationTimeHour =  prepareTimeConst.getDurationTime() / 60;
+        Query query = em.createNativeQuery("select * from PREPARE_TIME_CONST ptc where ptc.CAST_MACH_ID = " + schema.getSchemaConfiguration().getCastingUnitCastingMachineId()
+                + " and ROWNUM = 1", PrepareTimeConst.class);
 
+        PrepareTimeConst prepareTimeConst = (PrepareTimeConst) query.getSingleResult();
+        double durationTimeHour = prepareTimeConst.getDurationTime() / 60;
 
 
         Operation operation = schema.getOperationMap().get(OperationName.CAST_CM);
         if (operation.getActivationDate() == null || (getActivationDate() != null && getActivationDate().compareTo(operation.getActivationDate()) == 1)) {
-            operation.setActivationDate(new Date(getActivationDate().getTime() + (long)(durationTimeHour * 3600 * 1000)));
+            operation.setActivationDate(new Date(getActivationDate().getTime() + (long) (durationTimeHour * 3600 * 1000)));
         }
 
         operation.setActivationCount(operation.getActivationCount() - 1);
@@ -49,7 +50,9 @@ public class PrepareCmOperation extends Operation {
             return;
         }
 
-        LOGGER.debug("Result - Operation type: PrepareCmOperation startDate: " + convertTimeToString(getActivationDate().getTime()));
+        LOGGER.debug("Result - customUnitId: " + schema.getSchemaConfiguration().getCastingUnitId()
+                + ", Operation type: PrepareCmOperation startDate: "
+                + convertTimeToString(getActivationDate().getTime()));
     }
 
     private String convertTimeToString(long time) {

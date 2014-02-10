@@ -15,15 +15,21 @@ public class RestrictionByCob {
     private static final Comparator<ElectrolizerPrognosis> ELECTROLYZER_COMPARATOR = new Comparator<ElectrolizerPrognosis>() {
         @Override
         public int compare(ElectrolizerPrognosis o1, ElectrolizerPrognosis o2) {
-            if (o1.getShift() > o2.getShift()) {
-                return 1;
+            final int compareResult = o1.getPrognosDate().compareTo(o2.getPrognosDate());
+            if (compareResult == 0) {
+                if (o1.getShift() > o2.getShift()) {
+                    return 1;
+                }
+
+                if (o1.getShift() == o2.getShift()) {
+                    return 0;
+                }
+
+                return -1;
+
             }
 
-            if (o1.getShift() == o2.getShift()) {
-                return 0;
-            }
-
-            return -1;
+            return compareResult;
         }
     };
 
@@ -31,6 +37,24 @@ public class RestrictionByCob {
     }
 
     public static Map<Cast, List<ElectrolizerPrognosis>> checkRestriction(List<Cast> casts, List<ElectrolizerPrognosis> electrolyzers) {
+
+        Map<ElectrolizerPrognosisKey, List<ElectrolizerPrognosis>> electrolizerPrognosisesMap = Maps.newHashMap();
+
+        for (ElectrolizerPrognosis electrolizerPrognosis : electrolyzers) {
+            ElectrolizerPrognosisKey electrolizerPrognosisKey = new ElectrolizerPrognosisKey(electrolizerPrognosis.getPrognosDate(), electrolizerPrognosis.getShift());
+
+            final List<ElectrolizerPrognosis> electrolizerPrognosises = electrolizerPrognosisesMap.get(electrolizerPrognosisKey);
+            if (electrolizerPrognosises == null) {
+                electrolizerPrognosisesMap.put(electrolizerPrognosisKey, Lists.<ElectrolizerPrognosis>newArrayList(electrolizerPrognosis));
+
+                continue;
+            }
+
+            electrolizerPrognosises.add(electrolizerPrognosis);
+            electrolizerPrognosisesMap.put(electrolizerPrognosisKey, electrolizerPrognosises);
+        }
+
+
         final Map<Cast, List<ElectrolizerPrognosis>> resultOrderMap = Maps.newHashMap();
         final List<ElectrolizerPrognosis> usedElectrolyzer = Lists.newArrayList();
 
@@ -202,5 +226,44 @@ public class RestrictionByCob {
         }
 
         return listString;
+    }
+
+    private static class ElectrolizerPrognosisKey {
+
+        private final Date date;
+        private final int shift;
+
+        private ElectrolizerPrognosisKey(Date date, int shift) {
+            this.date = date;
+            this.shift = shift;
+        }
+
+        public Date getDate() {
+            return date;
+        }
+
+        public int getShift() {
+            return shift;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            ElectrolizerPrognosisKey that = (ElectrolizerPrognosisKey) o;
+
+            if (shift != that.shift) return false;
+            if (!date.equals(that.date)) return false;
+
+            return true;
+        }
+
+        @Override
+        public int hashCode() {
+            int result = date.hashCode();
+            result = 31 * result + shift;
+            return result;
+        }
     }
 }

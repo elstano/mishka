@@ -37,6 +37,7 @@ public class CastCmOperation extends Operation {
         final CastWrapper castWrapper = getCastWrapper();
         schema.getResultCastWrappers().add(castWrapper);
 
+
         long time = 0;
         if ("flush".equals(castWrapper.getCast().getCustomerOrder().getId())) {
             time = castWrapper.getFlushCastTime();
@@ -45,10 +46,13 @@ public class CastCmOperation extends Operation {
             EntityManager em = emf.createEntityManager();
 
             int markId = castWrapper.getCast().getCustomerOrder().getProduct().getMark().getId();
-            Query query = em.createNativeQuery("SELECT * from CASTING_SPEED cs where cs.MOULD_ID = 32 and cs.MARK_ID in (SELECT m.mark_id FROM MARK m where m.mark_id = " + markId + " UNION SELECT m.PARENT_MARK_ID FROM MARK m where m.mark_id = 191) and ROWNUM = 1", CastingSpeed.class);
+            Query query = em.createNativeQuery("SELECT * from CASTING_SPEED cs where cs.MOULD_ID = " + schema.getSchemaConfiguration().getMouldId()
+                    + " and cs.MARK_ID in (SELECT m.mark_id FROM MARK m where m.mark_id = " + markId
+                    + " UNION SELECT m.PARENT_MARK_ID FROM MARK m where m.mark_id = 191) and ROWNUM = 1", CastingSpeed.class);
+
             CastingSpeed castingSpeed = (CastingSpeed) query.getSingleResult();
 
-            if(castWrapper.getBlankCountTwo() != null) {
+            if (castWrapper.getBlankCountTwo() != null) {
                 double tonnageBoth = 0;
                 try {
                     tonnageBoth = GowkUtil.getTonnage(castWrapper);
@@ -58,17 +62,17 @@ public class CastCmOperation extends Operation {
 
                 time = (long) (tonnageBoth / castingSpeed.getSpeed() * 60 * 1000);
             } else {
-            if (Form.INGOT == castWrapper.getCast().getCustomerOrder().getProduct().getForm().getId()) {
-                try {
-                    time = (long) (CastUtil.getTonnage(castWrapper.getCast()) / castingSpeed.getSpeed() * 60 * 1000);
-                } catch (Exception e) {
-                    e.printStackTrace();
+                if (Form.INGOT == castWrapper.getCast().getCustomerOrder().getProduct().getForm().getId()) {
+                    try {
+                        time = (long) (CastUtil.getTonnage(castWrapper.getCast()) / castingSpeed.getSpeed() * 60 * 1000);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
-            }
 
-            if (Form.SLAB == castWrapper.getCast().getCustomerOrder().getProduct().getForm().getId() || Form.BILLET == castWrapper.getCast().getCustomerOrder().getProduct().getForm().getId()) {
-                time = (long) (CastUtil.getLengthBlank(castWrapper.getCast()) / castingSpeed.getSpeed() * 60 * 1000);
-            }
+                if (Form.SLAB == castWrapper.getCast().getCustomerOrder().getProduct().getForm().getId() || Form.BILLET == castWrapper.getCast().getCustomerOrder().getProduct().getForm().getId()) {
+                    time = (long) (CastUtil.getLengthBlank(castWrapper.getCast()) / castingSpeed.getSpeed() * 60 * 1000);
+                }
             }
         }
 
@@ -87,7 +91,8 @@ public class CastCmOperation extends Operation {
 
         setActivationCount(getActivationMaxCount());
 
-        LOGGER.debug("Result - Operation type: CastCmOperation, customer order id: " + castWrapper.getCast().getCustomerOrder().getId()
+        LOGGER.debug("Result - customUnitId: " + schema.getSchemaConfiguration().getCastingUnitId()
+                + ", Operation type: CastCmOperation, customer order id: " + castWrapper.getCast().getCustomerOrder().getId()
                 + ", startDate: " + convertTimeToString(startCastDate.getTime() - castWrapper.getPrepareCollectorTime())
                 + ", startCastDate: " + convertTimeToString(startCastDate.getTime())
                 + ", endCastDate: " + convertTimeToString(endCastDate.getTime())

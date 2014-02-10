@@ -34,20 +34,23 @@ public class PeriodicCMOperation extends Operation {
 
             schema.getOperations().add(operation);
 
-            LOGGER.debug("Result - Operation type: PeriodicCMOperation startDate: " + convertTimeToString(getActivationDate().getTime()) + ", cleanTime: " + time / 60 / 1000);
+            LOGGER.debug("Result - customUnitId: " + schema.getSchemaConfiguration().getCastingUnitId()
+                    + ", Operation type: PeriodicCMOperation startDate: "
+                    + convertTimeToString(getActivationDate().getTime())
+                    + ", cleanTime: " + time / 60 / 1000);
         } else {
 
-        Operation operation = schema.getOperationMap().get(OperationName.PREPARE_CM);
-        operation.setActivationDate(new Date(getActivationDate().getTime()));
+            Operation operation = schema.getOperationMap().get(OperationName.PREPARE_CM);
+            operation.setActivationDate(new Date(getActivationDate().getTime()));
 
-        schema.getOperations().add(operation);
+            schema.getOperations().add(operation);
 
         }
     }
 
     private boolean isNeedPeriodic() {
         PeriodicOperation periodicOperation = schema.getPeriodicOperations().peek();
-        if(periodicOperation == null) {
+        if (periodicOperation == null) {
             return false;
         }
 

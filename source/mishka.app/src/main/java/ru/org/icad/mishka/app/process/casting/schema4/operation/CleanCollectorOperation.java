@@ -30,7 +30,9 @@ public class CleanCollectorOperation extends Operation {
             PeriodicOperation periodicOperation = schema.getCleanCollectorOperations().poll();
             time = (long) (periodicOperation.getDurationTime() * 60 * 1000);
 
-            LOGGER.debug("Result - Operation type: CleanCollectorOperation startDate: " + convertTimeToString(getActivationDate().getTime()) + ", cleanTime: " + time / 60 / 1000);
+            LOGGER.debug("Result - customUnitId: " + schema.getSchemaConfiguration().getCastingUnitId()
+                    + ", Operation type: CleanCollectorOperation startDate: "
+                    + convertTimeToString(getActivationDate().getTime()) + ", cleanTime: " + time / 60 / 1000);
         }
 
         Operation operation = schema.getOperationMap().get(OperationName.PREPARE_COLLECTOR);
@@ -41,7 +43,7 @@ public class CleanCollectorOperation extends Operation {
 
     private boolean isNeedClean() {
         PeriodicOperation periodicOperation = schema.getCleanCollectorOperations().peek();
-        if(periodicOperation == null) {
+        if (periodicOperation == null) {
             return false;
         }
 

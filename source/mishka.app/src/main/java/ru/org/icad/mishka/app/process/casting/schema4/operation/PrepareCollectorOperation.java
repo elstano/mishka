@@ -57,12 +57,15 @@ public class PrepareCollectorOperation extends Operation {
             EntityManager em = emf.createEntityManager();
 
             int markId = castWrapper.getCast().getCustomerOrder().getProduct().getMark().getId();
-            Query query = em.createNativeQuery("select * from PREPARE_TIME_CONST ptc where ptc.COLLE_ID = 49 and ptc.MARK_ID in (SELECT m.mark_id FROM MARK m where m.mark_id = " + markId + " UNION SELECT m.PARENT_MARK_ID FROM MARK m where m.mark_id = " + markId + ") and ROWNUM = 1", PrepareTimeConst.class);
+            Query query = em.createNativeQuery("select * from PREPARE_TIME_CONST ptc where ptc.COLLE_ID = " + schema.getSchemaConfiguration().getCastingUnitCollectorId()
+                    + " and ptc.MARK_ID in (SELECT m.mark_id FROM MARK m where m.mark_id = " + markId
+                    + " UNION SELECT m.PARENT_MARK_ID FROM MARK m where m.mark_id = " + markId + ") and ROWNUM = 1", PrepareTimeConst.class);
+
             PrepareTimeConst prepareTimeConst = (PrepareTimeConst) query.getSingleResult();
 
             long durationTimeHour = prepareTimeConst.getDurationTime() * 60 * 1000;
 
-            if(castWrapper.getBlankCountTwo() != null) {
+            if (castWrapper.getBlankCountTwo() != null) {
                 try {
                     time += durationTimeHour + ladlePourTimeMaxHour / ladleTonnageMax * GowkUtil.getCobTonnage(castWrapper) * 60 * 1000;
                 } catch (Exception e) {
@@ -70,11 +73,11 @@ public class PrepareCollectorOperation extends Operation {
                 }
             } else {
 
-            try {
-                time += durationTimeHour + ladlePourTimeMaxHour / ladleTonnageMax * CastUtil.getCobTonnage(castWrapper.getCast()) * 60 * 1000;
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+                try {
+                    time += durationTimeHour + ladlePourTimeMaxHour / ladleTonnageMax * CastUtil.getCobTonnage(castWrapper.getCast()) * 60 * 1000;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
 
@@ -95,7 +98,9 @@ public class PrepareCollectorOperation extends Operation {
             return;
         }
 
-        LOGGER.debug("Result - Operation type: PrepareCollectorOperation startDate: " + convertTimeToString(getActivationDate().getTime()));
+        LOGGER.debug("Result - customUnitId: " + schema.getSchemaConfiguration().getCastingUnitId()
+                + ", Operation type: PrepareCollectorOperation startDate: "
+                + convertTimeToString(getActivationDate().getTime()));
     }
 
     private String convertTimeToString(long time) {

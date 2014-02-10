@@ -3,6 +3,7 @@ package ru.org.icad.mishka.app.process.casting.schema1_2;
 import ru.org.icad.mishka.app.process.casting.AbstractSchema;
 import ru.org.icad.mishka.app.process.casting.CastWrapper;
 import ru.org.icad.mishka.app.process.casting.Operation;
+import ru.org.icad.mishka.app.process.casting.SchemaConfiguration;
 import ru.org.icad.mishka.app.process.casting.schema1_2.operation.PrepareDistrOperation;
 
 import java.util.Arrays;
@@ -23,6 +24,11 @@ public class Schema1_2 extends AbstractSchema {
 
     @Override
     public Map<String, Operation> getOperationMap() {
+        return null;
+    }
+
+    @Override
+    public SchemaConfiguration getSchemaConfiguration() {
         return null;
     }
 

@@ -150,42 +150,22 @@ public class ElectrolizerPrognosis {
 
         ElectrolizerPrognosis that = (ElectrolizerPrognosis) o;
 
-        return Double.compare(that.cu, cu) == 0
-                && electrolizerId == that.electrolizerId
-                && Double.compare(that.fe, fe) == 0
-                && id == that.id
-                && Double.compare(that.mg, mg) == 0
-                && Double.compare(that.mn, mn) == 0
-                && shift == that.shift
-                && Double.compare(that.si, si) == 0
-                && Double.compare(that.ti, ti) == 0
-                && tonnage == that.tonnage
-                && castHouse.equals(that.castHouse)
-                && prognosDate.equals(that.prognosDate);
+        if (electrolizerId != that.electrolizerId) return false;
+        if (shift != that.shift) return false;
+        if (tonnage != that.tonnage) return false;
+        if (!castHouse.equals(that.castHouse)) return false;
+        if (!prognosDate.equals(that.prognosDate)) return false;
+
+        return true;
     }
 
     @Override
     public int hashCode() {
-        int result;
-        long temp;
-        result = id;
-        result = 31 * result + electrolizerId;
+        int result = electrolizerId;
         result = 31 * result + castHouse.hashCode();
         result = 31 * result + prognosDate.hashCode();
         result = 31 * result + shift;
         result = 31 * result + tonnage;
-        temp = Double.doubleToLongBits(fe);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(si);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(cu);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(mg);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(mn);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(ti);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
         return result;
     }
 
