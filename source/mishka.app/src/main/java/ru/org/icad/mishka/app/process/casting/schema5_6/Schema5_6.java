@@ -4,7 +4,6 @@ import ru.org.icad.mishka.app.OperationName;
 import ru.org.icad.mishka.app.process.casting.AbstractSchema;
 import ru.org.icad.mishka.app.process.casting.Operation;
 import ru.org.icad.mishka.app.process.casting.SchemaConfiguration;
-import ru.org.icad.mishka.app.process.casting.schema4.operation.PrepareCmOperation;
 import ru.org.icad.mishka.app.process.casting.schema5_6.operation.*;
 
 import java.util.Arrays;
@@ -13,16 +12,20 @@ import java.util.Map;
 
 public class Schema5_6 extends AbstractSchema {
 
-    public Schema5_6() {
+    private SchemaConfiguration schemaConfiguration;
+
+    public Schema5_6(SchemaConfiguration schemaConfiguration) {
+        this.schemaConfiguration = schemaConfiguration;
+
         CleanCollectorOneOperation cleanCollectorOneOperation = new CleanCollectorOneOperation(this);
         CleanCollectorTwoOperation cleanCollectorTwoOperation = new CleanCollectorTwoOperation(this);
         PrepareCollectorOneOperation prepareCollectorOneOperation = new PrepareCollectorOneOperation(this);
         PrepareCollectorTwoOperation prepareCollectorTwoOperation = new PrepareCollectorTwoOperation(this);
         PeriodicCmOperation periodicCmOperation = new PeriodicCmOperation(this);
-        PrepareCmOperation prepareCmOperation = new PrepareCmOperation(this);
+        PrepareCmOperation prepareCmOperation = new PrepareCmOperation(this, 2, 2);
         RemouldCmOperation remouldCmOperation = new RemouldCmOperation(this);
-        CastCmOneOperation castCmOneOperation = new CastCmOneOperation(this);
-        CastCmTwoOperation castCmTwoOperation = new CastCmTwoOperation(this);
+        CastCmCollectorOneOperation castCmCollectorOneOperation = new CastCmCollectorOneOperation(this, 3, 2);
+        CastCmCollectorTwoOperation castCmCollectorTwoOperation = new CastCmCollectorTwoOperation(this, 3, 3);
 
         final Map<String, Operation> operationMap = getOperationMap();
         operationMap.put(OperationName.CLEAN_COLLECTOR_ONE, cleanCollectorOneOperation);
@@ -32,8 +35,8 @@ public class Schema5_6 extends AbstractSchema {
         operationMap.put(OperationName.PERIODIC_CM, periodicCmOperation);
         operationMap.put(OperationName.PREPARE_CM, prepareCmOperation);
         operationMap.put(OperationName.REMOULD_CM, remouldCmOperation);
-        operationMap.put(OperationName.CAST_CM_ONE, castCmOneOperation);
-        operationMap.put(OperationName.CAST_CM_TWO, castCmTwoOperation);
+        operationMap.put(OperationName.CAST_CM_COLLECTOR_ONE, castCmCollectorOneOperation);
+        operationMap.put(OperationName.CAST_CM_COLLECTOR_TWO, castCmCollectorTwoOperation);
     }
 
     @Override
@@ -43,11 +46,11 @@ public class Schema5_6 extends AbstractSchema {
                 getOperationMap().get(OperationName.CLEAN_COLLECTOR_TWO),
                 getOperationMap().get(OperationName.PERIODIC_CM),
                 getOperationMap().get(OperationName.REMOULD_CM)
-                );
+        );
     }
 
     @Override
     public SchemaConfiguration getSchemaConfiguration() {
-        return null;
+        return schemaConfiguration;
     }
 }
