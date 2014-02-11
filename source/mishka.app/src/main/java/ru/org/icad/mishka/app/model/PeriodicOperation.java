@@ -13,9 +13,9 @@ import java.sql.Date;
         @NamedQuery(name = "PeriodicOperation.findAllWhereCastingUnitCollectorIsNotNull",
                 query = "SELECT p FROM PeriodicOperation p WHERE p.castingUnitCollector.id IS NOT NULL"),
         @NamedQuery(name = "PeriodicOperation.findCleanOperationForCollectorBetweenDate",
-                query = "SELECT p FROM PeriodicOperation p WHERE p.castingUnitCollector.id = :castingUnitCollectorId AND p.operation.id = 3 AND p.operationDate >= :startDate AND p.operationDate < :endDate"),
+                query = "SELECT p FROM PeriodicOperation p WHERE p.castingUnitCollector.id IN :castingUnitCollectorIds AND p.operation.id = 3 AND p.operationDate >= :startDate AND p.operationDate < :endDate"),
         @NamedQuery(name = "PeriodicOperation.findPeriodicOperationForCastingMachineBetweenDate",
-                query = "SELECT p FROM PeriodicOperation p WHERE p.castingUnitCastingMachine.id = :castingUnitCastingMachineId AND p.operationDate >= :startDate AND p.operationDate < :endDate")
+                query = "SELECT p FROM PeriodicOperation p WHERE p.castingUnitCastingMachine.id IN :castingUnitCastingMachineIds AND p.operationDate >= :startDate AND p.operationDate < :endDate")
 })
 @Entity
 @Table(name = TableName.PERIODIC_OPERATION)
