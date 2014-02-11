@@ -12,8 +12,8 @@ public final class OperationName {
     public static final String PREPARE_COLLECTOR_ONE = "prepareCollectorOne";
     public static final String PREPARE_COLLECTOR_TWO = "prepareCollectorTwo";
     public static final String REMOULD_CM = "remouldCm";
-    public static final String CAST_CM_ONE = "castCmOne";
-    public static final String CAST_CM_TWO = "castCmTwo";
+    public static final String CAST_CM_COLLECTOR_ONE = "castCmCollectorOne";
+    public static final String CAST_CM_COLLECTOR_TWO = "castCmCollectorTwo";
 
     private OperationName() {
     }
