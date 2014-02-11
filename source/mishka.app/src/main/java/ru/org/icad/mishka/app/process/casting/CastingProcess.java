@@ -2,6 +2,7 @@ package ru.org.icad.mishka.app.process.casting;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Queues;
+import com.google.common.primitives.Ints;
 import org.apache.commons.lang3.ObjectUtils;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
@@ -9,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import ru.org.icad.mishka.app.cache.CastingUnitProductChangeCache;
 import ru.org.icad.mishka.app.cache.key.ProductChangeKey;
 import ru.org.icad.mishka.app.model.*;
-import ru.org.icad.mishka.app.process.casting.schema4.Schema4;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -75,7 +75,9 @@ public class CastingProcess {
         TypedQuery<PeriodicOperation> cleanOperationQuery = em.createNamedQuery("PeriodicOperation.findCleanOperationForCollectorBetweenDate", PeriodicOperation.class);
         cleanOperationQuery.setParameter("startDate", startDate, TemporalType.DATE);
         cleanOperationQuery.setParameter("endDate", endDate, TemporalType.DATE);
-        cleanOperationQuery.setParameter("castingUnitCollectorId", schemaConfiguration.getCastingUnitCollectorId());
+
+        List<Integer> collectorIds = Ints.asList(schemaConfiguration.getCastingUnitCollectorIds());
+        cleanOperationQuery.setParameter("castingUnitCollectorIds", collectorIds);
 
         List<PeriodicOperation> operationList = cleanOperationQuery.getResultList();
         Collections.sort(operationList, new Comparator<PeriodicOperation>() {
@@ -90,7 +92,9 @@ public class CastingProcess {
         TypedQuery<PeriodicOperation> periodicOperationQuery = em.createNamedQuery("PeriodicOperation.findPeriodicOperationForCastingMachineBetweenDate", PeriodicOperation.class);
         periodicOperationQuery.setParameter("startDate", startDate, TemporalType.DATE);
         periodicOperationQuery.setParameter("endDate", endDate, TemporalType.DATE);
-        periodicOperationQuery.setParameter("castingUnitCastingMachineId", schemaConfiguration.getCastingUnitCastingMachineId());
+
+        List<Integer> castingMachineIds = Ints.asList(schemaConfiguration.getCastingUnitCastingMachineIds());
+        periodicOperationQuery.setParameter("castingUnitCastingMachineIds", castingMachineIds);
 
         List<PeriodicOperation> periodicList = periodicOperationQuery.getResultList();
         Collections.sort(periodicList, new Comparator<PeriodicOperation>() {
@@ -118,86 +122,98 @@ public class CastingProcess {
 
         List<CastWrapper> castWrappersWithoutGowk = Lists.newArrayList();
 
-        if (schema instanceof Schema4) {
-            for (int i = 0; i < castWrappers.size(); i++) {
-                CastWrapper castWrapper = castWrappers.get(i);
+//        if (schema instanceof Schema4) {
+        for (int i = 0; i < castWrappers.size(); i++) {
+            CastWrapper castWrapper = castWrappers.get(i);
 
-                if ((i + 1) >= castWrappers.size()) {
-                    continue;
-                }
-
-                CastWrapper castWrapperAfter = castWrappers.get(i + 1);
-
-                if (castWrapperAfter == null) {
-                    break;
-                }
-
-                if (CAST_WRAPPER_COMPARATOR.compare(castWrapper, castWrapperAfter) == 0) {
-                    Cast mergeCast = castWrapper.getCast();
-                    CastWrapper mergeCastWrapper = new CastWrapper(mergeCast);
-                    mergeCastWrapper.setBlankCountTwo(castWrapperAfter.getCast().getBlankCount());
-                    mergeCastWrapper.setIngotInBlankCountTwo(castWrapperAfter.getCast().getIngotInBlankCount());
-                    mergeCastWrapper.setLengthTwo(castWrapperAfter.getCast().getCustomerOrder().getLength());
-
-                    castWrappersWithoutGowk.add(mergeCastWrapper);
-
-
-                } else {
-                    castWrappersWithoutGowk.add(castWrapper);
-                }
+            if ((i + 1) >= castWrappers.size()) {
+                continue;
             }
 
-            castWrappers = castWrappersWithoutGowk;
+            CastWrapper castWrapperAfter = castWrappers.get(i + 1);
 
-            for (int i = 0; i < castWrappers.size(); i++) {
-
-                CastWrapper castWrapper = castWrappers.get(i);
-
-                if ((i + 1) >= castWrappers.size()) {
-                    continue;
-                }
-
-                CastWrapper castWrapperAfter = castWrappers.get(i + 1);
-
-                if (castWrapperAfter == null) {
-                    break;
-                }
-
-                int markId = castWrapper.getCast().getCustomerOrder().getProduct().getMark().getId();
-                int markIdAfter = castWrapperAfter.getCast().getCustomerOrder().getProduct().getMark().getId();
-
-                CastingUnitProductChange castingUnitProductChange = CastingUnitProductChangeCache.getInstance().getCastingUnitProduct(
-                        new ProductChangeKey(schemaConfiguration.getCastingUnitId(), markId, markIdAfter)
-                );
-
-                if (castingUnitProductChange == null) {
-                    continue;
-                }
-
-                Integer timeCast = castingUnitProductChange.getTimeCast();
-                if (timeCast == null || timeCast == 0) {
-                    Integer timePrepareCollector = castingUnitProductChange.getTimePrepareCollector();
-
-                    if (timePrepareCollector == null || timePrepareCollector == 0) {
-                        continue;
-                    }
-
-                    castWrapperAfter.setFlushCollectorPrepareTime(timePrepareCollector);
-
-                    continue;
-                }
-
-                Cast flushCast = new Cast();
-                flushCast.setCastingUnit(new CastingUnit(30));
-                flushCast.setCustomerOrder(new CustomerOrder("flush"));
-
-                CastWrapper flushCastWrapper = new CastWrapper(flushCast);
-                flushCastWrapper.setFlushCastTime(timeCast * 60 * 1000);
-                flushCastWrapper.setFlushCollectorPrepareTime(castingUnitProductChange.getTimePrepareCollector() * 60 * 1000);
-                flushCastWrapper.setFlushCmPrepareTime(castingUnitProductChange.getTimePrepareCastingMachine() * 60 * 1000);
-
-                castWrappers.add(castWrappers.indexOf(castWrapper), new CastWrapper(new Cast()));
+            if (castWrapperAfter == null) {
+                break;
             }
+
+            if (CAST_WRAPPER_COMPARATOR.compare(castWrapper, castWrapperAfter) == 0) {
+                Cast mergeCast = castWrapper.getCast();
+                CastWrapper mergeCastWrapper = new CastWrapper(mergeCast);
+                mergeCastWrapper.setBlankCountTwo(castWrapperAfter.getCast().getBlankCount());
+                mergeCastWrapper.setIngotInBlankCountTwo(castWrapperAfter.getCast().getIngotInBlankCount());
+                mergeCastWrapper.setLengthTwo(castWrapperAfter.getCast().getCustomerOrder().getLength());
+
+                castWrappersWithoutGowk.add(mergeCastWrapper);
+
+
+            } else {
+                castWrappersWithoutGowk.add(castWrapper);
+            }
+        }
+
+        castWrappers = castWrappersWithoutGowk;
+
+        for (int i = 0; i < castWrappers.size(); i++) {
+
+            CastWrapper castWrapper = castWrappers.get(i);
+
+            if ((i + 1) >= castWrappers.size()) {
+                continue;
+            }
+
+            CastWrapper castWrapperAfter = castWrappers.get(i + 1);
+
+            if (castWrapperAfter == null) {
+                break;
+            }
+
+            int markId = 0;
+            try {
+                markId = castWrapper.getCast().getCustomerOrder().getProduct().getMark().getId();
+            } catch (Exception e) {
+                LOGGER.error("Can't get mark id for customer order: " + castWrapper.getCast().getCustomerOrder(), e);
+
+            }
+
+            int markIdAfter = 0;
+            try {
+                markIdAfter = castWrapperAfter.getCast().getCustomerOrder().getProduct().getMark().getId();
+            } catch (Exception e) {
+                LOGGER.error("Can't get mark id for customer order: " + castWrapperAfter.getCast().getCustomerOrder(), e);
+            }
+
+            CastingUnitProductChange castingUnitProductChange = CastingUnitProductChangeCache.getInstance().getCastingUnitProduct(
+                    new ProductChangeKey(schemaConfiguration.getCastingUnitId(), markId, markIdAfter)
+            );
+
+            if (castingUnitProductChange == null) {
+                continue;
+            }
+
+            Integer timeCast = castingUnitProductChange.getTimeCast();
+            if (timeCast == null || timeCast == 0) {
+                Integer timePrepareCollector = castingUnitProductChange.getTimePrepareCollector();
+
+                if (timePrepareCollector == null || timePrepareCollector == 0) {
+                    continue;
+                }
+
+                castWrapperAfter.setFlushCollectorPrepareTime(timePrepareCollector);
+
+                continue;
+            }
+
+            Cast flushCast = new Cast();
+            flushCast.setCastingUnit(new CastingUnit(30));
+            flushCast.setCustomerOrder(new CustomerOrder("flush"));
+
+            CastWrapper flushCastWrapper = new CastWrapper(flushCast);
+            flushCastWrapper.setFlushCastTime(timeCast * 60 * 1000);
+            flushCastWrapper.setFlushCollectorPrepareTime(castingUnitProductChange.getTimePrepareCollector() * 60 * 1000);
+            flushCastWrapper.setFlushCmPrepareTime(castingUnitProductChange.getTimePrepareCastingMachine() * 60 * 1000);
+
+            castWrappers.add(castWrappers.indexOf(castWrapper), new CastWrapper(new Cast()));
+//            }
 
             schema.setOperations(operations);
             schema.setCleanCollectorOperations(cleanCollectorOperations);
