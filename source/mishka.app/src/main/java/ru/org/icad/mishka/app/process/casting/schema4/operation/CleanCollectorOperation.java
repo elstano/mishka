@@ -7,10 +7,9 @@ import ru.org.icad.mishka.app.OperationName;
 import ru.org.icad.mishka.app.model.PeriodicOperation;
 import ru.org.icad.mishka.app.process.casting.Operation;
 import ru.org.icad.mishka.app.process.casting.Schema;
+import ru.org.icad.mishka.app.util.TimeUtil;
 
 import java.sql.Date;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 
 public class CleanCollectorOperation extends Operation {
     private static final Logger LOGGER = LoggerFactory.getLogger(CleanCollectorOperation.class);
@@ -32,7 +31,7 @@ public class CleanCollectorOperation extends Operation {
 
             LOGGER.debug("Result - customUnitId: " + schema.getSchemaConfiguration().getCastingUnitId()
                     + ", Operation type: CleanCollectorOperation startDate: "
-                    + convertTimeToString(getActivationDate().getTime()) + ", cleanTime: " + time / 60 / 1000);
+                    + TimeUtil.convertTimeToString(getActivationDate().getTime()) + ", cleanTime: " + time / 60 / 1000);
         }
 
         Operation operation = schema.getOperationMap().get(OperationName.PREPARE_COLLECTOR);
@@ -51,10 +50,5 @@ public class CleanCollectorOperation extends Operation {
         DateTime periodicOperationStartShiftTime = periodicOperationTime.minusHours(1).plusHours((periodicOperation.getShift() - 1) * 8);
 
         return !getActivationDate().before(periodicOperationStartShiftTime.toDate());
-    }
-
-    private String convertTimeToString(long time) {
-        DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-        return df.format(time);
     }
 }

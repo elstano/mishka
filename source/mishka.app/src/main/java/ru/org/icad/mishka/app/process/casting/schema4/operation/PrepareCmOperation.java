@@ -6,14 +6,13 @@ import ru.org.icad.mishka.app.OperationName;
 import ru.org.icad.mishka.app.model.PrepareTimeConst;
 import ru.org.icad.mishka.app.process.casting.Operation;
 import ru.org.icad.mishka.app.process.casting.Schema;
+import ru.org.icad.mishka.app.util.TimeUtil;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import java.sql.Date;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 
 public class PrepareCmOperation extends Operation {
     private static final Logger LOGGER = LoggerFactory.getLogger(PrepareCmOperation.class);
@@ -30,7 +29,7 @@ public class PrepareCmOperation extends Operation {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("MishkaService");
         EntityManager em = emf.createEntityManager();
 
-        Query query = em.createNativeQuery("select * from PREPARE_TIME_CONST ptc where ptc.CAST_MACH_ID = " + schema.getSchemaConfiguration().getCastingUnitCastingMachineId()
+        Query query = em.createNativeQuery("select * from PREPARE_TIME_CONST ptc where ptc.CAST_MACH_ID = " + schema.getSchemaConfiguration().getCastingUnitCastingMachineIds()[0]
                 + " and ROWNUM = 1", PrepareTimeConst.class);
 
         PrepareTimeConst prepareTimeConst = (PrepareTimeConst) query.getSingleResult();
@@ -46,17 +45,10 @@ public class PrepareCmOperation extends Operation {
 
         if (operation.getActivationCount() == 0) {
             schema.getOperations().add(operation);
-
-            return;
         }
 
         LOGGER.debug("Result - customUnitId: " + schema.getSchemaConfiguration().getCastingUnitId()
                 + ", Operation type: PrepareCmOperation startDate: "
-                + convertTimeToString(getActivationDate().getTime()));
-    }
-
-    private String convertTimeToString(long time) {
-        DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-        return df.format(time);
+                + TimeUtil.convertTimeToString(getActivationDate().getTime()));
     }
 }

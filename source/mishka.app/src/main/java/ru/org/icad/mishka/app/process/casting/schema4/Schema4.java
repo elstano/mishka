@@ -20,7 +20,7 @@ public class Schema4 extends AbstractSchema {
         CleanCollectorOperation cleanCollectorOperation = new CleanCollectorOperation(this);
         PrepareCollectorOperation prepareCollectorOperation = new PrepareCollectorOperation(this);
         CastCmOperation castCmOperation = new CastCmOperation(this, 2);
-        PeriodicCMOperation periodicCmOperation = new PeriodicCMOperation(this);
+        PeriodicCmOperation periodicCmOperation = new PeriodicCmOperation(this);
         PrepareCmOperation prepareCmOperation = new PrepareCmOperation(this);
 
         final Map<String, Operation> operationMap = getOperationMap();
@@ -39,6 +39,7 @@ public class Schema4 extends AbstractSchema {
         );
     }
 
+    @Override
     public SchemaConfiguration getSchemaConfiguration() {
         return schemaConfiguration;
     }

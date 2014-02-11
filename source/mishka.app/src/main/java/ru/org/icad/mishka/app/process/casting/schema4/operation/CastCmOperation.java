@@ -3,21 +3,20 @@ package ru.org.icad.mishka.app.process.casting.schema4.operation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.org.icad.mishka.app.OperationName;
-import ru.org.icad.mishka.app.model.CastingSpeed;
-import ru.org.icad.mishka.app.model.Form;
+import ru.org.icad.mishka.app.model.*;
 import ru.org.icad.mishka.app.process.casting.CastWrapper;
 import ru.org.icad.mishka.app.process.casting.Operation;
 import ru.org.icad.mishka.app.process.casting.Schema;
 import ru.org.icad.mishka.app.util.CastUtil;
-import ru.org.icad.mishka.app.util.GowkUtil;
+import ru.org.icad.mishka.app.util.GowkCastUtil;
+import ru.org.icad.mishka.app.util.TimeUtil;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import java.sql.Date;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import java.util.Queue;
 
 public class CastCmOperation extends Operation {
     private static final Logger LOGGER = LoggerFactory.getLogger(CastCmOperation.class);
@@ -37,41 +36,45 @@ public class CastCmOperation extends Operation {
         final CastWrapper castWrapper = getCastWrapper();
         schema.getResultCastWrappers().add(castWrapper);
 
-
         long time = 0;
-        if ("flush".equals(castWrapper.getCast().getCustomerOrder().getId())) {
+        final Cast cast = castWrapper.getCast();
+        final CustomerOrder customerOrder = cast.getCustomerOrder();
+        if ("flush".equals(customerOrder.getId())) {
             time = castWrapper.getFlushCastTime();
         } else {
             EntityManagerFactory emf = Persistence.createEntityManagerFactory("MishkaService");
             EntityManager em = emf.createEntityManager();
 
-            int markId = castWrapper.getCast().getCustomerOrder().getProduct().getMark().getId();
-            Query query = em.createNativeQuery("SELECT * from CASTING_SPEED cs where cs.MOULD_ID = " + schema.getSchemaConfiguration().getMouldId()
+            final Product product = customerOrder.getProduct();
+            int markId = product.getMark().getId();
+            Query castingSpeedQuery = em.createNativeQuery("SELECT * from CASTING_SPEED cs where cs.MOULD_ID = " + schema.getSchemaConfiguration().getMouldId()
                     + " and cs.MARK_ID in (SELECT m.mark_id FROM MARK m where m.mark_id = " + markId
-                    + " UNION SELECT m.PARENT_MARK_ID FROM MARK m where m.mark_id = 191) and ROWNUM = 1", CastingSpeed.class);
+                    + " UNION SELECT m.PARENT_MARK_ID FROM MARK m where m.mark_id = " + markId
+                    + ") and ROWNUM = 1", CastingSpeed.class);
 
-            CastingSpeed castingSpeed = (CastingSpeed) query.getSingleResult();
+            CastingSpeed castingSpeed = (CastingSpeed) castingSpeedQuery.getSingleResult();
 
             if (castWrapper.getBlankCountTwo() != null) {
                 double tonnageBoth = 0;
                 try {
-                    tonnageBoth = GowkUtil.getTonnage(castWrapper);
+                    tonnageBoth = GowkCastUtil.getTonnage(castWrapper);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
 
                 time = (long) (tonnageBoth / castingSpeed.getSpeed() * 60 * 1000);
             } else {
-                if (Form.INGOT == castWrapper.getCast().getCustomerOrder().getProduct().getForm().getId()) {
+                final int formId = product.getForm().getId();
+                if (Form.INGOT == formId) {
                     try {
-                        time = (long) (CastUtil.getTonnage(castWrapper.getCast()) / castingSpeed.getSpeed() * 60 * 1000);
+                        time = (long) (CastUtil.getTonnage(cast) / castingSpeed.getSpeed() * 60 * 1000);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
 
-                if (Form.SLAB == castWrapper.getCast().getCustomerOrder().getProduct().getForm().getId() || Form.BILLET == castWrapper.getCast().getCustomerOrder().getProduct().getForm().getId()) {
-                    time = (long) (CastUtil.getLengthBlank(castWrapper.getCast()) / castingSpeed.getSpeed() * 60 * 1000);
+                if (Form.SLAB == formId || Form.BILLET == formId) {
+                    time = (long) (CastUtil.getLengthBlank(cast) / castingSpeed.getSpeed() * 60 * 1000);
                 }
             }
         }
@@ -86,23 +89,19 @@ public class CastCmOperation extends Operation {
         Operation periodicCmOperation = schema.getOperationMap().get(OperationName.PERIODIC_CM);
         periodicCmOperation.setActivationDate(endCastDate);
 
-        schema.getOperations().add(cleanCollectorOperation);
-        schema.getOperations().add(periodicCmOperation);
+        final Queue<Operation> operations = schema.getOperations();
+        operations.add(cleanCollectorOperation);
+        operations.add(periodicCmOperation);
 
         setActivationCount(getActivationMaxCount());
 
         LOGGER.debug("Result - customUnitId: " + schema.getSchemaConfiguration().getCastingUnitId()
-                + ", Operation type: CastCmOperation, customer order id: " + castWrapper.getCast().getCustomerOrder().getId()
-                + ", startDate: " + convertTimeToString(startCastDate.getTime() - castWrapper.getPrepareCollectorTime())
-                + ", startCastDate: " + convertTimeToString(startCastDate.getTime())
-                + ", endCastDate: " + convertTimeToString(endCastDate.getTime())
+                + ", Operation type: CastCmOperation, customer order id: " + customerOrder.getId()
+                + ", startDate: " + TimeUtil.convertTimeToString(startCastDate.getTime() - castWrapper.getPrepareCollectorTime())
+                + ", startCastDate: " + TimeUtil.convertTimeToString(startCastDate.getTime())
+                + ", endCastDate: " + TimeUtil.convertTimeToString(endCastDate.getTime())
                 + ", prepareTime: " + castWrapper.getPrepareCollectorTime() / 60 / 1000
                 + ", castTime: " + castWrapper.getCastTime() / 60 / 1000
         );
-    }
-
-    private String convertTimeToString(long time) {
-        DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-        return df.format(time);
     }
 }
