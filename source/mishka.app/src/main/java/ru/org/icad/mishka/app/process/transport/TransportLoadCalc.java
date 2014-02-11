@@ -1,8 +1,11 @@
 package ru.org.icad.mishka.app.process.transport;
 
+import org.apache.commons.math3.util.Precision;
 import ru.org.icad.mishka.app.model.CustomerOrder;
 import ru.org.icad.mishka.app.model.Form;
 import ru.org.icad.mishka.app.util.CustomerOrderUtil;
+
+import java.math.BigDecimal;
 
 public class TransportLoadCalc {
 
@@ -21,8 +24,8 @@ public class TransportLoadCalc {
         OrderTransport orderTransport = new OrderTransport();
         int orderTonnageMax = (customerOrder.getTolerancePlus() + 100) / 100 * customerOrder.getTonnage();
 
-        // ToDo Обрезать остаток от деления
-        orderTransport.setOrderContainers(orderTonnageMax / transportCapacity);
+        int orderContainers = (int) Precision.round(orderTonnageMax / transportCapacity, BigDecimal.ROUND_UP);
+        orderTransport.setOrderContainers(orderContainers);
 
         if (Form.BILLET == form.getId() || Form.SLAB == form.getId()) {
             orderTransport.setOrderIngots(orderTransport.getOrderContainers() * customerOrder.getTransportCapacity());
