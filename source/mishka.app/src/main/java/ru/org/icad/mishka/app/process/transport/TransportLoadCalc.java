@@ -24,7 +24,7 @@ public class TransportLoadCalc {
         OrderTransport orderTransport = new OrderTransport();
         int orderTonnageMax = (customerOrder.getTolerancePlus() + 100) / 100 * customerOrder.getTonnage();
 
-        int orderContainers = (int) Precision.round(orderTonnageMax / transportCapacity, BigDecimal.ROUND_UP);
+        int orderContainers = (int) Precision.round(orderTonnageMax / transportCapacity, BigDecimal.ROUND_DOWN);
         orderTransport.setOrderContainers(orderContainers);
 
         if (Form.BILLET == form.getId() || Form.SLAB == form.getId()) {
