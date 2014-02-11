@@ -5,11 +5,11 @@ import ru.org.icad.mishka.app.model.CustomerOrder;
 import ru.org.icad.mishka.app.model.Form;
 import ru.org.icad.mishka.app.process.casting.CastWrapper;
 
-public final class GowkUtil {
+public final class GowkCastUtil {
     private static final double RO = 2.741 * Math.pow(10, -9);
 
 
-    private GowkUtil() {
+    private GowkCastUtil() {
     }
 
     public static int getLengthBlank(CastWrapper castWrapper) {
