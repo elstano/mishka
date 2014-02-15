@@ -95,7 +95,7 @@ public class CastCmOperation extends Operation {
 
         setActivationCount(getActivationMaxCount());
 
-        LOGGER.debug("Result - customUnitId: " + schema.getSchemaConfiguration().getCastingUnitId()
+        LOGGER.debug("Result - castingUnitId: " + schema.getSchemaConfiguration().getCastingUnitId()
                 + ", Operation type: CastCmOperation, customer order id: " + customerOrder.getId()
                 + ", startDate: " + TimeUtil.convertTimeToString(startCastDate.getTime() - castWrapper.getPrepareCollectorTime())
                 + ", startCastDate: " + TimeUtil.convertTimeToString(startCastDate.getTime())

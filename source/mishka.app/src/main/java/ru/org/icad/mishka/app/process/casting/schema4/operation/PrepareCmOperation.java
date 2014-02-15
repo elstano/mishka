@@ -47,7 +47,7 @@ public class PrepareCmOperation extends Operation {
             schema.getOperations().add(operation);
         }
 
-        LOGGER.debug("Result - customUnitId: " + schema.getSchemaConfiguration().getCastingUnitId()
+        LOGGER.debug("Result - castingUnitId: " + schema.getSchemaConfiguration().getCastingUnitId()
                 + ", Operation type: PrepareCmOperation startDate: "
                 + TimeUtil.convertTimeToString(getActivationDate().getTime()));
     }

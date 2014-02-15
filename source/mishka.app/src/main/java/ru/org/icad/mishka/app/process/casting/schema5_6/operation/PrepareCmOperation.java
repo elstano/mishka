@@ -36,24 +36,24 @@ public class PrepareCmOperation extends Operation {
                 + " and ROWNUM = 1", PrepareTimeConst.class);
 
         PrepareTimeConst prepareTimeConst = (PrepareTimeConst) query.getSingleResult();
-        double durationTimeHour = prepareTimeConst.getDurationTime() / 60;
+        long durationTimeHour = prepareTimeConst.getDurationTime() * 60 * 1000;
 
         String nextOperationName = getNextId() == ONE_OPERATION_ID ? OperationName.CAST_CM_COLLECTOR_ONE : OperationName.CAST_CM_COLLECTOR_TWO;
 
-        Operation operationOne = schema.getOperationMap().get(nextOperationName);
-        if (operationOne.getActivationDate() == null || (getActivationDate() != null && getActivationDate().compareTo(operationOne.getActivationDate()) == 1)) {
-            operationOne.setActivationDate(new Date(getActivationDate().getTime() + (long) (durationTimeHour * 3600 * 1000)));
+        Operation operation = schema.getOperationMap().get(nextOperationName);
+        if (operation.getActivationDate() == null || (getActivationDate() != null && getActivationDate().compareTo(operation.getActivationDate()) == 1)) {
+            operation.setActivationDate(new Date(getActivationDate().getTime() + durationTimeHour));
         }
 
-        operationOne.setActivationCount(operationOne.getActivationCount() - 1);
+        operation.setActivationCount(operation.getActivationCount() - 1);
 
-        if (operationOne.getActivationCount() == 0) {
-            schema.getOperations().add(operationOne);
+        if (operation.getActivationCount() == 0) {
+            schema.getOperations().add(operation);
         }
 
         setActivationCount(getActivationMaxCount());
 
-        LOGGER.debug("Result - customUnitId: " + schema.getSchemaConfiguration().getCastingUnitId()
+        LOGGER.debug("Result - castingUnitId: " + schema.getSchemaConfiguration().getCastingUnitId()
                 + ", Operation type: PrepareCmOperation startDate: "
                 + TimeUtil.convertTimeToString(getActivationDate().getTime()));
     }

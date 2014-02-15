@@ -5,6 +5,7 @@ import com.google.common.collect.Queues;
 import ru.org.icad.mishka.app.model.PeriodicOperation;
 
 import java.util.Collection;
+import java.util.Deque;
 import java.util.Map;
 import java.util.Queue;
 
@@ -14,7 +15,7 @@ public abstract class AbstractSchema implements Schema {
     private Queue<CastWrapper> sourceOneCastWrappers = Queues.newConcurrentLinkedQueue();
     private Queue<CastWrapper> sourceTwoCastWrappers = Queues.newConcurrentLinkedQueue();
 
-    private Queue<CastWrapper> resultCastWrappers = Queues.newConcurrentLinkedQueue();
+    private Deque<CastWrapper> resultCastWrappers = Queues.newLinkedBlockingDeque();
     private Map<String, Operation> operationMap = Maps.newConcurrentMap();
 
     private Queue<Operation> operations;
@@ -52,12 +53,12 @@ public abstract class AbstractSchema implements Schema {
     }
 
     @Override
-    public Queue<CastWrapper> getResultCastWrappers() {
+    public Deque<CastWrapper> getResultCastWrappers() {
         return resultCastWrappers;
     }
 
-    public void setResultCastWrappers(Queue<CastWrapper> resultCastWrappers) {
-        this.resultCastWrappers = resultCastWrappers;
+    public void setResultCastWrappers(Collection<CastWrapper> resultCastWrappers) {
+        this.resultCastWrappers.addAll(resultCastWrappers);
     }
 
     @Override

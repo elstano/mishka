@@ -45,10 +45,10 @@ public class Schema5_6 extends AbstractSchema {
     @Override
     public List<? extends Operation> getInitOperations() {
         return Arrays.asList(
-                getOperationMap().get(OperationName.CLEAN_COLLECTOR_ONE),
-                getOperationMap().get(OperationName.CLEAN_COLLECTOR_TWO),
+                getOperationMap().get(OperationName.REMOULD_CM),
                 getOperationMap().get(OperationName.PERIODIC_CM),
-                getOperationMap().get(OperationName.REMOULD_CM)
+                getOperationMap().get(OperationName.CLEAN_COLLECTOR_ONE),
+                getOperationMap().get(OperationName.CLEAN_COLLECTOR_TWO)
         );
     }
 

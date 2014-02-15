@@ -28,7 +28,7 @@ public class CleanCollectorTwoOperation extends Operation {
             PeriodicOperation periodicOperation = schema.getCleanCollectorOperations().poll();
             time = (long) (periodicOperation.getDurationTime() * 60 * 1000);
 
-            LOGGER.debug("Result - customUnitId: " + schema.getSchemaConfiguration().getCastingUnitId()
+            LOGGER.debug("Result - castingUnitId: " + schema.getSchemaConfiguration().getCastingUnitId()
                     + ", Operation type: CleanCollectorTwoOperation startDate: "
                     + TimeUtil.convertTimeToString(getActivationDate().getTime()) + ", cleanTime: " + time / 60 / 1000);
         }

@@ -85,13 +85,13 @@ public class CastCmCollectorOneOperation extends Operation {
         remouldCmOperation.setNextId(2);
 
         final Queue<Operation> operations = schema.getOperations();
-        operations.add(cleanCollectorOneOperation);
-        operations.add(periodicCmOperation);
         operations.add(remouldCmOperation);
+        operations.add(periodicCmOperation);
+        operations.add(cleanCollectorOneOperation);
 
         setActivationCount(getActivationMaxCount());
 
-        LOGGER.debug("Result - customUnitId: " + schema.getSchemaConfiguration().getCastingUnitId()
+        LOGGER.debug("Result - castingUnitId: " + schema.getSchemaConfiguration().getCastingUnitId()
                 + ", Operation type: CastCmCollectorOneOperation, customer order id: " + customerOrder.getId()
                 + ", startDate: " + TimeUtil.convertTimeToString(startCastDate.getTime() - castWrapper.getPrepareCollectorTime())
                 + ", startCastDate: " + TimeUtil.convertTimeToString(startCastDate.getTime())

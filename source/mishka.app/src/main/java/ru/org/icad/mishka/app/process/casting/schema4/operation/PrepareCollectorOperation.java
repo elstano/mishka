@@ -101,7 +101,7 @@ public class PrepareCollectorOperation extends Operation {
             schema.getOperations().add(operation);
         }
 
-        LOGGER.debug("Result - customUnitId: " + schemaConfiguration.getCastingUnitId()
+        LOGGER.debug("Result - castingUnitId: " + schemaConfiguration.getCastingUnitId()
                 + ", Operation type: PrepareCollectorOperation startDate: "
                 + TimeUtil.convertTimeToString(getActivationDate().getTime()));
     }

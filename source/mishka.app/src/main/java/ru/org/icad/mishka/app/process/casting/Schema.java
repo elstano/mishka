@@ -2,10 +2,7 @@ package ru.org.icad.mishka.app.process.casting;
 
 import ru.org.icad.mishka.app.model.PeriodicOperation;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Queue;
+import java.util.*;
 
 public interface Schema {
 
@@ -23,7 +20,7 @@ public interface Schema {
 
     public void setSourceTwoCastWrappers(Collection<CastWrapper> sourceTwoCastWrappers);
 
-    public Queue<CastWrapper> getResultCastWrappers();
+    public Deque<CastWrapper> getResultCastWrappers();
 
     public Map<String, Operation> getOperationMap();
 

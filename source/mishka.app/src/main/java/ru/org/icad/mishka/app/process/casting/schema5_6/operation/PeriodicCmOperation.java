@@ -32,7 +32,7 @@ public class PeriodicCmOperation extends Operation {
 
             schema.getOperations().add(operation);
 
-            LOGGER.debug("Result - customUnitId: " + schema.getSchemaConfiguration().getCastingUnitId()
+            LOGGER.debug("Result - castingUnitId: " + schema.getSchemaConfiguration().getCastingUnitId()
                     + ", Operation type: PeriodicCmOperation startDate: "
                     + TimeUtil.convertTimeToString(getActivationDate().getTime())
                     + ", cleanTime: " + time / 60 / 1000);
@@ -40,8 +40,7 @@ public class PeriodicCmOperation extends Operation {
             return;
         }
 
-        Operation operation = schema.getOperationMap().get(OperationName.PREPARE_CM);
-
+        final Operation operation = schema.getOperationMap().get(OperationName.PREPARE_CM);
         if (operation.getActivationDate() == null || (getActivationDate() != null && getActivationDate().compareTo(operation.getActivationDate()) == 1)) {
             operation.setActivationDate(new Date(getActivationDate().getTime()));
         }
