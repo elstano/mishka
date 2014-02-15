@@ -11,6 +11,7 @@ import ru.org.icad.mishka.app.cache.CastingUnitProductChangeCache;
 import ru.org.icad.mishka.app.cache.key.ProductChangeKey;
 import ru.org.icad.mishka.app.model.*;
 import ru.org.icad.mishka.app.process.casting.schema4.Schema4;
+import ru.org.icad.mishka.app.process.casting.schema5_6.Schema5_6;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -116,44 +117,18 @@ public class CastingProcess {
 
         List<CastWrapper> castWrappers = Lists.newArrayList();
         for (Cast cast : casts) {
-            castWrappers.add(new CastWrapper(cast));
-        }
-
-        Collections.sort(castWrappers, CAST_WRAPPER_COMPARATOR);
-
-        List<CastWrapper> castWrappersWithoutGowk = Lists.newArrayList();
-
-        if (schema instanceof Schema4) {
-            for (int i = 0; i < castWrappers.size(); i++) {
-                CastWrapper castWrapper = castWrappers.get(i);
-
-                if ((i + 1) >= castWrappers.size()) {
-                    continue;
-                }
-
-                CastWrapper castWrapperAfter = castWrappers.get(i + 1);
-
-                if (castWrapperAfter == null) {
-                    break;
-                }
-
-                if (CAST_WRAPPER_COMPARATOR.compare(castWrapper, castWrapperAfter) == 0) {
-                    Cast mergeCast = castWrapper.getCast();
-                    CastWrapper mergeCastWrapper = new CastWrapper(mergeCast);
-                    mergeCastWrapper.setBlankCountTwo(castWrapperAfter.getCast().getBlankCount());
-                    mergeCastWrapper.setIngotInBlankCountTwo(castWrapperAfter.getCast().getIngotInBlankCount());
-                    mergeCastWrapper.setLengthTwo(castWrapperAfter.getCast().getCustomerOrder().getLength());
-
-                    castWrappersWithoutGowk.add(mergeCastWrapper);
-
-
-                } else {
-                    castWrappersWithoutGowk.add(castWrapper);
-                }
+            if(cast.getCustomerOrder().getProduct() == null) {
+                LOGGER.error("Can't get product for customer order: " + cast.getCustomerOrder());
+                continue;
             }
 
-            castWrappers = castWrappersWithoutGowk;
+            castWrappers.add(new CastWrapper(cast));
+        }
+        Collections.sort(castWrappers, CAST_WRAPPER_COMPARATOR);
+        castWrappers = getCastWrappersWithGowk(castWrappers);
 
+
+        if (schema instanceof Schema4) {
             for (int i = 0; i < castWrappers.size(); i++) {
 
                 CastWrapper castWrapper = castWrappers.get(i);
@@ -215,6 +190,17 @@ public class CastingProcess {
 
                 castWrappers.add(castWrappers.indexOf(castWrapper), new CastWrapper(new Cast()));
             }
+        }
+            if (schema instanceof Schema5_6) {
+                final int castWrappersDecrease = castWrappers.size() - 1;
+
+                for (int i = 0; i < castWrappers.size(); i+=2) {
+                        schema.getSourceOneCastWrappers().add(castWrappers.get(i));
+                    if(i < castWrappersDecrease) {
+                        schema.getSourceTwoCastWrappers().add(castWrappers.get(i + 1));
+                    }
+                }
+            }
 
             schema.setOperations(operations);
             schema.setCleanCollectorOperations(cleanCollectorOperations);
@@ -234,8 +220,36 @@ public class CastingProcess {
             }
 
             LOGGER.debug("Casting time: " + (System.currentTimeMillis() - startTime));
-        }
+    }
 
+    private List<CastWrapper> getCastWrappersWithGowk(List<CastWrapper> castWrappers) {
+        List<CastWrapper> castWrappersWithGowk = Lists.newArrayList();
+        for (int i = 0; i < castWrappers.size(); i++) {
+            CastWrapper castWrapper = castWrappers.get(i);
+
+            if ((i + 1) >= castWrappers.size()) {
+                continue;
+            }
+
+            CastWrapper castWrapperAfter = castWrappers.get(i + 1);
+
+            if (castWrapperAfter == null) {
+                break;
+            }
+
+            if (CAST_WRAPPER_COMPARATOR.compare(castWrapper, castWrapperAfter) == 0) {
+                Cast mergeCast = castWrapper.getCast();
+                CastWrapper mergeCastWrapper = new CastWrapper(mergeCast);
+                mergeCastWrapper.setBlankCountTwo(castWrapperAfter.getCast().getBlankCount());
+                mergeCastWrapper.setIngotInBlankCountTwo(castWrapperAfter.getCast().getIngotInBlankCount());
+                mergeCastWrapper.setLengthTwo(castWrapperAfter.getCast().getCustomerOrder().getLength());
+
+                castWrappersWithGowk.add(mergeCastWrapper);
+            } else {
+                castWrappersWithGowk.add(castWrapper);
+            }
+        }
+        return castWrappersWithGowk;
     }
 
     @Nullable

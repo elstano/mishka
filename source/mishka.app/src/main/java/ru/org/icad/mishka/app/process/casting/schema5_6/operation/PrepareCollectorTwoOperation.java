@@ -35,7 +35,7 @@ public class PrepareCollectorTwoOperation  extends Operation {
 
     @Override
     public void activate() {
-        final Queue<CastWrapper> sourceCastWrappers = schema.getSourceCastWrappers();
+        final Queue<CastWrapper> sourceCastWrappers = schema.getSourceTwoCastWrappers();
         if (sourceCastWrappers.isEmpty()) {
             return;
         }
@@ -63,7 +63,8 @@ public class PrepareCollectorTwoOperation  extends Operation {
             int markId = cast.getCustomerOrder().getProduct().getMark().getId();
             Query prepareTimeConstQuery = em.createNativeQuery("select * from PREPARE_TIME_CONST ptc where ptc.COLLE_ID = " + schemaConfiguration.getCastingUnitCollectorIds()[1]
                     + " and ptc.MARK_ID in (SELECT m.mark_id FROM MARK m where m.mark_id = " + markId
-                    + " UNION SELECT m.PARENT_MARK_ID FROM MARK m where m.mark_id = " + markId + ") and ROWNUM = 1", PrepareTimeConst.class);
+                    + " UNION SELECT m.PARENT_MARK_ID FROM MARK m where m.mark_id = " + markId
+                    + " UNION SELECT 400 FROM DUAL) and ROWNUM = 1", PrepareTimeConst.class);
 
             PrepareTimeConst prepareTimeConst = (PrepareTimeConst) prepareTimeConstQuery.getSingleResult();
 
