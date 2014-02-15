@@ -11,6 +11,9 @@ import java.util.Queue;
 public abstract class AbstractSchema implements Schema {
 
     private Queue<CastWrapper> sourceCastWrappers = Queues.newConcurrentLinkedQueue();
+    private Queue<CastWrapper> sourceOneCastWrappers = Queues.newConcurrentLinkedQueue();
+    private Queue<CastWrapper> sourceTwoCastWrappers = Queues.newConcurrentLinkedQueue();
+
     private Queue<CastWrapper> resultCastWrappers = Queues.newConcurrentLinkedQueue();
     private Map<String, Operation> operationMap = Maps.newConcurrentMap();
 
@@ -26,6 +29,26 @@ public abstract class AbstractSchema implements Schema {
     @Override
     public void setSourceCastWrappers(Collection<CastWrapper> sourceCastWrappers) {
         this.sourceCastWrappers.addAll(sourceCastWrappers);
+    }
+
+    @Override
+    public Queue<CastWrapper> getSourceOneCastWrappers() {
+        return sourceOneCastWrappers;
+    }
+
+    @Override
+    public void setSourceOneCastWrappers(Collection<CastWrapper> sourceOneCastWrappers) {
+        this.sourceOneCastWrappers.addAll(sourceOneCastWrappers);
+    }
+
+    @Override
+    public Queue<CastWrapper> getSourceTwoCastWrappers() {
+        return sourceTwoCastWrappers;
+    }
+
+    @Override
+    public void setSourceTwoCastWrappers(Collection<CastWrapper> sourceTwoCastWrappers) {
+        this.sourceTwoCastWrappers.addAll(sourceTwoCastWrappers);
     }
 
     @Override

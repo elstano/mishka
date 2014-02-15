@@ -7,18 +7,18 @@ import ru.org.icad.mishka.app.OperationName;
 import ru.org.icad.mishka.app.model.PeriodicOperation;
 import ru.org.icad.mishka.app.process.casting.Operation;
 import ru.org.icad.mishka.app.process.casting.Schema;
+import ru.org.icad.mishka.app.util.TimeUtil;
 
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
-public class PeriodicCMOperation extends Operation {
-    private static final Logger LOGGER = LoggerFactory.getLogger(PeriodicCMOperation.class);
-
+public class PeriodicCmOperation extends Operation {
+    private static final Logger LOGGER = LoggerFactory.getLogger(PeriodicCmOperation.class);
 
     private Schema schema;
 
-    public PeriodicCMOperation(Schema schema) {
+    public PeriodicCmOperation(Schema schema) {
         this.schema = schema;
     }
 
@@ -35,8 +35,8 @@ public class PeriodicCMOperation extends Operation {
             schema.getOperations().add(operation);
 
             LOGGER.debug("Result - customUnitId: " + schema.getSchemaConfiguration().getCastingUnitId()
-                    + ", Operation type: PeriodicCMOperation startDate: "
-                    + convertTimeToString(getActivationDate().getTime())
+                    + ", Operation type: PeriodicCmOperation startDate: "
+                    + TimeUtil.convertTimeToString(getActivationDate().getTime())
                     + ", cleanTime: " + time / 60 / 1000);
         } else {
 
@@ -58,10 +58,5 @@ public class PeriodicCMOperation extends Operation {
         DateTime periodicOperationStartShiftTime = periodicOperationTime.minusHours(1).plusHours((periodicOperation.getShift() - 1) * 8);
 
         return !getActivationDate().before(periodicOperationStartShiftTime.toDate());
-    }
-
-    private String convertTimeToString(long time) {
-        DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-        return df.format(time);
     }
 }

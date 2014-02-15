@@ -16,6 +16,7 @@ import java.sql.Date;
 
 public class PrepareCmOperation extends Operation {
     private static final Logger LOGGER = LoggerFactory.getLogger(PrepareCmOperation.class);
+    private static final int ONE_OPERATION_ID = 1;
 
     private final Schema schema;
 
@@ -37,8 +38,9 @@ public class PrepareCmOperation extends Operation {
         PrepareTimeConst prepareTimeConst = (PrepareTimeConst) query.getSingleResult();
         double durationTimeHour = prepareTimeConst.getDurationTime() / 60;
 
+        String nextOperationName = getNextId() == ONE_OPERATION_ID ? OperationName.CAST_CM_COLLECTOR_ONE : OperationName.CAST_CM_COLLECTOR_TWO;
 
-        Operation operationOne = schema.getOperationMap().get(OperationName.CAST_CM_COLLECTOR_ONE);
+        Operation operationOne = schema.getOperationMap().get(nextOperationName);
         if (operationOne.getActivationDate() == null || (getActivationDate() != null && getActivationDate().compareTo(operationOne.getActivationDate()) == 1)) {
             operationOne.setActivationDate(new Date(getActivationDate().getTime() + (long) (durationTimeHour * 3600 * 1000)));
         }
@@ -47,17 +49,6 @@ public class PrepareCmOperation extends Operation {
 
         if (operationOne.getActivationCount() == 0) {
             schema.getOperations().add(operationOne);
-        }
-
-        Operation operationTwo = schema.getOperationMap().get(OperationName.CAST_CM_COLLECTOR_TWO);
-        if (operationTwo.getActivationDate() == null || (getActivationDate() != null && getActivationDate().compareTo(operationTwo.getActivationDate()) == 1)) {
-            operationTwo.setActivationDate(new Date(getActivationDate().getTime() + (long) (durationTimeHour * 3600 * 1000)));
-        }
-
-        operationTwo.setActivationCount(operationTwo.getActivationCount() - 1);
-
-        if (operationTwo.getActivationCount() == 0) {
-            schema.getOperations().add(operationTwo);
         }
 
         setActivationCount(getActivationMaxCount());

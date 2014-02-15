@@ -8,6 +8,7 @@ public abstract class Operation {
     private int activationCount;
     private int activationMaxCount;
     private Date activationDate;
+    private int nextId;
 
     public CastWrapper getCastWrapper() {
         return castWrapper;
@@ -39,6 +40,14 @@ public abstract class Operation {
 
     public void setActivationDate(Date activationDate) {
         this.activationDate = activationDate;
+    }
+
+    public int getNextId() {
+        return nextId;
+    }
+
+    public void setNextId(int nextId) {
+        this.nextId = nextId;
     }
 
     public abstract void activate();

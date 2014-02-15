@@ -15,6 +15,14 @@ public interface Schema {
 
     public void setSourceCastWrappers(Collection<CastWrapper> sourceCastWrappers);
 
+    public Queue<CastWrapper> getSourceOneCastWrappers();
+
+    public void setSourceOneCastWrappers(Collection<CastWrapper> sourceOneCastWrappers);
+
+    public Queue<CastWrapper> getSourceTwoCastWrappers();
+
+    public void setSourceTwoCastWrappers(Collection<CastWrapper> sourceTwoCastWrappers);
+
     public Queue<CastWrapper> getResultCastWrappers();
 
     public Map<String, Operation> getOperationMap();

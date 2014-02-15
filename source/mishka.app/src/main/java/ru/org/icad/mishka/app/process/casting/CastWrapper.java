@@ -15,7 +15,7 @@ public class CastWrapper {
     private Date endDate;
     private Cast cast;
 
-    // ToDo Убрать отсюда
+    // ToDo Убрать отсюда!!!
     private Integer blankCountTwo;
     private Integer ingotInBlankCountTwo;
     private Integer lengthTwo;

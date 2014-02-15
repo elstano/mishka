@@ -12,6 +12,7 @@ import java.util.Map;
 
 public class Schema5_6 extends AbstractSchema {
 
+    private static final int INIT_NEXT_ID = 1;
     private SchemaConfiguration schemaConfiguration;
 
     public Schema5_6(SchemaConfiguration schemaConfiguration) {
@@ -24,8 +25,10 @@ public class Schema5_6 extends AbstractSchema {
         PeriodicCmOperation periodicCmOperation = new PeriodicCmOperation(this);
         PrepareCmOperation prepareCmOperation = new PrepareCmOperation(this, 2, 2);
         RemouldCmOperation remouldCmOperation = new RemouldCmOperation(this);
-        CastCmCollectorOneOperation castCmCollectorOneOperation = new CastCmCollectorOneOperation(this, 3, 2);
-        CastCmCollectorTwoOperation castCmCollectorTwoOperation = new CastCmCollectorTwoOperation(this, 3, 3);
+        remouldCmOperation.setNextId(INIT_NEXT_ID);
+
+        CastCmCollectorOneOperation castCmCollectorOneOperation = new CastCmCollectorOneOperation(this, 2, 2);
+        CastCmCollectorTwoOperation castCmCollectorTwoOperation = new CastCmCollectorTwoOperation(this, 2, 2);
 
         final Map<String, Operation> operationMap = getOperationMap();
         operationMap.put(OperationName.CLEAN_COLLECTOR_ONE, cleanCollectorOneOperation);

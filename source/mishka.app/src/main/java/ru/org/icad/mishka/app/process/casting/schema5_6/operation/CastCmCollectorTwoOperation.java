@@ -81,11 +81,9 @@ public class CastCmCollectorTwoOperation extends Operation {
         Operation periodicCmOperation = schema.getOperationMap().get(OperationName.PERIODIC_CM);
         periodicCmOperation.setActivationDate(endCastDate);
 
-        Operation castCmCollectorOneOperation = schema.getOperationMap().get(OperationName.CAST_CM_COLLECTOR_ONE);
-        castCmCollectorOneOperation.setActivationCount(castCmCollectorOneOperation.getActivationCount() - 1);
-
         Operation remouldCmOperation = schema.getOperationMap().get(OperationName.REMOULD_CM);
         remouldCmOperation.setActivationDate(endCastDate);
+        remouldCmOperation.setNextId(1);
 
         final Queue<Operation> operations = schema.getOperations();
         operations.add(cleanCollectorTwoOperation);
