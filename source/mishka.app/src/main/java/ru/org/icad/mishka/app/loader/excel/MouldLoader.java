@@ -47,16 +47,17 @@ public class MouldLoader implements ExcelLoader<Mould> {
             }
 
             final int mouldId = Double.valueOf(mouldIdCell.getNumericCellValue()).intValue();
-            final int castHouseId = ExcelUtil.getIntegerCellValue(row, 1);
+            final Integer castHouseId = ExcelUtil.getIntegerCellValue(row, 1);
             final Integer startCastMachId = ExcelUtil.getIntegerCellValue(row, 2);
             final int formId = ExcelUtil.getIntegerCellValue(row, 3);
-            final int width = ExcelUtil.getIntegerCellValue(row, 4);
-            final int height = ExcelUtil.getIntegerCellValue(row, 5);
-            final int diameter = ExcelUtil.getIntegerCellValue(row, 6);
+            final Integer width = ExcelUtil.getIntegerCellValue(row, 4);
+            final Integer height = ExcelUtil.getIntegerCellValue(row, 5);
+            final Integer diameter = ExcelUtil.getIntegerCellValue(row, 6);
             final Integer resource = ExcelUtil.getIntegerCellValue(row, 7);
             final Integer resourceMax = ExcelUtil.getIntegerCellValue(row, 8);
             final Integer prepareTime = ExcelUtil.getIntegerCellValue(row, 9);
             final Integer numBlanksMax = ExcelUtil.getIntegerCellValue(row, 10);
+            final Integer weight = ExcelUtil.getIntegerCellValue(row, 11);
 
             Mould mould = new Mould();
             mould.setId(mouldId);
@@ -70,6 +71,7 @@ public class MouldLoader implements ExcelLoader<Mould> {
             mould.setResourceMax(resourceMax);
             mould.setPrepareTime(prepareTime);
             mould.setNumBlanksMax(numBlanksMax);
+            mould.setWeight(weight);
 
             moulds.add(mould);
         }

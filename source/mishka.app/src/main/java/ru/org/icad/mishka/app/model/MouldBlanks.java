@@ -17,7 +17,7 @@ public class MouldBlanks {
     @JoinColumn(name = ColumnName.MOULD_ID)
     private Mould mould;
     @Column(name = "NUM_BLANKS")
-    private int numBlanks;
+    private Integer numBlanks;
 
     public int getId() {
         return id;
@@ -35,11 +35,11 @@ public class MouldBlanks {
         this.mould = mould;
     }
 
-    public int getNumBlanks() {
+    public Integer getNumBlanks() {
         return numBlanks;
     }
 
-    public void setNumBlanks(int numBlanks) {
+    public void setNumBlanks(Integer numBlanks) {
         this.numBlanks = numBlanks;
     }
 

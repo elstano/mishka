@@ -46,7 +46,7 @@ public class MouldBlanksLoader implements ExcelLoader<MouldBlanks> {
             }
 
             final int mouldId = Double.valueOf(mouldIdCell.getNumericCellValue()).intValue();
-            final int numBlanks = ExcelUtil.getIntegerCellValue(row, 1);
+            final Integer numBlanks = ExcelUtil.getIntegerCellValue(row, 1);
 
 
             MouldBlanks mouldBlanks = new MouldBlanks();

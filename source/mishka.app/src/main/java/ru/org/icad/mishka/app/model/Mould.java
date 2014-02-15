@@ -16,17 +16,17 @@ public class Mould {
     @Column(name = ColumnName.MOULD_ID)
     private int id;
     @Column(name = "CH_ID")
-    private int castHouseId;
+    private Integer castHouseId;
     @Column(name = "START_CAST_MACH_ID")
     private Integer startCastMachId;
     @Column(name = "FORM_ID")
     private int formId;
     @Column(name = "WIDTH")
-    private int width;
+    private Integer width;
     @Column(name = "HEIGHT")
-    private int height;
+    private Integer height;
     @Column(name = "DIAMETER")
-    private int diameter;
+    private Integer diameter;
     @Column(name = "RESOURCE_CURRENT")
     private Integer resource;
     @Column(name = "RESOURCE_MAX")
@@ -35,6 +35,8 @@ public class Mould {
     private Integer prepareTime;
     @Column(name = "NUM_BLANKS_MAX")
     private Integer numBlanksMax;
+    @Column(name = "WEIGHT")
+    private Integer weight;
 
     public Mould() {
     }
@@ -51,11 +53,11 @@ public class Mould {
         this.id = id;
     }
 
-    public int getCastHouseId() {
+    public Integer getCastHouseId() {
         return castHouseId;
     }
 
-    public void setCastHouseId(int castHouseId) {
+    public void setCastHouseId(Integer castHouseId) {
         this.castHouseId = castHouseId;
     }
 
@@ -75,27 +77,27 @@ public class Mould {
         this.formId = formId;
     }
 
-    public int getWidth() {
+    public Integer getWidth() {
         return width;
     }
 
-    public void setWidth(int width) {
+    public void setWidth(Integer width) {
         this.width = width;
     }
 
-    public int getHeight() {
+    public Integer getHeight() {
         return height;
     }
 
-    public void setHeight(int height) {
+    public void setHeight(Integer height) {
         this.height = height;
     }
 
-    public int getDiameter() {
+    public Integer getDiameter() {
         return diameter;
     }
 
-    public void setDiameter(int diameter) {
+    public void setDiameter(Integer diameter) {
         this.diameter = diameter;
     }
 
@@ -129,6 +131,14 @@ public class Mould {
 
     public void setNumBlanksMax(Integer numBlanksMax) {
         this.numBlanksMax = numBlanksMax;
+    }
+
+    public Integer getWeight() {
+        return weight;
+    }
+
+    public void setWeight(Integer weight) {
+        this.weight = weight;
     }
 
     @Override
