@@ -7,6 +7,10 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Date;
 
+@NamedQueries({
+        @NamedQuery(name = "CustomerOrder.findAll",
+                query = "SELECT co FROM CustomerOrder co")
+})
 @Entity
 @Table(name = TableName.CUSTOMER_ORDER)
 public class CustomerOrder {
