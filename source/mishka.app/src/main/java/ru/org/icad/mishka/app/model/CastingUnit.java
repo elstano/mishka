@@ -9,9 +9,11 @@ import java.sql.Date;
 
 @NamedQueries({
         @NamedQuery(name = "CastingUnit.findAll",
-                query = "SELECT c FROM CastingUnit c"),
+                query = "SELECT cu FROM CastingUnit cu"),
         @NamedQuery(name = "CastingUnit.findByPrimaryKey",
-                query = "SELECT c FROM CastingUnit c WHERE c.id = :id")
+                query = "SELECT cu FROM CastingUnit cu WHERE cu.id = :id"),
+        @NamedQuery(name = "CastingUnit.findByPlantId",
+                query = "select cu from CastingUnit cu, CastHouse ch where ch.plant.id = :plantId and cu.castHouse.id = ch.id")
 })
 @Entity
 @Table(name = TableName.CASTING_UNIT)
