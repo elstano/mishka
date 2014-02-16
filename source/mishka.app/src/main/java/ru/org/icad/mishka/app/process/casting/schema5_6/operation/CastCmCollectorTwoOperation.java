@@ -99,6 +99,13 @@ public class CastCmCollectorTwoOperation extends Operation {
                 + ", endCastDate: " + TimeUtil.convertTimeToString(endCastDate.getTime())
                 + ", prepareTime: " + castWrapper.getPrepareCollectorTime() / 60 / 1000
                 + ", castTime: " + castWrapper.getCastTime() / 60 / 1000
+                + (isGowk(castWrapper) ? ", gowk: " + isGowk(castWrapper): "")
         );
+    }
+
+    private boolean isGowk(CastWrapper castWrapper) {
+        return castWrapper.getLengthTwo() != null
+                || castWrapper.getBlankCountTwo() != null
+                || castWrapper.getIngotInBlankCountTwo() != null;
     }
 }

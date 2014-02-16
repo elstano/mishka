@@ -54,18 +54,22 @@ public class CastCmTwoCollectorTwoOperation extends Operation {
             CastingSpeed castingSpeed = (CastingSpeed) castingSpeedQuery.getSingleResult();
 
             if (castWrapper.getBlankCountTwo() != null) {
-                double lengthBlank = 0;
+                double tonnageBoth = 0;
                 try {
-                    lengthBlank = GowkCastUtil.getLengthBlank(castWrapper);
+                    tonnageBoth = GowkCastUtil.getTonnage(castWrapper);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
 
-                time = (long) (lengthBlank / castingSpeed.getSpeed() * 60 * 1000);
+                time = (long) (tonnageBoth / castingSpeed.getSpeed() * 60 * 1000);
             } else {
                 final int formId = product.getForm().getId();
-                if (Form.SLAB == formId || Form.BILLET == formId) {
-                    time = (long) (CastUtil.getLengthBlank(cast) / castingSpeed.getSpeed() * 60 * 1000);
+                if (Form.INGOT == formId) {
+                    try {
+                        time = (long) (CastUtil.getTonnage(cast) / castingSpeed.getSpeed() * 60 * 1000);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         }
@@ -77,10 +81,10 @@ public class CastCmTwoCollectorTwoOperation extends Operation {
 
         Operation cleanCollectorTwoOperation = schema.getOperationMap().get(OperationName.CLEAN_COLLECTOR_TWO);
         cleanCollectorTwoOperation.setActivationDate(endCastDate);
-        Operation periodicCmOperation = schema.getOperationMap().get(OperationName.PERIODIC_CM);
+        Operation periodicCmOperation = schema.getOperationMap().get(OperationName.PERIODIC_CM_TWO);
         periodicCmOperation.setActivationDate(endCastDate);
 
-        Operation remouldCmOperation = schema.getOperationMap().get(OperationName.REMOULD_CM);
+        Operation remouldCmOperation = schema.getOperationMap().get(OperationName.REMOULD_CM_TWO);
         remouldCmOperation.setActivationDate(endCastDate);
         remouldCmOperation.setNextId(1);
 
@@ -92,12 +96,19 @@ public class CastCmTwoCollectorTwoOperation extends Operation {
         setActivationCount(getActivationMaxCount());
 
         LOGGER.debug("Result - castingUnitId: " + schema.getSchemaConfiguration().getCastingUnitId()
-                + ", Operation type: CastCmCollectorTwoOperation, customer order id: " + customerOrder.getId()
+                + ", Operation type: CastCmTwoCollectorTwoOperation, customer order id: " + customerOrder.getId()
                 + ", startDate: " + TimeUtil.convertTimeToString(startCastDate.getTime() - castWrapper.getPrepareCollectorTime())
                 + ", startCastDate: " + TimeUtil.convertTimeToString(startCastDate.getTime())
                 + ", endCastDate: " + TimeUtil.convertTimeToString(endCastDate.getTime())
                 + ", prepareTime: " + castWrapper.getPrepareCollectorTime() / 60 / 1000
                 + ", castTime: " + castWrapper.getCastTime() / 60 / 1000
+                + (isGowk(castWrapper) ? ", gowk: " + isGowk(castWrapper): "")
         );
+    }
+
+    private boolean isGowk(CastWrapper castWrapper) {
+        return castWrapper.getLengthTwo() != null
+                || castWrapper.getBlankCountTwo() != null
+                || castWrapper.getIngotInBlankCountTwo() != null;
     }
 }

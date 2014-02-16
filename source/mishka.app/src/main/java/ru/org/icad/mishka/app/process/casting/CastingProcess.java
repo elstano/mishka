@@ -12,6 +12,7 @@ import ru.org.icad.mishka.app.cache.key.ProductChangeKey;
 import ru.org.icad.mishka.app.model.*;
 import ru.org.icad.mishka.app.process.casting.schema4.Schema4;
 import ru.org.icad.mishka.app.process.casting.schema5_6.Schema5_6;
+import ru.org.icad.mishka.app.process.casting.schema9.Schema9;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -174,10 +175,9 @@ public class CastingProcess {
                 castWrappers.add(castWrappers.indexOf(castWrapper), flushCastWrapper);
             }
         }
-        if (schema instanceof Schema5_6) {
+        if (schema instanceof Schema5_6 || schema instanceof Schema9) {
             final List<CastWrapper> oneCastWrappers = Lists.newArrayList();
             final List<CastWrapper> twoCastWrappers = Lists.newArrayList();
-
 
             for (int i = 0; i < castWrappers.size(); i++) {
                 if (oneCastWrappers.size() == 0) {
