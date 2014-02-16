@@ -1,7 +1,7 @@
 package ru.org.icad.mishka.web.gwt.main.server.dev;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
-import ru.org.icad.mishka.app.dev.CastingDev;
+import ru.org.icad.mishka.app.dev.casting.CastingDev;
 import ru.org.icad.mishka.app.dev.DbToolDev;
 import ru.org.icad.mishka.app.dev.RestrictionDev;
 import ru.org.icad.mishka.app.dev.TransportDev;

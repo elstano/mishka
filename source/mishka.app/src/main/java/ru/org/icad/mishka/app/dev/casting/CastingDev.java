@@ -1,4 +1,4 @@
-package ru.org.icad.mishka.app.dev;
+package ru.org.icad.mishka.app.dev.casting;
 
 import com.google.common.collect.Lists;
 import ru.org.icad.mishka.app.process.casting.CastingProcess;

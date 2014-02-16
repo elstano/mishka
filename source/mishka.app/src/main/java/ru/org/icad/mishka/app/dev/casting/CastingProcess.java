@@ -1,4 +1,4 @@
-package ru.org.icad.mishka.app.process.casting;
+package ru.org.icad.mishka.app.dev.casting;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Queues;
@@ -10,6 +10,9 @@ import org.slf4j.LoggerFactory;
 import ru.org.icad.mishka.app.cache.CastingUnitProductChangeCache;
 import ru.org.icad.mishka.app.cache.key.ProductChangeKey;
 import ru.org.icad.mishka.app.model.*;
+import ru.org.icad.mishka.app.process.casting.CastWrapper;
+import ru.org.icad.mishka.app.process.casting.Schema;
+import ru.org.icad.mishka.app.process.casting.SchemaConfiguration;
 import ru.org.icad.mishka.app.process.casting.schema4.Schema4;
 import ru.org.icad.mishka.app.process.casting.schema5_6.Schema5_6;
 import ru.org.icad.mishka.app.process.casting.schema9.Schema9;
@@ -33,7 +36,7 @@ public class CastingProcess {
         public int compare(CastWrapper o1, CastWrapper o2) {
             final Cast castFirst = o1.getCast();
             final Cast castSecond = o2.getCast();
-            int castDateCompareResult = ObjectUtils.compare(castFirst.getCastDate(), castSecond.getCastDate());
+            int castDateCompareResult = castFirst.getCastDate().compareTo(castSecond.getCastDate());
             if (castDateCompareResult != 0) {
                 return castDateCompareResult;
             }
@@ -47,23 +50,26 @@ public class CastingProcess {
         }
     };
 
-    private Queue<Operation> operations = Queues.newConcurrentLinkedQueue();
+    private Queue<ru.org.icad.mishka.app.process.casting.Operation> operations = Queues.newConcurrentLinkedQueue();
 
     private Schema schema;
+
+    public CastingProcess() {
+    }
 
     public CastingProcess(Schema schema) {
         this.schema = schema;
     }
 
-    public Queue<Operation> getOperations() {
+    public Queue<ru.org.icad.mishka.app.process.casting.Operation> getOperations() {
         return operations;
     }
 
-    public void setOperations(Queue<Operation> operations) {
+    public void setOperations(Queue<ru.org.icad.mishka.app.process.casting.Operation> operations) {
         this.operations = operations;
     }
 
-    public List<CastWrapper> castingProcess(List<Cast> casts) {
+    public void castingProcess() {
         Date startDate = stringToDate(START_DATE);
         Date endDate = stringToDate(END_DATE);
 
@@ -105,6 +111,13 @@ public class CastingProcess {
         });
 
         Queue<PeriodicOperation> periodicOperations = Queues.newConcurrentLinkedQueue(periodicList);
+
+        TypedQuery<Cast> typedQuery = em.createNamedQuery("Cast.getCastsForCastingUnitBetweenDate", Cast.class);
+        typedQuery.setParameter("startDate", startDate, TemporalType.DATE);
+        typedQuery.setParameter("endDate", endDate, TemporalType.DATE);
+        typedQuery.setParameter("castingUnitId", schemaConfiguration.getCastingUnitId());
+
+        List<Cast> casts = typedQuery.getResultList();
 
         List<CastWrapper> castWrappers = Lists.newArrayList();
         for (Cast cast : casts) {
@@ -169,15 +182,15 @@ public class CastingProcess {
             final List<CastWrapper> oneCastWrappers = Lists.newArrayList();
             final List<CastWrapper> twoCastWrappers = Lists.newArrayList();
 
-            for (final CastWrapper castWrapper1 : castWrappers) {
+            for (int i = 0; i < castWrappers.size(); i++) {
                 if (oneCastWrappers.size() == 0) {
-                    oneCastWrappers.add(castWrapper1);
+                    oneCastWrappers.add(castWrappers.get(i));
 
                     continue;
                 }
 
                 if (twoCastWrappers.size() == 0) {
-                    twoCastWrappers.add(castWrapper1);
+                    twoCastWrappers.add(castWrappers.get(i));
 
                     continue;
                 }
@@ -186,11 +199,12 @@ public class CastingProcess {
 
                 if (compareResult <= 0) {
                     CastWrapper oneCastWrapper = oneCastWrappers.get(oneCastWrappers.size() - 1);
+                    CastWrapper castWrapper = castWrappers.get(i);
 
-                    CastingUnitProductChange castingUnitProductChange = getCastingUnitProductChange(schemaConfiguration, oneCastWrapper, castWrapper1);
+                    CastingUnitProductChange castingUnitProductChange = getCastingUnitProductChange(schemaConfiguration, oneCastWrapper, castWrapper);
 
                     if (castingUnitProductChange == null) {
-                        oneCastWrappers.add(castWrapper1);
+                        oneCastWrappers.add(castWrappers.get(i));
 
                         continue;
                     }
@@ -203,7 +217,7 @@ public class CastingProcess {
                             continue;
                         }
 
-                        castWrapper1.setFlushCollectorPrepareTime(timePrepareCollector);
+                        castWrapper.setFlushCollectorPrepareTime(timePrepareCollector);
 
                         continue;
                     }
@@ -218,17 +232,18 @@ public class CastingProcess {
                     flushCastWrapper.setFlushCmPrepareTime(castingUnitProductChange.getTimePrepareCastingMachine() * 60 * 1000);
 
                     oneCastWrappers.add(flushCastWrapper);
-                    oneCastWrappers.add(castWrapper1);
+                    oneCastWrappers.add(castWrapper);
 
                     continue;
                 }
 
                 CastWrapper twoCastWrapper = twoCastWrappers.get(twoCastWrappers.size() - 1);
+                CastWrapper castWrapper = castWrappers.get(i);
 
-                CastingUnitProductChange castingUnitProductChange = getCastingUnitProductChange(schemaConfiguration, twoCastWrapper, castWrapper1);
+                CastingUnitProductChange castingUnitProductChange = getCastingUnitProductChange(schemaConfiguration, twoCastWrapper, castWrapper);
 
                 if (castingUnitProductChange == null) {
-                    twoCastWrappers.add(castWrapper1);
+                    twoCastWrappers.add(castWrappers.get(i));
                     continue;
                 }
 
@@ -240,7 +255,7 @@ public class CastingProcess {
                         continue;
                     }
 
-                    castWrapper1.setFlushCollectorPrepareTime(timePrepareCollector);
+                    castWrapper.setFlushCollectorPrepareTime(timePrepareCollector);
 
                     continue;
                 }
@@ -255,7 +270,7 @@ public class CastingProcess {
                 flushCastWrapper.setFlushCmPrepareTime(castingUnitProductChange.getTimePrepareCastingMachine() * 60 * 1000);
 
                 twoCastWrappers.add(flushCastWrapper);
-                twoCastWrappers.add(castWrapper1);
+                twoCastWrappers.add(castWrapper);
             }
 
             schema.getSourceOneCastWrappers().addAll(oneCastWrappers);
@@ -267,7 +282,7 @@ public class CastingProcess {
         schema.setPeriodicOperations(periodicOperations);
         schema.setSourceCastWrappers(castWrappers);
 
-        for (Operation operation : schema.getInitOperations()) {
+        for (ru.org.icad.mishka.app.process.casting.Operation operation : schema.getInitOperations()) {
             operation.setActivationDate(startDate);
         }
 
@@ -280,8 +295,6 @@ public class CastingProcess {
         }
 
         LOGGER.debug("Casting time: " + (System.currentTimeMillis() - startTime));
-
-        return Lists.newArrayList(schema.getResultCastWrappers());
     }
 
     private CastingUnitProductChange getCastingUnitProductChange(SchemaConfiguration schemaConfiguration, CastWrapper castWrapper, CastWrapper castWrapperAfter) {
