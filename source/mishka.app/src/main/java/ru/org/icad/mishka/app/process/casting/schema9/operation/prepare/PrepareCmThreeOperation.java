@@ -19,11 +19,8 @@ public class PrepareCmThreeOperation extends Operation {
 
     private final Schema schema;
 
-    public PrepareCmThreeOperation(Schema schema, int activationMaxCount, int activationCount) {
+    public PrepareCmThreeOperation(Schema schema) {
         this.schema = schema;
-
-        this.setActivationMaxCount(activationMaxCount);
-        this.setActivationCount(activationCount);
     }
 
     @Override

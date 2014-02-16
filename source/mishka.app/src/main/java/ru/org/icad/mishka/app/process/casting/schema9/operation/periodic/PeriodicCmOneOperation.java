@@ -1,6 +1,5 @@
 package ru.org.icad.mishka.app.process.casting.schema9.operation.periodic;
 
-import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.org.icad.mishka.app.OperationName;
@@ -10,7 +9,6 @@ import ru.org.icad.mishka.app.process.casting.Schema;
 import ru.org.icad.mishka.app.util.TimeUtil;
 
 import java.sql.Date;
-import java.util.Queue;
 
 public class PeriodicCmOneOperation extends Operation {
     private static final Logger LOGGER = LoggerFactory.getLogger(PeriodicCmOneOperation.class);
@@ -46,11 +44,7 @@ public class PeriodicCmOneOperation extends Operation {
             operation.setActivationDate(new Date(getActivationDate().getTime()));
         }
 
-        operation.setActivationCount(operation.getActivationCount() - 1);
-
-        if (operation.getActivationCount() == 0) {
-            schema.getOperations().add(operation);
-        }
+        schema.getOperations().add(operation);
     }
 
     private boolean isNeedPeriodic() {

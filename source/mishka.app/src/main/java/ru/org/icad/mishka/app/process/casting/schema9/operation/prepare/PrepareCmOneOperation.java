@@ -20,11 +20,8 @@ public class PrepareCmOneOperation extends Operation {
 
     private final Schema schema;
 
-    public PrepareCmOneOperation(Schema schema, int activationMaxCount, int activationCount) {
+    public PrepareCmOneOperation(Schema schema) {
         this.schema = schema;
-
-        this.setActivationMaxCount(activationMaxCount);
-        this.setActivationCount(activationCount);
     }
 
     @Override

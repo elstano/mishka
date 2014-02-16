@@ -10,7 +10,7 @@ import ru.org.icad.mishka.app.util.TimeUtil;
 
 import java.sql.Date;
 
-public class PeriodicCmThreeOperation extends Operation{
+public class PeriodicCmThreeOperation extends Operation {
     private static final Logger LOGGER = LoggerFactory.getLogger(PeriodicCmThreeOperation.class);
 
     private final Schema schema;
@@ -44,11 +44,7 @@ public class PeriodicCmThreeOperation extends Operation{
             operation.setActivationDate(new Date(getActivationDate().getTime()));
         }
 
-        operation.setActivationCount(operation.getActivationCount() - 1);
-
-        if (operation.getActivationCount() == 0) {
-            schema.getOperations().add(operation);
-        }
+        schema.getOperations().add(operation);
     }
 
     private boolean isNeedPeriodic() {

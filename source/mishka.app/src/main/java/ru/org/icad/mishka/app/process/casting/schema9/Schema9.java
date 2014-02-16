@@ -33,9 +33,9 @@ public class Schema9 extends AbstractSchema {
 
         PrepareCollectorOneOperation prepareCollectorOneOperation = new PrepareCollectorOneOperation(this);
         PrepareCollectorTwoOperation prepareCollectorTwoOperation = new PrepareCollectorTwoOperation(this);
-        PrepareCmOneOperation prepareCmOneOperation = new PrepareCmOneOperation(this, 2, 2);
+        PrepareCmOneOperation prepareCmOneOperation = new PrepareCmOneOperation(this);
         PrepareCmTwoOperation prepareCmTwoOperation = new PrepareCmTwoOperation(this, 2, 2);
-        PrepareCmThreeOperation prepareCmThreeOperation = new PrepareCmThreeOperation(this, 2, 2);
+        PrepareCmThreeOperation prepareCmThreeOperation = new PrepareCmThreeOperation(this);
 
         PeriodicCmOneOperation periodicCmOneOperation = new PeriodicCmOneOperation(this);
         PeriodicCmTwoOperation periodicCmTwoOperation = new PeriodicCmTwoOperation(this);
