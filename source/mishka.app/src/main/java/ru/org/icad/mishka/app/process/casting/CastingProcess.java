@@ -83,7 +83,7 @@ public class CastingProcess {
         Collections.sort(operationList, new Comparator<PeriodicOperation>() {
             @Override
             public int compare(PeriodicOperation o1, PeriodicOperation o2) {
-                return o1.getOperationDate().compareTo(o2.getOperationDate());
+                return ObjectUtils.compare(o1.getOperationDate(), o2.getOperationDate());
             }
         });
 
@@ -100,7 +100,7 @@ public class CastingProcess {
         Collections.sort(periodicList, new Comparator<PeriodicOperation>() {
             @Override
             public int compare(PeriodicOperation o1, PeriodicOperation o2) {
-                return o1.getOperationDate().compareTo(o2.getOperationDate());
+                return ObjectUtils.compare(o1.getOperationDate(), o2.getOperationDate());
             }
         });
 
