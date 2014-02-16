@@ -39,5 +39,17 @@ public class CastingDev {
         int mouldId24 = 1;
         CastingProcess castingProcess24 = new CastingProcess(new Schema5_6(new SchemaConfiguration(castHouseId, 24, collectorIds24, castingMachineIds24, mouldId24)));
         castingProcess24.castingProcess();
+
+        int[] collectorIds26 = new int[]{44, 45};
+        int[] castingMachineIds26 = new int[]{43};
+        int mouldId26 = 23;
+        CastingProcess castingProcess26 = new CastingProcess(new Schema5_6(new SchemaConfiguration(castHouseId, 26, collectorIds26, castingMachineIds26, mouldId26)));
+        castingProcess26.castingProcess();
+
+        int[] collectorIds28 = new int[]{46, 47};
+        int[] castingMachineIds28 = new int[]{44};
+        int mouldId28 = 23;
+        CastingProcess castingProcess28 = new CastingProcess(new Schema5_6(new SchemaConfiguration(castHouseId, 28, collectorIds28, castingMachineIds28, mouldId28)));
+        castingProcess28.castingProcess();
     }
 }

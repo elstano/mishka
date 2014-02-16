@@ -10,8 +10,6 @@ import ru.org.icad.mishka.app.process.casting.Schema;
 import ru.org.icad.mishka.app.util.TimeUtil;
 
 import java.sql.Date;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 
 public class PeriodicCmOperation extends Operation {
     private static final Logger LOGGER = LoggerFactory.getLogger(PeriodicCmOperation.class);
@@ -24,7 +22,7 @@ public class PeriodicCmOperation extends Operation {
 
     @Override
     public void activate() {
-        long time = 0;
+        long time;
         if (isNeedPeriodic()) {
             PeriodicOperation periodicOperation = schema.getPeriodicOperations().poll();
             time = (long) (periodicOperation.getDurationTime() * 60 * 1000);
@@ -34,7 +32,7 @@ public class PeriodicCmOperation extends Operation {
 
             schema.getOperations().add(operation);
 
-            LOGGER.debug("Result - customUnitId: " + schema.getSchemaConfiguration().getCastingUnitId()
+            LOGGER.debug("Result - castingUnitId: " + schema.getSchemaConfiguration().getCastingUnitId()
                     + ", Operation type: PeriodicCmOperation startDate: "
                     + TimeUtil.convertTimeToString(getActivationDate().getTime())
                     + ", cleanTime: " + time / 60 / 1000);
