@@ -48,7 +48,7 @@ public class RemouldCmTwoOperation extends Operation {
 
         final long completeTime = getActivationDate().getTime() + time;
 
-        final Operation operation = schema.getOperationMap().get(OperationName.PREPARE_CM);
+        final Operation operation = schema.getOperationMap().get(OperationName.PREPARE_CM_TWO);
         if (operation.getActivationDate() == null || (getActivationDate() != null && completeTime > operation.getActivationDate().getTime())) {
             operation.setActivationDate(new Date(completeTime));
         }
@@ -69,8 +69,8 @@ public class RemouldCmTwoOperation extends Operation {
         }
 
         Operation operation = getNextId() == 1
-                ? schema.getOperationMap().get(OperationName.CAST_CM_COLLECTOR_ONE) :
-                schema.getOperationMap().get(OperationName.CAST_CM_COLLECTOR_TWO);
+                ? schema.getOperationMap().get(OperationName.CAST_CM_TWO_COLLECTOR_ONE) :
+                schema.getOperationMap().get(OperationName.CAST_CM_TWO_COLLECTOR_TWO);
 
         final CastWrapper sourceCastWrapper = operation.getCastWrapper();
 
@@ -83,25 +83,10 @@ public class RemouldCmTwoOperation extends Operation {
             LOGGER.error("Cast have different form!");
         }
 
-        if (Form.INGOT == sourceFormId) {
-            return !ObjectUtils.equals(
-                    sourceCastWrapper.getCast().getCustomerOrder().getWeight(),
-                    resultCastWrapper.getCast().getCustomerOrder().getWeight()
-            );
-        }
-
-        if (Form.SLAB == sourceFormId) {
-            return !ObjectUtils.equals(sourceCastWrapper.getCast().getCustomerOrder().getWidth(),
-                    resultCastWrapper.getCast().getCustomerOrder().getWidth()) ||
-                    !ObjectUtils.equals(sourceCastWrapper.getCast().getCustomerOrder().getHeight(),
-                            resultCastWrapper.getCast().getCustomerOrder().getHeight());
-        }
-
-
-        return Form.BILLET == sourceFormId
-                && !ObjectUtils.equals(
-                sourceCastWrapper.getCast().getCustomerOrder().getDiameter(),
-                resultCastWrapper.getCast().getCustomerOrder().getDiameter()
-        );
+        return Form.INGOT == sourceFormId &&
+                !ObjectUtils.equals(
+                        sourceCastWrapper.getCast().getCustomerOrder().getWeight(),
+                        resultCastWrapper.getCast().getCustomerOrder().getWeight()
+                );
     }
 }

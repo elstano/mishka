@@ -10,6 +10,7 @@ import ru.org.icad.mishka.app.process.casting.Schema;
 import ru.org.icad.mishka.app.util.TimeUtil;
 
 import java.sql.Date;
+import java.util.Queue;
 
 public class PeriodicCmOneOperation extends Operation {
     private static final Logger LOGGER = LoggerFactory.getLogger(PeriodicCmOneOperation.class);
@@ -27,20 +28,20 @@ public class PeriodicCmOneOperation extends Operation {
             PeriodicOperation periodicOperation = schema.getPeriodicOperations().poll();
             time = (long) (periodicOperation.getDurationTime() * 60 * 1000);
 
-            Operation operation = schema.getOperationMap().get(OperationName.PERIODIC_CM);
+            Operation operation = schema.getOperationMap().get(OperationName.PERIODIC_CM_ONE);
             operation.setActivationDate(new Date(getActivationDate().getTime() + time));
 
             schema.getOperations().add(operation);
 
             LOGGER.debug("Result - castingUnitId: " + schema.getSchemaConfiguration().getCastingUnitId()
-                    + ", Operation type: PeriodicCmOperation startDate: "
+                    + ", Operation type: PeriodicCmOneOperation startDate: "
                     + TimeUtil.convertTimeToString(getActivationDate().getTime())
                     + ", cleanTime: " + time / 60 / 1000);
 
             return;
         }
 
-        final Operation operation = schema.getOperationMap().get(OperationName.PREPARE_CM);
+        final Operation operation = schema.getOperationMap().get(OperationName.PREPARE_CM_ONE);
         if (operation.getActivationDate() == null || (getActivationDate() != null && getActivationDate().compareTo(operation.getActivationDate()) == 1)) {
             operation.setActivationDate(new Date(getActivationDate().getTime()));
         }
@@ -53,14 +54,16 @@ public class PeriodicCmOneOperation extends Operation {
     }
 
     private boolean isNeedPeriodic() {
-        PeriodicOperation periodicOperation = schema.getPeriodicOperations().peek();
-        if (periodicOperation == null) {
-            return false;
-        }
+//        Queue<PeriodicOperation> periodicOperations = schema.getPeriodicOperations();
+//        for (PeriodicOperation periodicOperation : periodicOperations) {
+//            if (periodicOperation.getCastingUnitCastingMachine().getId() == schema.getSchemaConfiguration().getCastingUnitCastingMachineIds()[0]) {
+//                DateTime periodicOperationTime = new DateTime(periodicOperation.getOperationDate().getTime());
+//                DateTime periodicOperationStartShiftTime = periodicOperationTime.minusHours(1).plusHours((periodicOperation.getShift() - 1) * 8);
+//
+//                return !getActivationDate().before(periodicOperationStartShiftTime.toDate());
+//            }
+//        }
 
-        DateTime periodicOperationTime = new DateTime(periodicOperation.getOperationDate().getTime());
-        DateTime periodicOperationStartShiftTime = periodicOperationTime.minusHours(1).plusHours((periodicOperation.getShift() - 1) * 8);
-
-        return !getActivationDate().before(periodicOperationStartShiftTime.toDate());
+        return false;
     }
 }

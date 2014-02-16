@@ -5,6 +5,7 @@ import ru.org.icad.mishka.app.process.casting.CastingProcess;
 import ru.org.icad.mishka.app.process.casting.SchemaConfiguration;
 import ru.org.icad.mishka.app.process.casting.schema4.Schema4;
 import ru.org.icad.mishka.app.process.casting.schema5_6.Schema5_6;
+import ru.org.icad.mishka.app.process.casting.schema9.Schema9;
 
 import java.util.List;
 
@@ -51,5 +52,11 @@ public class CastingDev {
         int mouldId28 = 23;
         CastingProcess castingProcess28 = new CastingProcess(new Schema5_6(new SchemaConfiguration(castHouseId, 28, collectorIds28, castingMachineIds28, mouldId28)));
         castingProcess28.castingProcess();
+
+        int[] collectorIds31 = new int[]{50, 51};
+        int[] castingMachineIds31 = new int[]{48, 50, 49};
+        int mouldId31 = 30;
+        CastingProcess castingProcess31 = new CastingProcess(new Schema9(new SchemaConfiguration(castHouseId, 31, collectorIds31, castingMachineIds31, mouldId31)));
+        castingProcess31.castingProcess();
     }
 }

@@ -36,13 +36,12 @@ public class PrepareCmOneOperation extends Operation {
                 + " and ROWNUM = 1", PrepareTimeConst.class);
 
         PrepareTimeConst prepareTimeConst = (PrepareTimeConst) query.getSingleResult();
-        long durationTimeHour = prepareTimeConst.getDurationTime() * 60 * 1000;
+        double durationTimeHour = prepareTimeConst.getDurationTime() / 60;
 
-        String nextOperationName = getNextId() == ONE_OPERATION_ID ? OperationName.CAST_CM_COLLECTOR_ONE : OperationName.CAST_CM_COLLECTOR_TWO;
 
-        Operation operation = schema.getOperationMap().get(nextOperationName);
+        Operation operation = schema.getOperationMap().get(OperationName.CAST_CM_ONE_COLLECTOR_ONE);
         if (operation.getActivationDate() == null || (getActivationDate() != null && getActivationDate().compareTo(operation.getActivationDate()) == 1)) {
-            operation.setActivationDate(new Date(getActivationDate().getTime() + durationTimeHour));
+            operation.setActivationDate(new Date(getActivationDate().getTime() + (long) (durationTimeHour * 3600 * 1000)));
         }
 
         operation.setActivationCount(operation.getActivationCount() - 1);
@@ -51,10 +50,8 @@ public class PrepareCmOneOperation extends Operation {
             schema.getOperations().add(operation);
         }
 
-        setActivationCount(getActivationMaxCount());
-
         LOGGER.debug("Result - castingUnitId: " + schema.getSchemaConfiguration().getCastingUnitId()
-                + ", Operation type: PrepareCmOperation startDate: "
+                + ", Operation type: PrepareCmOneOperation startDate: "
                 + TimeUtil.convertTimeToString(getActivationDate().getTime()));
     }
 }

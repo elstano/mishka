@@ -27,6 +27,7 @@ import java.util.Queue;
 
 public class PrepareCollectorTwoOperation  extends Operation {
     private static final Logger LOGGER = LoggerFactory.getLogger(CleanCollectorOneOperation.class);
+    private static final int INGOT_WEIGHT_15 = 15;
 
     private final Schema schema;
 
@@ -89,7 +90,10 @@ public class PrepareCollectorTwoOperation  extends Operation {
 
         castWrapper.setPrepareCollectorTime(time);
 
-        Operation operation = schema.getOperationMap().get(OperationName.CAST_CM_COLLECTOR_TWO);
+        Operation operation = cast.getCustomerOrder().getWeight() == INGOT_WEIGHT_15
+                ? schema.getOperationMap().get(OperationName.CAST_CM_THREE_COLLECTOR_TWO)
+                : schema.getOperationMap().get(OperationName.CAST_CM_TWO_COLLECTOR_TWO);
+
         if (operation.getActivationDate() == null || (getActivationDate() != null && getActivationDate().compareTo(operation.getActivationDate()) == 1)) {
             operation.setActivationDate(new Date(getActivationDate().getTime() + time));
         }
