@@ -1,7 +1,6 @@
 package ru.org.icad.mishka.app.dev.casting;
 
 import com.google.common.collect.Lists;
-import ru.org.icad.mishka.app.process.casting.CastingProcess;
 import ru.org.icad.mishka.app.process.casting.SchemaConfiguration;
 import ru.org.icad.mishka.app.process.casting.schema4.Schema4;
 import ru.org.icad.mishka.app.process.casting.schema5_6.Schema5_6;
