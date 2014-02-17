@@ -3,20 +3,23 @@ package ru.org.icad.mishka.app.process.calculation;
 import org.apache.commons.lang3.ObjectUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.org.icad.mishka.app.dev.casting.CastingDev;
 import ru.org.icad.mishka.app.loader.db.CastingUnitLoader;
 import ru.org.icad.mishka.app.loader.db.CustomerOrderLoaded;
 import ru.org.icad.mishka.app.loader.db.DBLoader;
 import ru.org.icad.mishka.app.loader.db.GroupCustomerOrderLoader;
-import ru.org.icad.mishka.app.model.CastingUnit;
-import ru.org.icad.mishka.app.model.CustomerOrder;
-import ru.org.icad.mishka.app.model.GroupCustomerOrder;
+import ru.org.icad.mishka.app.model.*;
+import ru.org.icad.mishka.app.process.casting.CastWrapper;
+import ru.org.icad.mishka.app.process.casting.CastingProcess;
 import ru.org.icad.mishka.app.util.TimeCalculationUtils;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
 import java.sql.Date;
 import java.sql.SQLException;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by @author Ivan Solovyev.
@@ -31,6 +34,8 @@ public class ScheduleCalculator
 
     public void calculateSchedule() throws SQLException
     {
+        Map<Integer, List<Cast>> casts = new HashMap<>();
+
         //Division of Orders into Groups
         DBLoader<GroupCustomerOrder> groupCULoader = new GroupCustomerOrderLoader();
         Collection<GroupCustomerOrder> groupCustomerOrders = groupCULoader.load();
@@ -57,6 +62,7 @@ public class ScheduleCalculator
         for (CastingUnit cu : castingUnitList)
         {
             cu.setStartTime(new Date(2013, 5, 1));
+            casts.put(cu.getId(), new ArrayList<Cast>());
         }
 
         //Last assigned Product for Casting Unit to calculate next assigned Group of Orders
@@ -117,18 +123,70 @@ public class ScheduleCalculator
                         assignedGroupCustomerOrder = gco;
                     }
                 }
+            }
 
-                if (LOGGER.isDebugEnabled())
-                {
-                    LOGGER.debug("Preparation Time for " + castingUnitForAssign.getId() + " on " + gco.getGroupId() +
-                            " is " + preparationTime);
-                }
+            assert assignedGroupCustomerOrder != null;
+
+            if (LOGGER.isDebugEnabled())
+            {
+                LOGGER.debug("Preparation Time for " + castingUnitForAssign.getId() + " on " +
+                        assignedGroupCustomerOrder.getGroupId() + " is " + minimalPreparationTime);
             }
 
             //generate Casts, assign order, recalculate time
 
-            //remove assigned group from groupCustomerOrders
+            for (String assignedOrderId : assignedGroupCustomerOrder.getCustomerOrderIds())
+            {
+                CustomerOrder customerOrder = customerOrderMap.get(assignedOrderId);
 
+                //Calculation number of Casts for current Order
+                EntityManagerFactory emf = Persistence.createEntityManagerFactory("MishkaService");
+                EntityManager em = emf.createEntityManager();
+                TypedQuery<CastingUnitCollector> castingUnitCollectorQuery = em.createNamedQuery("CastingUnitCollector.findByCastingUnit", CastingUnitCollector.class);
+                castingUnitCollectorQuery.setParameter("castUnitId", castingUnitForAssign.getId());
+                List<CastingUnitCollector> castingUnitCollectors = castingUnitCollectorQuery.getResultList();
+                int collectorTonnage = 0;
+                for (CastingUnitCollector castingUnitCollector : castingUnitCollectors) {
+                    if (collectorTonnage == 0)
+                    {
+                        collectorTonnage = castingUnitCollector.getMixerTonnageMax();
+                    }
+                    else if (castingUnitCollector.getMixerTonnageMax() < collectorTonnage)
+                    {
+                        collectorTonnage = castingUnitCollector.getMixerTonnageMax();
+                    }
+                }
+
+                for (int i = 0; i < customerOrder.getTonnage() % collectorTonnage; i++)
+                {
+                    Cast cast = new Cast();
+                    cast.setCastingUnit(castingUnitForAssign);
+                    cast.setCustomerOrder(customerOrder);
+                    cast.setCastNumber(casts.get(castingUnitForAssign.getId()).size() + 1);
+
+                    casts.get(castingUnitForAssign.getId()).add(cast);
+                }
+            }
+
+            CastingProcess castingProcess = new CastingProcess(CastingDev.SCHEMA_MAP.get(castingUnitForAssign.getId()));
+            List<CastWrapper> castWrappers = castingProcess.castingProcess(casts.get(castingUnitForAssign.getId()));
+
+            for (CastWrapper castWrapper : castWrappers)
+            {
+                for (CastingUnit cu : castingUnitList)
+                {
+                    if (cu.getId() == castingUnitForAssign.getId())
+                    {
+                        cu.setStartTime(castWrapper.getEndDate());
+                        cu.setPreviousProductId(customerOrderMap.get(assignedGroupCustomerOrder.getGroupId()).getProduct().getId());
+                    }
+                }
+            }
+
+            if (LOGGER.isDebugEnabled())
+            {
+                LOGGER.debug("Finishing calculation for 1 Group of Orders");
+            }
         }
     }
 }

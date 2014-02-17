@@ -5,6 +5,14 @@ import ru.org.icad.mishka.app.TableName;
 
 import javax.persistence.*;
 
+@NamedQueries({
+        @NamedQuery(name = "CastingUnitCollector.findAll",
+                query = "SELECT cuc FROM CastingUnitCollector cuc"),
+        @NamedQuery(name = "CastingUnitCollector.findByPrimaryKey",
+                query = "SELECT cuc FROM CastingUnitCollector cuc WHERE cuc.id = :id"),
+        @NamedQuery(name = "CastingUnitCollector.findByCastingUnit",
+                query = "select cuc from CastingUnitCollector cuc where cuc.castingUnit.id = :castUnitId")
+})
 @Entity
 @Table(name = TableName.CU_COLLECTOR)
 public class CastingUnitCollector {
