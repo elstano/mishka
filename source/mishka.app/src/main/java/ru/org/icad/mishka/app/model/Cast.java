@@ -133,4 +133,18 @@ public class Cast {
         result = 31 * result + ingotInBlankCount;
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "Cast{" +
+                "castingUnit=" + castingUnit +
+                ", castDate=" + castDate +
+                ", shift=" + shift +
+                ", castNumber=" + castNumber +
+                ", customerOrder=" + customerOrder +
+                ", blankCount=" + blankCount +
+                ", ingotInBlankCount=" + ingotInBlankCount +
+                ", ingotCount=" + ingotCount +
+                '}';
+    }
 }

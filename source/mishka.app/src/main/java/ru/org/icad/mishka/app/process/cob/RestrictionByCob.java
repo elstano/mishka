@@ -2,6 +2,8 @@ package ru.org.icad.mishka.app.process.cob;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.org.icad.mishka.app.model.Cast;
 import ru.org.icad.mishka.app.model.CustomerOrder;
 import ru.org.icad.mishka.app.model.ElectrolizerPrognosis;
@@ -11,6 +13,7 @@ import ru.org.icad.mishka.app.util.CastUtil;
 import java.util.*;
 
 public class RestrictionByCob {
+    private static final Logger LOGGER = LoggerFactory.getLogger(RestrictionByCob.class);
 
     private static final Comparator<ElectrolizerPrognosis> ELECTROLYZER_COMPARATOR = new Comparator<ElectrolizerPrognosis>() {
         @Override
@@ -65,14 +68,13 @@ public class RestrictionByCob {
         final Map<Cast, List<ElectrolizerPrognosis>> tempCastMap = getOrderMap(casts, electrolyzers);
         final Map<Cast, List<ElectrolizerPrognosis>> currentCastMap = sortByElectrolyzerCapacity(tempCastMap);
 
-
         for (Map.Entry<Cast, List<ElectrolizerPrognosis>> entry : currentCastMap.entrySet()) {
             Cast currentCast = entry.getKey();
             double castCobTonnage = 0;
             try {
                 castCobTonnage = CastUtil.getCobTonnage(currentCast);
             } catch (Exception e) {
-                e.printStackTrace();
+                LOGGER.error("Can't get tonnage fro cast: " + currentCast, e);
             }
             int electrolyzersCapacity = 0;
 
