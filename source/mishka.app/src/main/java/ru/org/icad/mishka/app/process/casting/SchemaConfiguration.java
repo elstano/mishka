@@ -6,20 +6,20 @@ public class SchemaConfiguration {
     private final int castingUnitId;
     private final int[] castingUnitCollectorIds;
     private final int[] castingUnitCastingMachineIds;
-    private final int mouldId;
+    private final int[] mouldIds;
 
     public SchemaConfiguration(
             int castHouseId,
             int castingUnitId,
             int[] castingUnitCollectorIds,
             int[] castingUnitCastingMachineIds,
-            int mouldId
+            int[] mouldIds
     ) {
         this.castHouseId = castHouseId;
         this.castingUnitId = castingUnitId;
         this.castingUnitCollectorIds = castingUnitCollectorIds;
         this.castingUnitCastingMachineIds = castingUnitCastingMachineIds;
-        this.mouldId = mouldId;
+        this.mouldIds = mouldIds;
     }
 
     public int getCastHouseId() {
@@ -38,7 +38,7 @@ public class SchemaConfiguration {
         return castingUnitCastingMachineIds;
     }
 
-    public int getMouldId() {
-        return mouldId;
+    public int[] getMouldIds() {
+        return mouldIds;
     }
 }

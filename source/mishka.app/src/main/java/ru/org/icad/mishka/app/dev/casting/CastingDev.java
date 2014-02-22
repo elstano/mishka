@@ -12,13 +12,13 @@ import java.util.Map;
 public class CastingDev {
 
     public static final Map<Integer, Schema> SCHEMA_MAP = ImmutableMap.<Integer, Schema>builder()
-            .put(30, new Schema4(new SchemaConfiguration(2, 30, new int[]{49}, new int[]{46}, 32)))
-            .put(33, new Schema4(new SchemaConfiguration(2, 33, new int[]{52}, new int[]{51}, 33)))
-            .put(22, new Schema5_6(new SchemaConfiguration(2, 22, new int[]{40, 41}, new int[]{41}, 1)))
-            .put(24, new Schema5_6(new SchemaConfiguration(2, 24, new int[]{42, 43}, new int[]{42}, 1)))
-            .put(26, new Schema5_6(new SchemaConfiguration(2, 26, new int[]{44, 45}, new int[]{43}, 23)))
-            .put(28, new Schema5_6(new SchemaConfiguration(2, 28, new int[]{46, 47}, new int[]{44}, 23)))
-            .put(31, new Schema9(new SchemaConfiguration(2, 31, new int[]{50, 51}, new int[]{48, 50, 49}, 30)))
+            .put(30, new Schema4(new SchemaConfiguration(2, 30, new int[]{49}, new int[]{46}, new int[] {15})))
+            .put(33, new Schema4(new SchemaConfiguration(2, 33, new int[]{52}, new int[]{51}, new int[] {16})))
+            .put(22, new Schema5_6(new SchemaConfiguration(2, 22, new int[]{40, 41}, new int[]{41}, new int[] {103})))
+            .put(24, new Schema5_6(new SchemaConfiguration(2, 24, new int[]{42, 43}, new int[]{42}, new int[] {59})))
+            .put(26, new Schema5_6(new SchemaConfiguration(2, 26, new int[]{44, 45}, new int[]{43}, new int[] {155})))
+            .put(28, new Schema5_6(new SchemaConfiguration(2, 28, new int[]{46, 47}, new int[]{44}, new int[] {158})))
+            .put(31, new Schema9(new SchemaConfiguration(2, 31, new int[]{50, 51}, new int[]{48, 50, 49}, new int[] {23, 30, 24})))
             .build();
 
     public void castingProcess() {
