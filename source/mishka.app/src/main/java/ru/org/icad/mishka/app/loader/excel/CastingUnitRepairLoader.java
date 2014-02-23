@@ -36,11 +36,6 @@ public class CastingUnitRepairLoader implements ExcelLoader<CastingUnitRepair> {
                 continue;
             }
 
-            Cell rowCell = row.getCell(0);
-            if (rowCell == null) {
-                continue;
-            }
-
             if (row.getRowNum() == 0) {
                 continue;
             }
