@@ -6,6 +6,12 @@ import ru.org.icad.mishka.app.TableName;
 import javax.persistence.*;
 import java.io.Serializable;
 
+@NamedQueries({
+        @NamedQuery(name = "CuttingLine.findAll",
+                query = "SELECT cl FROM CuttingLine cl"),
+        @NamedQuery(name = "CuttingLine.getCuttingLineByIdAndDiameter",
+                query = "SELECT cl FROM CuttingLine cl WHERE cl.castingUnitHomogenCuttingLine.id = :castingUnitHomogenCuttingLineId and cl.diameter = :diameter")
+})
 @Entity
 @Table(name = TableName.CUTTING_LINE)
 public class CuttingLine {

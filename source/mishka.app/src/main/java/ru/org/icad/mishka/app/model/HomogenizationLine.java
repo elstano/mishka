@@ -6,6 +6,12 @@ import ru.org.icad.mishka.app.TableName;
 import javax.persistence.*;
 import java.io.Serializable;
 
+@NamedQueries({
+        @NamedQuery(name = "HomogenizationLine.findAll",
+                query = "SELECT hl FROM HomogenizationLine hl"),
+        @NamedQuery(name = "HomogenizationLine.getHomogenizationLineByIdAndDiameter",
+                query = "SELECT hl FROM HomogenizationLine hl WHERE hl.castingUnitHomogenCuttingLine.id = :castingUnitHomogenCuttingLineId and hl.diameter = :diameter")
+})
 @Entity
 @Table(name = TableName.HOMOGENIZATION_LINE)
 public class HomogenizationLine {
