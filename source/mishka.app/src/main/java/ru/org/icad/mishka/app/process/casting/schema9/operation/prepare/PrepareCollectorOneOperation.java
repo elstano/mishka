@@ -7,6 +7,7 @@ import ru.org.icad.mishka.app.OperationName;
 import ru.org.icad.mishka.app.cache.CastHouseCache;
 import ru.org.icad.mishka.app.cache.CastingUnitCache;
 import ru.org.icad.mishka.app.model.Cast;
+import ru.org.icad.mishka.app.model.CastingUnitRepair;
 import ru.org.icad.mishka.app.model.PrepareTimeConst;
 import ru.org.icad.mishka.app.process.casting.CastWrapper;
 import ru.org.icad.mishka.app.process.casting.Operation;
@@ -23,10 +24,11 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.util.List;
 import java.util.Queue;
 
 public class PrepareCollectorOneOperation extends Operation {
-    private static final Logger LOGGER = LoggerFactory.getLogger(CleanCollectorOneOperation.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PrepareCollectorOneOperation.class);
     private static final int INGOT_WEIGHT_15 = 15;
 
     private final Schema schema;
@@ -85,6 +87,29 @@ public class PrepareCollectorOneOperation extends Operation {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+            }
+        }
+
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("MishkaService");
+        EntityManager em = emf.createEntityManager();
+        Query castingUnitRepairsQuery = em.createNativeQuery("SELECT * from CU_REPAIR cur where cur.COLLE_ID = "
+                +  schema.getSchemaConfiguration().getCastingUnitCollectorIds()[0] , CastingUnitRepair.class);
+        List castingUnitRepairs = castingUnitRepairsQuery.getResultList();
+        if(castingUnitRepairs != null) {
+            for(Object object : castingUnitRepairs) {
+                CastingUnitRepair castingUnitRepair = (CastingUnitRepair )object;
+                if(castingUnitRepair.getTimeEnd().before(getActivationDate())) {
+                    continue;
+                }
+
+                if(castingUnitRepair.getTimeStart().after(new Date(getActivationDate().getTime() + time))) {
+                    continue;
+                }
+
+                setActivationDate(castingUnitRepair.getTimeEnd());
+
+                LOGGER.debug("Result - castingUnitId: " + schema.getSchemaConfiguration().getCastingUnitId()
+                        + ", Operation type: PrepareCollectorOneOperation Repair");
             }
         }
 

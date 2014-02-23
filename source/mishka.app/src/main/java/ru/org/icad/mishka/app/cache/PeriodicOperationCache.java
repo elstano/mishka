@@ -5,6 +5,7 @@ import ru.org.icad.mishka.app.model.PeriodicOperation;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -13,7 +14,7 @@ public class PeriodicOperationCache {
     private static final PeriodicOperationCache INSTANCE = new PeriodicOperationCache();
     @PersistenceContext(unitName = "MishkaService")
     private EntityManager em;
-    private ConcurrentMap<Integer, PeriodicOperation> periodicOperationCollectorConcurrentMap;
+    private Map<Integer, PeriodicOperation> periodicOperationCollectorConcurrentMap;
 
     private PeriodicOperationCache() {
         periodicOperationCollectorConcurrentMap = new ConcurrentHashMap<>();

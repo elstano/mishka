@@ -6,6 +6,10 @@ import ru.org.icad.mishka.app.TableName;
 import javax.persistence.*;
 import java.sql.Date;
 
+@NamedQueries({
+        @NamedQuery(name = "CastingUnitRepair.findAll",
+                query = "SELECT cur FROM CastingUnitRepair cur")
+})
 @Entity
 @Table(name = TableName.CU_REPAIR)
 public class CastingUnitRepair {

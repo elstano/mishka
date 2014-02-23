@@ -16,6 +16,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import java.sql.Date;
+import java.util.List;
 import java.util.Queue;
 
 public class CastCmOperation extends Operation {
@@ -77,6 +78,29 @@ public class CastCmOperation extends Operation {
                 if (Form.SLAB == formId || Form.BILLET == formId) {
                     time = (long) (CastUtil.getLengthBlank(cast) / castingSpeed.getSpeed() * 60 * 1000);
                 }
+            }
+        }
+
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("MishkaService");
+        EntityManager em = emf.createEntityManager();
+        Query castingUnitRepairsQuery = em.createNativeQuery("SELECT * from CU_REPAIR cur where cur.CAST_MACH_ID = "
+                +  schema.getSchemaConfiguration().getCastingUnitCastingMachineIds()[0] , CastingUnitRepair.class);
+        List castingUnitRepairs = castingUnitRepairsQuery.getResultList();
+        if(castingUnitRepairs != null) {
+            for(Object object : castingUnitRepairs) {
+                CastingUnitRepair castingUnitRepair = (CastingUnitRepair )object;
+                if(castingUnitRepair.getTimeEnd().before(getActivationDate())) {
+                    continue;
+                }
+
+                if(castingUnitRepair.getTimeStart().after(new Date(getActivationDate().getTime() + time /2))) {
+                    continue;
+                }
+
+               setActivationDate(castingUnitRepair.getTimeEnd());
+
+                LOGGER.debug("Result - castingUnitId: " + schema.getSchemaConfiguration().getCastingUnitId()
+                        + ", Operation type: CastCmOperation Repair, customer order id: " + customerOrder.getId());
             }
         }
 

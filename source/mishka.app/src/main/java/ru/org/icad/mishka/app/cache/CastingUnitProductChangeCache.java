@@ -7,17 +7,17 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 
 public class CastingUnitProductChangeCache {
 
     private static volatile CastingUnitProductChangeCache instance;
 
-    private ConcurrentMap<ProductChangeKey, CastingUnitProductChange> castingUnitProductChangeConcurrentMap;
+    private Map<ProductChangeKey, CastingUnitProductChange> changeKeyCastingUnitProductChangeMap;
 
     private CastingUnitProductChangeCache() {
-        castingUnitProductChangeConcurrentMap = new ConcurrentHashMap<>();
+        changeKeyCastingUnitProductChangeMap = new ConcurrentHashMap<>();
 
         loadCastingUnitProductChange();
     }
@@ -44,7 +44,7 @@ public class CastingUnitProductChangeCache {
 
 
         for (CastingUnitProductChange castingUnitProductChange : castingUnitProductChanges) {
-            castingUnitProductChangeConcurrentMap.put(
+            changeKeyCastingUnitProductChangeMap.put(
                     new ProductChangeKey(
                             castingUnitProductChange.getCastingUnit().getId(),
                             castingUnitProductChange.getMarkId1(),
@@ -55,6 +55,6 @@ public class CastingUnitProductChangeCache {
     }
 
     public CastingUnitProductChange getCastingUnitProduct(ProductChangeKey productChangeKey) {
-        return castingUnitProductChangeConcurrentMap.get(productChangeKey);
+        return changeKeyCastingUnitProductChangeMap.get(productChangeKey);
     }
 }

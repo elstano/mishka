@@ -6,17 +6,17 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 
 public class CastingUnitCache {
 
     private static volatile CastingUnitCache instance;
 
-    private ConcurrentMap<Integer, CastingUnit> castingUnitConcurrentMap;
+    private Map<Integer, CastingUnit> castingUnitMap;
 
     private CastingUnitCache() {
-        castingUnitConcurrentMap = new ConcurrentHashMap<>();
+        castingUnitMap = new ConcurrentHashMap<>();
 
         loadCastingUnit();
     }
@@ -27,12 +27,12 @@ public class CastingUnitCache {
 
         List<CastingUnit> castingUnits = em.createNamedQuery("CastingUnit.findAll", CastingUnit.class).getResultList();
         for (CastingUnit castingUnit : castingUnits) {
-            castingUnitConcurrentMap.put(castingUnit.getId(), castingUnit);
+            castingUnitMap.put(castingUnit.getId(), castingUnit);
         }
     }
 
     public int getLadlePourTimeMax(Integer id) {
-        return castingUnitConcurrentMap.get(id).getLadlePourTimeMax();
+        return castingUnitMap.get(id).getLadlePourTimeMax();
     }
 
     public static CastingUnitCache getInstance() {

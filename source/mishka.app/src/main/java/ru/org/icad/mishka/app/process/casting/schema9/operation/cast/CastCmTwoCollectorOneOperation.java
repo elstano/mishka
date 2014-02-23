@@ -16,6 +16,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import java.sql.Date;
+import java.util.List;
 import java.util.Queue;
 
 public class CastCmTwoCollectorOneOperation extends Operation {
@@ -74,6 +75,29 @@ public class CastCmTwoCollectorOneOperation extends Operation {
                         e.printStackTrace();
                     }
                 }
+            }
+        }
+
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("MishkaService");
+        EntityManager em = emf.createEntityManager();
+        Query castingUnitRepairsQuery = em.createNativeQuery("SELECT * from CU_REPAIR cur where cur.CAST_MACH_ID = "
+                +  schema.getSchemaConfiguration().getCastingUnitCastingMachineIds()[1] , CastingUnitRepair.class);
+        List castingUnitRepairs = castingUnitRepairsQuery.getResultList();
+        if(castingUnitRepairs != null) {
+            for(Object object : castingUnitRepairs) {
+                CastingUnitRepair castingUnitRepair = (CastingUnitRepair )object;
+                if(castingUnitRepair.getTimeEnd().before(getActivationDate())) {
+                    continue;
+                }
+
+                if(castingUnitRepair.getTimeStart().after(new Date(getActivationDate().getTime() + time /2))) {
+                    continue;
+                }
+
+                setActivationDate(castingUnitRepair.getTimeEnd());
+
+                LOGGER.debug("Result - castingUnitId: " + schema.getSchemaConfiguration().getCastingUnitId()
+                        + ", Operation type: CastCmTwoCollectorOneOperation Repair, customer order id: " + customerOrder.getId());
             }
         }
 

@@ -6,17 +6,17 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 
 public class CastHouseCache {
 
     private static volatile CastHouseCache instance;
 
-    private ConcurrentMap<Integer, CastHouse> CastHouseCachetConcurrentMap;
+    private Map<Integer, CastHouse> castHouseMap;
 
     private CastHouseCache() {
-        CastHouseCachetConcurrentMap = new ConcurrentHashMap<>();
+        castHouseMap = new ConcurrentHashMap<>();
 
         loadCastingUnit();
     }
@@ -41,11 +41,11 @@ public class CastHouseCache {
 
         List<CastHouse> castHouses = em.createNamedQuery("CastHouse.findAll", CastHouse.class).getResultList();
         for (CastHouse castHouse : castHouses) {
-            CastHouseCachetConcurrentMap.put(castHouse.getId(), castHouse);
+            castHouseMap.put(castHouse.getId(), castHouse);
         }
     }
 
     public double getLadleTonnageMax(Integer id) {
-        return CastHouseCachetConcurrentMap.get(id).getLadleTonnageMax();
+        return castHouseMap.get(id).getLadleTonnageMax();
     }
 }

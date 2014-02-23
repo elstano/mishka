@@ -313,9 +313,6 @@ public class CastingProcess {
             LOGGER.error("Can't get mark id for customer order: " + castWrapperAfter.getCast().getCustomerOrder(), e);
         }
 
-        LOGGER.info("Product change on castingUnitId: " + schemaConfiguration.getCastingUnitId()
-                + ", marks: " + markId + " - " + markIdAfter);
-
         return CastingUnitProductChangeCache.getInstance().getCastingUnitProduct(
                 new ProductChangeKey(schemaConfiguration.getCastingUnitId(), markId, markIdAfter)
         );
