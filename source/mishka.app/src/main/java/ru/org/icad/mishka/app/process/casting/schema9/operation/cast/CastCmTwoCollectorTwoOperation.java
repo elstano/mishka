@@ -47,10 +47,9 @@ public class CastCmTwoCollectorTwoOperation extends Operation {
 
             final Product product = customerOrder.getProduct();
             int markId = product.getMark().getId();
-            Query castingSpeedQuery = em.createNativeQuery("SELECT * from CASTING_SPEED cs where cs.MOULD_ID = " + schema.getSchemaConfiguration().getMouldIds()[1]
-                    + " and cs.MARK_ID in (SELECT m.mark_id FROM MARK m where m.mark_id = " + markId
-                    + " UNION SELECT m.PARENT_MARK_ID FROM MARK m where m.mark_id = " + markId
-                    + " UNION SELECT 402 FROM DUAL"
+            Query castingSpeedQuery = em.createNativeQuery("SELECT * FROM CASTING_SPEED cs WHERE cs.MOULD_ID = " + schema.getSchemaConfiguration().getMouldIds()[1]
+                    + " and cs.MARK_ID in (SELECT m.mark_id FROM MARK m "
+                    + " CONNECT BY PRIOR m.parent_mark_id = m.mark_id START WITH m.mark_id = " + markId
                     + ") and ROWNUM = 1", CastingSpeed.class);
 
             CastingSpeed castingSpeed = (CastingSpeed) castingSpeedQuery.getSingleResult();

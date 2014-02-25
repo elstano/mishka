@@ -66,9 +66,9 @@ public class PrepareCollectorOneOperation extends Operation {
 
             int markId = cast.getCustomerOrder().getProduct().getMark().getId();
             Query prepareTimeConstQuery = em.createNativeQuery("select * from PREPARE_TIME_CONST ptc where ptc.COLLE_ID = " + schemaConfiguration.getCastingUnitCollectorIds()[0]
-                    + " and ptc.MARK_ID in (SELECT m.mark_id FROM MARK m where m.mark_id = " + markId
-                    + " UNION SELECT m.PARENT_MARK_ID FROM MARK m where m.mark_id = " + markId
-                    + " UNION SELECT 400 FROM DUAL) and ROWNUM = 1", PrepareTimeConst.class);
+                    + " and ptc.MARK_ID in (SELECT m.mark_id FROM MARK m "
+                    + " CONNECT BY PRIOR m.parent_mark_id = m.mark_id START WITH m.mark_id = " + markId
+                    + ") and ROWNUM = 1", PrepareTimeConst.class);
 
             PrepareTimeConst prepareTimeConst = (PrepareTimeConst) prepareTimeConstQuery.getSingleResult();
 
