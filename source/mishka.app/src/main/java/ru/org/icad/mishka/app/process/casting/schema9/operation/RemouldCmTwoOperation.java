@@ -4,6 +4,7 @@ import org.apache.commons.lang3.ObjectUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.org.icad.mishka.app.OperationName;
+import ru.org.icad.mishka.app.model.CastMachMoulds;
 import ru.org.icad.mishka.app.model.CastingUnitCastingMachine;
 import ru.org.icad.mishka.app.model.Form;
 import ru.org.icad.mishka.app.process.casting.CastWrapper;
@@ -14,7 +15,7 @@ import ru.org.icad.mishka.app.util.TimeUtil;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import java.sql.Date;
 
 public class RemouldCmTwoOperation extends Operation {
@@ -33,11 +34,38 @@ public class RemouldCmTwoOperation extends Operation {
             EntityManagerFactory emf = Persistence.createEntityManagerFactory("MishkaService");
             EntityManager em = emf.createEntityManager();
 
-            Query castingUnitCastingMachineQuery = em.createNativeQuery("SELECT * FROM CU_CASTING_MACHINE ccm WHERE ccm.CAST_MACH_ID = "
-                    + schema.getSchemaConfiguration().getCastingUnitCastingMachineIds()[0],
-                    CastingUnitCastingMachine.class);
+            TypedQuery<CastingUnitCastingMachine> castingUnitCastingMachineTypedQuery
+                    = em.createNamedQuery("CastingUnitCastingMachine.findByPrimaryKey", CastingUnitCastingMachine.class);
+            castingUnitCastingMachineTypedQuery.setParameter("id", schema.getSchemaConfiguration().getCastingUnitCastingMachineIds()[1]);
+            CastingUnitCastingMachine castingUnitCastingMachine = castingUnitCastingMachineTypedQuery.getSingleResult();
 
-            CastingUnitCastingMachine castingUnitCastingMachine = (CastingUnitCastingMachine) castingUnitCastingMachineQuery.getSingleResult();
+
+            Operation operation = getNextId() == 1
+                    ? schema.getOperationMap().get(OperationName.CAST_CM_COLLECTOR_ONE) :
+                    schema.getOperationMap().get(OperationName.CAST_CM_COLLECTOR_TWO);
+
+            final CastWrapper sourceCastWrapper = operation.getCastWrapper();
+            final int sourceFormId = sourceCastWrapper.getCast().getCustomerOrder().getProduct().getForm().getId();
+
+            int previousMouldId = schema.getSchemaConfiguration().getMouldIds()[1];
+            for (CastMachMoulds castMachMoulds : castingUnitCastingMachine.getMoulds()) {
+                if (castMachMoulds.getMould().getFormId() != sourceFormId) {
+                    continue;
+                }
+
+
+                if (Form.INGOT == sourceFormId) {
+                    if (ObjectUtils.equals(castMachMoulds.getMould().getWeight(), sourceCastWrapper.getCast().getCustomerOrder().getWeight())) {
+                        schema.getSchemaConfiguration().setMouldIds(new int[]{castMachMoulds.getMould().getId()});
+
+                        break;
+                    }
+                }
+            }
+
+            if ((previousMouldId == schema.getSchemaConfiguration().getMouldIds()[1])) {
+                LOGGER.error("Error can't found mould for order id : " + sourceCastWrapper.getCast().getCustomerOrder().getId());
+            }
 
             time += castingUnitCastingMachine.getRemouldTime() * 60 * 1000;
 

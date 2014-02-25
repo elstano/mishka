@@ -6,7 +6,7 @@ public class SchemaConfiguration {
     private final int castingUnitId;
     private final int[] castingUnitCollectorIds;
     private final int[] castingUnitCastingMachineIds;
-    private final int[] mouldIds;
+    private int[] mouldIds;
 
     public SchemaConfiguration(
             int castHouseId,
@@ -40,5 +40,9 @@ public class SchemaConfiguration {
 
     public int[] getMouldIds() {
         return mouldIds;
+    }
+
+    public void setMouldIds(int[] mouldIds) {
+        this.mouldIds = mouldIds;
     }
 }

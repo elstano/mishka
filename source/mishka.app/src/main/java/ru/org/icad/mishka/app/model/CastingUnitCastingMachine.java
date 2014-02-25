@@ -4,6 +4,7 @@ import ru.org.icad.mishka.app.ColumnName;
 import ru.org.icad.mishka.app.TableName;
 
 import javax.persistence.*;
+import java.util.List;
 
 @NamedQueries({
         @NamedQuery(name = "CastingUnitCastingMachine.findAll",
@@ -25,6 +26,8 @@ public class CastingUnitCastingMachine {
     private int remouldTime;
     @Column(name = "LENGHT_BLANK_MAX")
     private int lenghtBlankMax;
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<CastMachMoulds> moulds;
 
     public CastingUnitCastingMachine() {
     }
@@ -63,6 +66,14 @@ public class CastingUnitCastingMachine {
 
     public void setLenghtBlankMax(int lenghtBlankMax) {
         this.lenghtBlankMax = lenghtBlankMax;
+    }
+
+    public List<CastMachMoulds> getMoulds() {
+        return moulds;
+    }
+
+    public void setMoulds(List<CastMachMoulds> moulds) {
+        this.moulds = moulds;
     }
 
     @Override
