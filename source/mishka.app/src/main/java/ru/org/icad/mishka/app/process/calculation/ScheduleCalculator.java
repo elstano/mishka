@@ -200,7 +200,7 @@ public class ScheduleCalculator
 
             if (LOGGER.isDebugEnabled())
             {
-                LOGGER.debug("Finishing calculation for 1 Group of Orders");
+                LOGGER.debug("Finishing calculation for one Group of Orders");
             }
         }
     }
