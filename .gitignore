@@ -3,3 +3,4 @@ source/.idea
 source/*/*.iml
 source/*.iml
 source/.DS_Store
+*.DS_Store

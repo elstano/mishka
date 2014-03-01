@@ -92,8 +92,14 @@ public class ScheduleCalculator
             castingUnitMould.put(cu.getId(), 0);
         }
 
-        //TODO: while
-        if (groupCustomerOrders.size() > 0)
+        Schedule schedule = new Schedule();
+        schedule.setCustomerOrders(customerOrderMap);
+        schedule.setGroupCustomerOrders(groupCustomerOrders);
+        schedule.setCastingUnits(castingUnitList);
+        schedule.setCastingUnitMould(castingUnitMould);
+        schedule.setUnassignedGroupCustomerOrders(groupCustomerOrders);
+
+        while (schedule.getUnassignedGroupCustomerOrders().size() > 0)
         {
             CastingUnit castingUnitForAssign = null;
             //get first available cast unit
