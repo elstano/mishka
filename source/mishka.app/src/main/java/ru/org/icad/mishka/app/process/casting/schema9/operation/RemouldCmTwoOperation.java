@@ -39,10 +39,9 @@ public class RemouldCmTwoOperation extends Operation {
             castingUnitCastingMachineTypedQuery.setParameter("id", schema.getSchemaConfiguration().getCastingUnitCastingMachineIds()[1]);
             CastingUnitCastingMachine castingUnitCastingMachine = castingUnitCastingMachineTypedQuery.getSingleResult();
 
-
             Operation operation = getNextId() == 1
-                    ? schema.getOperationMap().get(OperationName.CAST_CM_COLLECTOR_ONE) :
-                    schema.getOperationMap().get(OperationName.CAST_CM_COLLECTOR_TWO);
+                    ? schema.getOperationMap().get(OperationName.CAST_CM_TWO_COLLECTOR_ONE) :
+                    schema.getOperationMap().get(OperationName.CAST_CM_TWO_COLLECTOR_TWO);
 
             final CastWrapper sourceCastWrapper = operation.getCastWrapper();
             final int sourceFormId = sourceCastWrapper.getCast().getCustomerOrder().getProduct().getForm().getId();
