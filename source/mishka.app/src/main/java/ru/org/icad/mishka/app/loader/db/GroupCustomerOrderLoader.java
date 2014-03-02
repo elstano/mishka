@@ -53,7 +53,7 @@ public class GroupCustomerOrderLoader implements DBLoader<GroupCustomerOrder>
                     "   and cm_m.mould_id = mould.mould_id\n" +
                     "   and cu_cm.cast_mach_id = cm_m.cast_mach_id\n" +
                     "   and cu_m.cu_id = cu_cm.cu_id\n" +
-                    "   and cu_m.mark_id = p.mark_id\n" +
+                    "   and p.mark_id in (select m.mark_id from mark m start with m.mark_id = cu_m.mark_id connect by prior m.mark_id = m.parent_mark_id)\n" + //TODO:clarify condition
                     "   and cu_m.cu_id not in (28)\n" +
                     "   and cu.cu_id = cu_m.cu_id\n" +
                     " order by go.group_id, go.order_id";

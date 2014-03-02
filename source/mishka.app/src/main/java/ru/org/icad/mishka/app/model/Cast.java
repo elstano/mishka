@@ -10,7 +10,9 @@ import java.sql.Date;
         @NamedQuery(name = "Cast.findAll",
                 query = "SELECT c FROM Cast c"),
         @NamedQuery(name = "Cast.getCastsForCastingUnitBetweenDate",
-                query = "SELECT c FROM Cast c  WHERE c.castDate >= :startDate AND c.castDate < :endDate AND c.castingUnit.id = :castingUnitId")
+                query = "SELECT c FROM Cast c  WHERE c.castDate >= :startDate AND c.castDate < :endDate AND c.castingUnit.id = :castingUnitId"),
+        @NamedQuery(name = "Cast.getCastsForCustomerOrder",
+                query = "SELECT c FROM Cast c WHERE c.customerOrder.id = :customerOrderId")
 })
 @Entity
 @Table(name = TableName.CAST)

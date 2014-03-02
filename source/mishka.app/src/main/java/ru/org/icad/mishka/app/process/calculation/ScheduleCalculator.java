@@ -18,12 +18,11 @@ import ru.org.icad.mishka.app.process.casting.schema5_6.Schema5_6;
 import ru.org.icad.mishka.app.process.casting.schema9.Schema9;
 import ru.org.icad.mishka.app.util.TimeCalculationUtils;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.TypedQuery;
+import javax.persistence.*;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -99,11 +98,12 @@ public class ScheduleCalculator
         schedule.setCastingUnitMould(castingUnitMould);
         schedule.setUnassignedGroupCustomerOrders(groupCustomerOrders);
 
-        while (schedule.getUnassignedGroupCustomerOrders().size() > 0)
+        //TODO:while
+        if (schedule.getUnassignedGroupCustomerOrders().size() > 0)
         {
             CastingUnit castingUnitForAssign = null;
             //get first available cast unit
-            for (CastingUnit castingUnit : castingUnitList)
+            for (CastingUnit castingUnit : schedule.getCastingUnits())
             {
                 if (castingUnitForAssign == null)
                 {
@@ -158,7 +158,7 @@ public class ScheduleCalculator
 
             for (String assignedOrderId : assignedGroupCustomerOrder.getCustomerOrderIds())
             {
-                CustomerOrder customerOrder = customerOrderMap.get(assignedOrderId);
+                CustomerOrder customerOrder = schedule.getCustomerOrders().get(assignedOrderId);
 
                 //Calculation number of Casts for current Order
                 EntityManagerFactory emf = Persistence.createEntityManagerFactory("MishkaService");
@@ -178,13 +178,22 @@ public class ScheduleCalculator
                     }
                 }
 
-                for (int i = 0; i < customerOrder.getTonnage() % collectorTonnage; i++)
-                {
-                    Cast cast = new Cast();
-                    cast.setCastingUnit(castingUnitForAssign);
-                    cast.setCustomerOrder(customerOrder);
-                    cast.setCastNumber(casts.get(castingUnitForAssign.getId()).size() + 1);
+//                for (int i = 0; i < customerOrder.getTonnage() % collectorTonnage; i++)
+//                {
+//                    Cast cast = new Cast();
+//                    cast.setCastingUnit(castingUnitForAssign);
+//                    cast.setCustomerOrder(customerOrder);
+//                    cast.setCastNumber(casts.get(castingUnitForAssign.getId()).size() + 1);
+//
+//                    casts.get(castingUnitForAssign.getId()).add(cast);
+//                }
+                TypedQuery<Cast> typedQuery = em.createNamedQuery("Cast.getCastsForCustomerOrder", Cast.class);
+                typedQuery.setParameter("customerOrderId", customerOrder.getId());
 
+                List<Cast> customerOrderCasts = typedQuery.getResultList();
+                for (Cast cast : customerOrderCasts)
+                {
+                    cast.setCastingUnit(castingUnitForAssign);
                     casts.get(castingUnitForAssign.getId()).add(cast);
                 }
             }
@@ -194,15 +203,20 @@ public class ScheduleCalculator
 
             for (CastWrapper castWrapper : castWrappers)
             {
-                for (CastingUnit cu : castingUnitList)
+                for (CastingUnit cu : schedule.getCastingUnits())
                 {
-                    if (cu.getId() == castingUnitForAssign.getId())
+                    if (cu.getId() == castingUnitForAssign.getId() && castWrapper.getCast().getCastingUnit().getId() == castingUnitForAssign.getId())
                     {
-                        cu.setStartTime(castWrapper.getEndDate());
-                        cu.setPreviousProductId(customerOrderMap.get(assignedGroupCustomerOrder.getGroupId()).getProduct().getId());
+                        if (castWrapper.getEndDate().compareTo(cu.getStartTime()) > 0)
+                        {
+                            cu.setStartTime(castWrapper.getEndDate());
+                            cu.setPreviousProductId(customerOrderMap.get(assignedGroupCustomerOrder.getGroupId()).getProduct().getId());
+                        }
                     }
                 }
             }
+
+            schedule.getUnassignedGroupCustomerOrders().remove(assignedGroupCustomerOrder);
 
             if (LOGGER.isDebugEnabled())
             {
