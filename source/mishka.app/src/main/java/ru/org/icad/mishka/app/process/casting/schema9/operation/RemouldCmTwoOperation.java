@@ -55,7 +55,7 @@ public class RemouldCmTwoOperation extends Operation {
 
                 if (Form.INGOT == sourceFormId) {
                     if (ObjectUtils.equals(castMachMoulds.getMould().getWeight(), sourceCastWrapper.getCast().getCustomerOrder().getWeight())) {
-                        schema.getSchemaConfiguration().setMouldIds(new int[]{castMachMoulds.getMould().getId()});
+                        schema.getSchemaConfiguration().setMouldIds(new int[]{schema.getSchemaConfiguration().getMouldIds()[0], castMachMoulds.getMould().getId(),  schema.getSchemaConfiguration().getMouldIds()[2]});
 
                         break;
                     }

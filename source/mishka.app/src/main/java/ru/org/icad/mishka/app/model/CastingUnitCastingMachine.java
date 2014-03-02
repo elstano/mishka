@@ -26,7 +26,8 @@ public class CastingUnitCastingMachine {
     private int remouldTime;
     @Column(name = "LENGHT_BLANK_MAX")
     private int lenghtBlankMax;
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany
+    @JoinColumn(name = ColumnName.CAST_MACH_ID)
     private List<CastMachMoulds> moulds;
 
     public CastingUnitCastingMachine() {

@@ -37,7 +37,6 @@ public class CastCmCollectorOneOperation extends Operation {
     @Override
     public void activate() {
         final CastWrapper castWrapper = getCastWrapper();
-        schema.getResultCastWrappers().add(castWrapper);
 
         long time = 0;
         long homogenTime = 0;
@@ -141,8 +140,7 @@ public class CastCmCollectorOneOperation extends Operation {
 
         long filterFlushTime = 0;
         if (CUSTING_UNITS_FILTRATION.contains(schema.getSchemaConfiguration().getCastingUnitId()) && isFilterFlushNeed()) {
-            Query filterChangeMarkQuery = em.createNativeQuery("SELECT * from FILTER_CHANGE_MARK fcm where fcm. = "
-                    + 4 , FilterChangeMark.class);
+            Query filterChangeMarkQuery = em.createNativeQuery("SELECT * from FILTER_CHANGE_MARK fcm where fcm.FILTER_ID = 4 and rownum = 1", FilterChangeMark.class);
             Object filterChangeMark = filterChangeMarkQuery.getSingleResult();
 
             filterFlushTime = ((FilterChangeMark) filterChangeMark).getDurationTime() * 60 * 1000;
@@ -154,6 +152,7 @@ public class CastCmCollectorOneOperation extends Operation {
 
         castWrapper.setCastTime(time);
         castWrapper.setEndDate(endCastDate);
+        schema.getResultCastWrappers().add(castWrapper);
 
         Operation cleanCollectorOneOperation = schema.getOperationMap().get(OperationName.CLEAN_COLLECTOR_ONE);
         cleanCollectorOneOperation.setActivationDate(endCastDate);
@@ -200,8 +199,8 @@ public class CastCmCollectorOneOperation extends Operation {
             return false;
         }
 
-        final int sourceMarkId = getCastWrapper().getCast().getCustomerOrder().getProduct().getForm().getId();
-        final int previousMarkId = resultCastWrapper.getCast().getCustomerOrder().getProduct().getForm().getId();
+        final int sourceMarkId = getCastWrapper().getCast().getCustomerOrder().getProduct().getMark().getId();
+        final int previousMarkId = resultCastWrapper.getCast().getCustomerOrder().getProduct().getMark().getId();
 
         return sourceMarkId != previousMarkId;
     }

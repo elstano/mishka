@@ -14,7 +14,6 @@ import ru.org.icad.mishka.app.util.TimeUtil;
 
 import javax.persistence.*;
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
 
@@ -36,7 +35,6 @@ public class CastCmCollectorTwoOperation extends Operation {
     @Override
     public void activate() {
         final CastWrapper castWrapper = getCastWrapper();
-        schema.getResultCastWrappers().add(castWrapper);
 
         long time = 0;
         long homogenTime = 0;
@@ -118,16 +116,16 @@ public class CastCmCollectorTwoOperation extends Operation {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("MishkaService");
         EntityManager em = emf.createEntityManager();
         Query castingUnitRepairsQuery = em.createNativeQuery("SELECT * from CU_REPAIR cur where cur.CAST_MACH_ID = "
-                +  schema.getSchemaConfiguration().getCastingUnitCastingMachineIds()[0] , CastingUnitRepair.class);
+                + schema.getSchemaConfiguration().getCastingUnitCastingMachineIds()[0], CastingUnitRepair.class);
         List castingUnitRepairs = castingUnitRepairsQuery.getResultList();
-        if(castingUnitRepairs != null) {
-            for(Object object : castingUnitRepairs) {
-                CastingUnitRepair castingUnitRepair = (CastingUnitRepair )object;
-                if(castingUnitRepair.getTimeEnd().before(getActivationDate())) {
+        if (castingUnitRepairs != null) {
+            for (Object object : castingUnitRepairs) {
+                CastingUnitRepair castingUnitRepair = (CastingUnitRepair) object;
+                if (castingUnitRepair.getTimeEnd().before(getActivationDate())) {
                     continue;
                 }
 
-                if(castingUnitRepair.getTimeStart().after(new Date(getActivationDate().getTime() + time /2))) {
+                if (castingUnitRepair.getTimeStart().after(new Date(getActivationDate().getTime() + time / 2))) {
                     continue;
                 }
 
@@ -140,8 +138,7 @@ public class CastCmCollectorTwoOperation extends Operation {
 
         long filterFlushTime = 0;
         if (CUSTING_UNITS_FILTRATION.contains(schema.getSchemaConfiguration().getCastingUnitId()) && isFilterFlushNeed()) {
-            Query filterChangeMarkQuery = em.createNativeQuery("SELECT * from FILTER_CHANGE_MARK fcm where fcm. = "
-                    + 4 , FilterChangeMark.class);
+            Query filterChangeMarkQuery = em.createNativeQuery("SELECT * from FILTER_CHANGE_MARK fcm where fcm.FILTER_ID = 4 and rownum = 1", FilterChangeMark.class);
             Object filterChangeMark = filterChangeMarkQuery.getSingleResult();
 
             filterFlushTime = ((FilterChangeMark) filterChangeMark).getDurationTime() * 60 * 1000;
@@ -153,6 +150,7 @@ public class CastCmCollectorTwoOperation extends Operation {
 
         castWrapper.setCastTime(time);
         castWrapper.setEndDate(endCastDate);
+        schema.getResultCastWrappers().add(castWrapper);
 
         Operation cleanCollectorTwoOperation = schema.getOperationMap().get(OperationName.CLEAN_COLLECTOR_TWO);
         cleanCollectorTwoOperation.setActivationDate(endCastDate);
@@ -177,9 +175,9 @@ public class CastCmCollectorTwoOperation extends Operation {
                 + ", endCastDate: " + TimeUtil.convertTimeToString(endCastDate.getTime())
                 + ", prepareTime: " + castWrapper.getPrepareCollectorTime() / 60 / 1000
                 + ", castTime: " + castWrapper.getCastTime() / 60 / 1000
-                + (homogenTime == 0 ? "": ", homogenTime: " + homogenTime / 60 / 1000)
-                + (isGowk(castWrapper) ? ", gowk: " + isGowk(castWrapper): "")
-                + (filterFlushTime == 0 ? "": ", filterFlushTime: " + filterFlushTime / 60 / 1000)
+                + (homogenTime == 0 ? "" : ", homogenTime: " + homogenTime / 60 / 1000)
+                + (isGowk(castWrapper) ? ", gowk: " + isGowk(castWrapper) : "")
+                + (filterFlushTime == 0 ? "" : ", filterFlushTime: " + filterFlushTime / 60 / 1000)
         );
     }
 
@@ -199,8 +197,8 @@ public class CastCmCollectorTwoOperation extends Operation {
             return false;
         }
 
-        final int sourceMarkId = getCastWrapper().getCast().getCustomerOrder().getProduct().getForm().getId();
-        final int previousMarkId = resultCastWrapper.getCast().getCustomerOrder().getProduct().getForm().getId();
+        final int sourceMarkId = getCastWrapper().getCast().getCustomerOrder().getProduct().getMark().getId();
+        final int previousMarkId = resultCastWrapper.getCast().getCustomerOrder().getProduct().getMark().getId();
 
         return sourceMarkId != previousMarkId;
     }
