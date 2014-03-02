@@ -20,8 +20,9 @@ import java.util.Queue;
 
 public class CastCmCollectorTwoOperation extends Operation {
     private static final Logger LOGGER = LoggerFactory.getLogger(CastCmCollectorTwoOperation.class);
-    private static final ArrayList<Integer> CUSTING_UNITS_HOMOGEN = Lists.newArrayList(26, 28);
-
+    private static final List<Integer> CUSTING_UNITS_FILTRATION = Lists.newArrayList(22, 24);
+    private static final List<Integer> CUSTING_UNITS_HOMOGEN = Lists.newArrayList(26, 28);
+    private static final int NO_FILTRATION = 1;
 
     private final Schema schema;
 
@@ -137,6 +138,16 @@ public class CastCmCollectorTwoOperation extends Operation {
             }
         }
 
+        long filterFlushTime = 0;
+        if (CUSTING_UNITS_FILTRATION.contains(schema.getSchemaConfiguration().getCastingUnitId()) && isFilterFlushNeed()) {
+            Query filterChangeMarkQuery = em.createNativeQuery("SELECT * from FILTER_CHANGE_MARK fcm where fcm. = "
+                    + 4 , FilterChangeMark.class);
+            Object filterChangeMark = filterChangeMarkQuery.getSingleResult();
+
+            filterFlushTime = ((FilterChangeMark) filterChangeMark).getDurationTime() * 60 * 1000;
+            time += filterFlushTime;
+        }
+
         final Date startCastDate = getActivationDate();
         final Date endCastDate = new Date(startCastDate.getTime() + time);
 
@@ -168,6 +179,7 @@ public class CastCmCollectorTwoOperation extends Operation {
                 + ", castTime: " + castWrapper.getCastTime() / 60 / 1000
                 + (homogenTime == 0 ? "": ", homogenTime: " + homogenTime / 60 / 1000)
                 + (isGowk(castWrapper) ? ", gowk: " + isGowk(castWrapper): "")
+                + (filterFlushTime == 0 ? "": ", filterFlushTime: " + filterFlushTime / 60 / 1000)
         );
     }
 
@@ -175,5 +187,21 @@ public class CastCmCollectorTwoOperation extends Operation {
         return castWrapper.getLengthTwo() != null
                 || castWrapper.getBlankCountTwo() != null
                 || castWrapper.getIngotInBlankCountTwo() != null;
+    }
+
+    private boolean isFilterFlushNeed() {
+        if (NO_FILTRATION == getCastWrapper().getCast().getCustomerOrder().getProduct().getFiltration().getId()) {
+            return false;
+        }
+
+        final CastWrapper resultCastWrapper = schema.getResultCastWrappers().peekLast();
+        if (resultCastWrapper == null) {
+            return false;
+        }
+
+        final int sourceMarkId = getCastWrapper().getCast().getCustomerOrder().getProduct().getForm().getId();
+        final int previousMarkId = resultCastWrapper.getCast().getCustomerOrder().getProduct().getForm().getId();
+
+        return sourceMarkId != previousMarkId;
     }
 }

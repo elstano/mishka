@@ -12,7 +12,7 @@ import ru.org.icad.mishka.app.util.TimeUtil;
 import java.sql.Date;
 
 public class CleanCollectorTwoOperation extends Operation {
-    private static final Logger LOGGER = LoggerFactory.getLogger(CleanCollectorOneOperation.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(CleanCollectorTwoOperation.class);
 
     private final Schema schema;
 
