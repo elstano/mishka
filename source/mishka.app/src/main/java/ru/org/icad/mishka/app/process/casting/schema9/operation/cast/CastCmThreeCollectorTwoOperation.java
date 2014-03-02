@@ -98,10 +98,11 @@ public class CastCmThreeCollectorTwoOperation extends Operation {
             }
         }
 
-        castWrapper.setCastTime(time);
-
         final Date startCastDate = getActivationDate();
         final Date endCastDate = new Date(startCastDate.getTime() + time);
+
+        castWrapper.setCastTime(time);
+        castWrapper.setEndDate(endCastDate);
 
         Operation cleanCollectorOperation = schema.getOperationMap().get(OperationName.CLEAN_COLLECTOR_TWO);
         cleanCollectorOperation.setActivationDate(endCastDate);

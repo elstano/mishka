@@ -100,10 +100,11 @@ public class CastCmTwoCollectorOneOperation extends Operation {
             }
         }
 
-        castWrapper.setCastTime(time);
-
         final Date startCastDate = getActivationDate();
         final Date endCastDate = new Date(startCastDate.getTime() + time);
+
+        castWrapper.setCastTime(time);
+        castWrapper.setEndDate(endCastDate);
 
         Operation cleanCollectorOneOperation = schema.getOperationMap().get(OperationName.CLEAN_COLLECTOR_ONE);
         cleanCollectorOneOperation.setActivationDate(endCastDate);
