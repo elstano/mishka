@@ -16,13 +16,11 @@ import ru.org.icad.mishka.app.process.casting.SchemaConfiguration;
 import ru.org.icad.mishka.app.process.casting.schema4.Schema4;
 import ru.org.icad.mishka.app.process.casting.schema5_6.Schema5_6;
 import ru.org.icad.mishka.app.process.casting.schema9.Schema9;
+import ru.org.icad.mishka.app.util.CastUtil;
 import ru.org.icad.mishka.app.util.TimeCalculationUtils;
 
 import javax.persistence.*;
 import java.sql.Date;
-import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -36,7 +34,7 @@ public class ScheduleCalculator
     {
     }
 
-    public void calculateSchedule() throws SQLException
+    public void calculateSchedule() throws Exception
     {
         final Map<Integer, Schema> schemaMap = ImmutableMap.<Integer, Schema>builder()
                 .put(30, new Schema4(new SchemaConfiguration(2, 30, new int[]{49}, new int[]{46}, new int[] {15})))
@@ -178,6 +176,7 @@ public class ScheduleCalculator
                     }
                 }
 
+                //TODO:change Cast to optimized
 //                for (int i = 0; i < customerOrder.getTonnage() % collectorTonnage; i++)
 //                {
 //                    Cast cast = new Cast();
@@ -187,15 +186,26 @@ public class ScheduleCalculator
 //
 //                    casts.get(castingUnitForAssign.getId()).add(cast);
 //                }
-                TypedQuery<Cast> typedQuery = em.createNamedQuery("Cast.getCastsForCustomerOrder", Cast.class);
-                typedQuery.setParameter("customerOrderId", customerOrder.getId());
 
-                List<Cast> customerOrderCasts = typedQuery.getResultList();
-                for (Cast cast : customerOrderCasts)
-                {
-                    cast.setCastingUnit(castingUnitForAssign);
-                    casts.get(castingUnitForAssign.getId()).add(cast);
-                }
+//                TypedQuery<Cast> typedQuery = em.createNamedQuery("Cast.getCastsForCustomerOrder", Cast.class);
+//                typedQuery.setParameter("customerOrderId", customerOrder.getId());
+//
+//                List<Cast> customerOrderCasts = typedQuery.getResultList();
+//                for (Cast cast : customerOrderCasts)
+//                {
+//                    cast.setCastingUnit(castingUnitForAssign);
+//                    casts.get(castingUnitForAssign.getId()).add(cast);
+//                }
+
+                TypedQuery<Mould> mouldTypedQuery = em.createNamedQuery("Mould.getMouldForSlab", Mould.class);
+                mouldTypedQuery.setParameter("castingUnitId", castingUnitForAssign.getId());
+                mouldTypedQuery.setParameter("formId", customerOrder.getProduct().getForm().getId());
+                mouldTypedQuery.setParameter("width", customerOrder.getWidth());
+                mouldTypedQuery.setParameter("height", customerOrder.getHeight());
+
+                List<Mould> moulds = mouldTypedQuery.getResultList();
+
+                casts.get(castingUnitForAssign.getId()).addAll(generateCasts(customerOrder, castingUnitForAssign, moulds.get(0)));
             }
 
             CastingProcess castingProcess = new CastingProcess(schemaMap.get(castingUnitForAssign.getId()));
@@ -223,5 +233,95 @@ public class ScheduleCalculator
                 LOGGER.debug("Finishing calculation for one Group of Orders");
             }
         }
+    }
+
+    public List<Cast> generateCasts(CustomerOrder customerOrder, CastingUnit castingUnit, Mould mould) throws Exception
+    {
+        List<Cast> casts = new ArrayList<>();
+
+        if (Form.SLAB == customerOrder.getProduct().getForm().getId())
+        {
+            int ingots = 0;
+            int blanks = 0;
+
+            int lengthBlanksCast = 0;
+
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("MishkaService");
+            EntityManager em = emf.createEntityManager();
+            TypedQuery<CastingUnitCastingMachine> typedQuery = em.createNamedQuery("CastingUnitCastingMachine.findByCastUnitId", CastingUnitCastingMachine.class);
+            typedQuery.setParameter("castingUnitId", castingUnit.getId());
+            List<CastingUnitCastingMachine> castingUnitCastingMachines = typedQuery.getResultList();
+
+            int lengthMaxBlankCast = castingUnitCastingMachines.get(0).getLenghtBlankMax();
+
+            int weightProdCast = (int) (customerOrder.getLength() * customerOrder.getHeight() * customerOrder.getWidth() * CastUtil.RO);
+
+            int lengthMaxProd = castingUnit.getCastHouse().getBlankWeightMax() * customerOrder.getLength().intValue() / weightProdCast;
+
+            if (lengthMaxProd < lengthMaxBlankCast)
+            {
+                lengthMaxBlankCast = lengthMaxProd;
+            }
+
+            boolean isLengthConditionPassed = true;
+            while (isLengthConditionPassed)
+            {
+                if (((ingots + 1) * customerOrder.getLength().intValue() + customerOrder.getProduct().getClipping()) < lengthMaxBlankCast)
+                {
+                    ingots += 1;
+                    lengthBlanksCast = ingots * customerOrder.getLength() + customerOrder.getProduct().getClipping();
+                }
+                else
+                {
+                    isLengthConditionPassed = false;
+                }
+            }
+
+            TypedQuery<MouldBlanks> mbTypedQuery = em.createNamedQuery("MouldBlanks.getMouldBlanksForMould", MouldBlanks.class);
+            mbTypedQuery.setParameter("mouldId", mould.getId());
+            List<MouldBlanks> mouldBlanksList = mbTypedQuery.getResultList();
+
+            //TODO: calculate MouldBlanks based on volume of mixer
+            for (MouldBlanks mouldBlanks : mouldBlanksList)
+            {
+                if (mouldBlanks.getNumBlanks() > blanks)
+                {
+                    blanks = mouldBlanks.getNumBlanks();
+                }
+            }
+
+            int vCast = blanks * lengthBlanksCast * customerOrder.getHeight() * customerOrder.getWidth();
+
+            int custNum = (int) Math.ceil((double) customerOrder.getTonnage() / vCast);
+
+            for (int i = 0; i < custNum; i++)
+            {
+                Cast cast = new Cast();
+                cast.setCastingUnit(castingUnit);
+                cast.setCastNumber(i + 1);
+                cast.setCustomerOrder(customerOrder);
+                cast.setBlankCount(blanks);
+                cast.setIngotCount(0);
+                cast.setIngotInBlankCount(ingots);
+                casts.add(cast);
+            }
+
+            return casts;
+        }
+
+        if (Form.INGOT == customerOrder.getProduct().getForm().getId())
+        {
+            //TODO: define generation of Casts for INGOT
+
+            return casts;
+        }
+        else if (Form.BILLET == customerOrder.getProduct().getForm().getId())
+        {
+            //TODO: define generation of Casts for BILLET
+
+            return casts;
+        }
+
+        throw new Exception();
     }
 }

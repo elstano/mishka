@@ -6,6 +6,12 @@ import ru.org.icad.mishka.app.TableName;
 import javax.persistence.*;
 import java.io.Serializable;
 
+@NamedQueries({
+        @NamedQuery(name = "MouldBlanks.findAll",
+                query = "SELECT mb FROM MouldBlanks mb"),
+        @NamedQuery(name = "MouldBlanks.getMouldBlanksForMould",
+                query = "SELECT mb FROM MouldBlanks mb WHERE mb.mould.id = :mouldId")
+})
 @Entity
 @Table(name = TableName.MOULD_BLANKS)
 public class MouldBlanks {

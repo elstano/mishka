@@ -6,7 +6,7 @@ import ru.org.icad.mishka.app.model.Form;
 
 public class CastUtil {
 
-    private static final double RO = 2.741 * Math.pow(10, -9);
+    public static final double RO = 2.741 * Math.pow(10, -9);
 
     private CastUtil() {
     }

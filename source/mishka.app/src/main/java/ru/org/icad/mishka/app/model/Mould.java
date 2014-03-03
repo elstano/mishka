@@ -3,11 +3,21 @@ package ru.org.icad.mishka.app.model;
 import ru.org.icad.mishka.app.ColumnName;
 import ru.org.icad.mishka.app.TableName;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
+//TODO:Revise width and height
+@NamedQueries({
+        @NamedQuery(name = "Mould.findAll",
+                query = "SELECT m FROM Mould m"),
+        @NamedQuery(name = "Mould.getMouldForSlab",
+                query = "SELECT m FROM Mould m, CastMachMoulds cmm, CastingUnitCastingMachine cucm" +
+                        " WHERE cucm.castingUnit.id = :castingUnitId" +
+                        "   AND cmm.castingUnitCastingMachine.id = cucm.id" +
+                        "   AND m.id = cmm.mould.id" +
+                        "   AND m.formId = :formId" +
+                        "   AND m.width = :height" +
+                        "   AND m.height = :width")
+})
 @Entity
 @Table(name = TableName.MOULD)
 public class Mould {
