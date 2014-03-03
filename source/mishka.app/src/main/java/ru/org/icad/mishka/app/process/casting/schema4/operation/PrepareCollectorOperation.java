@@ -93,9 +93,8 @@ public class PrepareCollectorOperation extends Operation {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("MishkaService");
         EntityManager em = emf.createEntityManager();
         Query castingUnitRepairsQuery = em.createNativeQuery("SELECT * from CU_REPAIR cur where cur.COLLE_ID = "
-                +  schema.getSchemaConfiguration().getCastingUnitCollectorIds()[0] , CastingUnitRepair.class);
+                + schema.getSchemaConfiguration().getCastingUnitCollectorIds()[0], CastingUnitRepair.class);
         List castingUnitRepairs = castingUnitRepairsQuery.getResultList();
-        final Date activationDate = new Date(getActivationDate().getTime() + time);
         if(castingUnitRepairs != null) {
             for(Object object : castingUnitRepairs) {
                 CastingUnitRepair castingUnitRepair = (CastingUnitRepair )object;
@@ -103,7 +102,7 @@ public class PrepareCollectorOperation extends Operation {
                     continue;
                 }
 
-                if(castingUnitRepair.getTimeStart().after(activationDate)) {
+                if(castingUnitRepair.getTimeStart().after(new Date(getActivationDate().getTime() + time))) {
                     continue;
                 }
 
@@ -116,8 +115,9 @@ public class PrepareCollectorOperation extends Operation {
 
         castWrapper.setPrepareCollectorTime(time);
 
-        Operation operation = schema.getOperationMap().get(OperationName.CAST_CM);
-        if (ObjectUtils.compare(activationDate, operation.getActivationDate()) == 1) {
+        final Date activationDate = new Date(getActivationDate().getTime() + time);
+
+        Operation operation = schema.getOperationMap().get(OperationName.CAST_CM);         if (ObjectUtils.compare(activationDate, operation.getActivationDate()) == 1) {
             operation.setActivationDate(activationDate);
         }
 
