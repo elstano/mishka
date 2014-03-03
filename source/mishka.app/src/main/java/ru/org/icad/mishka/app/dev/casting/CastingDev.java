@@ -1,7 +1,6 @@
 package ru.org.icad.mishka.app.dev.casting;
 
 import com.google.common.collect.ImmutableMap;
-import org.jetbrains.annotations.Nullable;
 import ru.org.icad.mishka.app.model.Cast;
 import ru.org.icad.mishka.app.process.casting.CastingProcess;
 import ru.org.icad.mishka.app.process.casting.Schema;
@@ -9,11 +8,10 @@ import ru.org.icad.mishka.app.process.casting.SchemaConfiguration;
 import ru.org.icad.mishka.app.process.casting.schema4.Schema4;
 import ru.org.icad.mishka.app.process.casting.schema5_6.Schema5_6;
 import ru.org.icad.mishka.app.process.casting.schema9.Schema9;
+import ru.org.icad.mishka.app.util.TimeUtil;
 
 import javax.persistence.*;
 import java.sql.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 
@@ -23,17 +21,17 @@ public class CastingDev {
 
     public void castingProcess() {
         final Map<Integer, Schema> schemaMap = ImmutableMap.<Integer, Schema>builder()
-                .put(30, new Schema4(new SchemaConfiguration(2, 30, new int[]{49}, new int[]{46}, new int[] {15})))
-                .put(33, new Schema4(new SchemaConfiguration(2, 33, new int[]{52}, new int[]{51}, new int[] {16})))
-                .put(22, new Schema5_6(new SchemaConfiguration(2, 22, new int[]{40, 41}, new int[]{41}, new int[] {103})))
-                .put(24, new Schema5_6(new SchemaConfiguration(2, 24, new int[]{42, 43}, new int[]{42}, new int[] {59})))
-                .put(26, new Schema5_6(new SchemaConfiguration(2, 26, new int[]{44, 45}, new int[]{43}, new int[] {155})))
-                .put(28, new Schema5_6(new SchemaConfiguration(2, 28, new int[]{46, 47}, new int[]{44}, new int[] {158})))
-                .put(31, new Schema9(new SchemaConfiguration(2, 31, new int[]{50, 51}, new int[]{48, 50, 49}, new int[] {23, 30, 24})))
+                .put(30, new Schema4(new SchemaConfiguration(2, 30, new int[]{49}, new int[]{46}, new int[]{15})))
+                .put(33, new Schema4(new SchemaConfiguration(2, 33, new int[]{52}, new int[]{51}, new int[]{16})))
+                .put(22, new Schema5_6(new SchemaConfiguration(2, 22, new int[]{40, 41}, new int[]{41}, new int[]{103})))
+                .put(24, new Schema5_6(new SchemaConfiguration(2, 24, new int[]{42, 43}, new int[]{42}, new int[]{59})))
+                .put(26, new Schema5_6(new SchemaConfiguration(2, 26, new int[]{44, 45}, new int[]{43}, new int[]{155})))
+                .put(28, new Schema5_6(new SchemaConfiguration(2, 28, new int[]{46, 47}, new int[]{44}, new int[]{158})))
+                .put(31, new Schema9(new SchemaConfiguration(2, 31, new int[]{50, 51}, new int[]{48, 50, 49}, new int[]{23, 30, 24})))
                 .build();
 
-        final Date startDate = stringToDate(START_DATE);
-        final Date endDate = stringToDate(END_DATE);
+        final Date startDate = TimeUtil.stringToDate(START_DATE);
+        final Date endDate = TimeUtil.stringToDate(END_DATE);
 
         List<Cast> casts30 = getCasts(startDate, endDate, 30);
         CastingProcess castingProcess30 = new CastingProcess(schemaMap.get(30));
@@ -74,16 +72,5 @@ public class CastingDev {
         castQuery.setParameter("castingUnitId", castUnitId);
 
         return castQuery.getResultList();
-    }
-
-    @Nullable
-    private Date stringToDate(String string) {
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        try {
-            return new Date(format.parse(string).getTime());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 }

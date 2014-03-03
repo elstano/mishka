@@ -1,5 +1,6 @@
 package ru.org.icad.mishka.app.process.casting.schema5_6.operation;
 
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.math3.util.Precision;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -114,7 +115,7 @@ public class PrepareCollectorOneOperation extends Operation {
         castWrapper.setPrepareCollectorTime(time);
 
         Operation operation = schema.getOperationMap().get(OperationName.CAST_CM_COLLECTOR_ONE);
-        if (operation.getActivationDate() == null || (getActivationDate() != null && getActivationDate().compareTo(operation.getActivationDate()) == 1)) {
+        if (ObjectUtils.compare(getActivationDate(), operation.getActivationDate()) == 1) {
             operation.setActivationDate(new Date(getActivationDate().getTime() + time));
         }
 

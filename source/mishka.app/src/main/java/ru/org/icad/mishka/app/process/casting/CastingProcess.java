@@ -4,7 +4,6 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Queues;
 import com.google.common.primitives.Ints;
 import org.apache.commons.lang3.ObjectUtils;
-import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.org.icad.mishka.app.cache.CastingUnitProductChangeCache;
@@ -13,11 +12,10 @@ import ru.org.icad.mishka.app.model.*;
 import ru.org.icad.mishka.app.process.casting.schema4.Schema4;
 import ru.org.icad.mishka.app.process.casting.schema5_6.Schema5_6;
 import ru.org.icad.mishka.app.process.casting.schema9.Schema9;
+import ru.org.icad.mishka.app.util.TimeUtil;
 
 import javax.persistence.*;
 import java.sql.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -64,8 +62,8 @@ public class CastingProcess {
     }
 
     public List<CastWrapper> castingProcess(List<Cast> casts) {
-        Date startDate = stringToDate(START_DATE);
-        Date endDate = stringToDate(END_DATE);
+        Date startDate = TimeUtil.stringToDate(START_DATE);
+        Date endDate = TimeUtil.stringToDate(END_DATE);
 
         SchemaConfiguration schemaConfiguration = schema.getSchemaConfiguration();
 
@@ -300,9 +298,6 @@ public class CastingProcess {
             LOGGER.error("Can't get mark id for customer order: " + castWrapperAfter.getCast().getCustomerOrder(), e);
         }
 
-        LOGGER.info("Product change on castingUnitId: " + schemaConfiguration.getCastingUnitId()
-                + ", marks: " + markId + " - " + markIdAfter);
-
         return CastingUnitProductChangeCache.getInstance().getCastingUnitProduct(
                 new ProductChangeKey(schemaConfiguration.getCastingUnitId(), markId, markIdAfter)
         );
@@ -335,21 +330,12 @@ public class CastingProcess {
                 mergeCastWrapper.setLengthTwo(castWrapperAfter.getCast().getCustomerOrder().getLength());
 
                 castWrappersWithGowk.add(mergeCastWrapper);
+
+                i++;
             } else {
                 castWrappersWithGowk.add(castWrapper);
             }
         }
         return castWrappersWithGowk;
-    }
-
-    @Nullable
-    private Date stringToDate(String string) {
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        try {
-            return new Date(format.parse(string).getTime());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 }

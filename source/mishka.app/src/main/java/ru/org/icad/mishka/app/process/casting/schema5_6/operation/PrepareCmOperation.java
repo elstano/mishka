@@ -1,5 +1,6 @@
 package ru.org.icad.mishka.app.process.casting.schema5_6.operation;
 
+import org.apache.commons.lang3.ObjectUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.org.icad.mishka.app.OperationName;
@@ -41,7 +42,7 @@ public class PrepareCmOperation extends Operation {
         String nextOperationName = getNextId() == ONE_OPERATION_ID ? OperationName.CAST_CM_COLLECTOR_ONE : OperationName.CAST_CM_COLLECTOR_TWO;
 
         Operation operation = schema.getOperationMap().get(nextOperationName);
-        if (operation.getActivationDate() == null || (getActivationDate() != null && getActivationDate().compareTo(operation.getActivationDate()) == 1)) {
+        if (ObjectUtils.compare(getActivationDate(), operation.getActivationDate()) == 1) {
             operation.setActivationDate(new Date(getActivationDate().getTime() + durationTimeHour));
         }
 
