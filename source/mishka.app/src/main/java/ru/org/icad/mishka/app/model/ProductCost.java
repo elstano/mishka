@@ -18,8 +18,10 @@ public class ProductCost {
     @JoinColumn(name = ColumnName.PLANT_ID)
     private Plant plant;
     @OneToOne
+    @JoinColumn(name = ColumnName.MARK_ID)
     private Mark mark;
     @OneToOne
+    @JoinColumn(name = ColumnName.FORM_ID)
     private Form form;
     @Column(name = "COST")
     private BigDecimal cost;
