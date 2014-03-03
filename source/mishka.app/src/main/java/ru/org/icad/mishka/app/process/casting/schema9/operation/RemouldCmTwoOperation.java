@@ -76,7 +76,7 @@ public class RemouldCmTwoOperation extends Operation {
         final long completeTime = getActivationDate().getTime() + time;
 
         final Operation operation = schema.getOperationMap().get(OperationName.PREPARE_CM_TWO);
-        if (operation.getActivationDate() == null || (getActivationDate() != null && completeTime > operation.getActivationDate().getTime())) {
+        if (ObjectUtils.compare(getActivationDate(), operation.getActivationDate()) == 1) {
             operation.setActivationDate(new Date(completeTime));
         }
 

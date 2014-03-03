@@ -1,5 +1,6 @@
 package ru.org.icad.mishka.app.process.casting.schema9.operation.periodic;
 
+import org.apache.commons.lang3.ObjectUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.org.icad.mishka.app.OperationName;
@@ -40,7 +41,7 @@ public class PeriodicCmOneOperation extends Operation {
         }
 
         final Operation operation = schema.getOperationMap().get(OperationName.PREPARE_CM_ONE);
-        if (operation.getActivationDate() == null || (getActivationDate() != null && getActivationDate().compareTo(operation.getActivationDate()) == 1)) {
+        if (ObjectUtils.compare(getActivationDate(), operation.getActivationDate()) == 1) {
             operation.setActivationDate(new Date(getActivationDate().getTime()));
         }
 
