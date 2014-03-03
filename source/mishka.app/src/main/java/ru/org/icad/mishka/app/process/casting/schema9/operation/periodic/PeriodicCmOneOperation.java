@@ -42,7 +42,7 @@ public class PeriodicCmOneOperation extends Operation {
 
         final Operation operation = schema.getOperationMap().get(OperationName.PREPARE_CM_ONE);
         if (ObjectUtils.compare(getActivationDate(), operation.getActivationDate()) == 1) {
-            operation.setActivationDate(new Date(getActivationDate().getTime()));
+            operation.setActivationDate(getActivationDate());
         }
 
         schema.getOperations().add(operation);

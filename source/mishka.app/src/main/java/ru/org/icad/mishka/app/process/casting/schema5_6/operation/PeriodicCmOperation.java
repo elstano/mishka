@@ -43,7 +43,7 @@ public class PeriodicCmOperation extends Operation {
 
         final Operation operation = schema.getOperationMap().get(OperationName.PREPARE_CM);
         if (ObjectUtils.compare(getActivationDate(), operation.getActivationDate()) == 1) {
-            operation.setActivationDate(new Date(getActivationDate().getTime()));
+            operation.setActivationDate(getActivationDate());
         }
 
         operation.setActivationCount(operation.getActivationCount() - 1);

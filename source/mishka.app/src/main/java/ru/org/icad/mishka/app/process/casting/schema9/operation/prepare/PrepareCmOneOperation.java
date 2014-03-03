@@ -34,12 +34,13 @@ public class PrepareCmOneOperation extends Operation {
                 + " and ROWNUM = 1", PrepareTimeConst.class);
 
         PrepareTimeConst prepareTimeConst = (PrepareTimeConst) query.getSingleResult();
-        double durationTimeHour = prepareTimeConst.getDurationTime() / 60;
+        long durationTime = prepareTimeConst.getDurationTime() * 60 * 1000;
 
+        final Date activationDate = new Date(getActivationDate().getTime() + durationTime);
 
         Operation operation = schema.getOperationMap().get(OperationName.CAST_CM_ONE_COLLECTOR_ONE);
-        if (ObjectUtils.compare(getActivationDate(), operation.getActivationDate()) == 1) {
-            operation.setActivationDate(new Date(getActivationDate().getTime() + (long) (durationTimeHour * 3600 * 1000)));
+        if (ObjectUtils.compare(activationDate, operation.getActivationDate()) == 1) {
+            operation.setActivationDate(activationDate);
         }
 
         operation.setActivationCount(operation.getActivationCount() - 1);

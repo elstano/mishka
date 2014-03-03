@@ -93,11 +93,11 @@ public class RemouldCmOperation extends Operation {
                     + TimeUtil.convertTimeToString(getActivationDate().getTime()) + ", remouldTime: " + time / 60 / 1000);
         }
 
-        final long completeTime = getActivationDate().getTime() + time;
+        final Date activationDate = new Date(getActivationDate().getTime() + time);
 
         final Operation operation = schema.getOperationMap().get(OperationName.PREPARE_CM);
-        if (ObjectUtils.compare(getActivationDate(), operation.getActivationDate()) == 1) {
-            operation.setActivationDate(new Date(completeTime));
+        if (ObjectUtils.compare(activationDate, operation.getActivationDate()) == 1) {
+            operation.setActivationDate(activationDate);
         }
 
         operation.setActivationCount(operation.getActivationCount() - 1);

@@ -37,13 +37,15 @@ public class PrepareCmOperation extends Operation {
                 + " and ROWNUM = 1", PrepareTimeConst.class);
 
         PrepareTimeConst prepareTimeConst = (PrepareTimeConst) query.getSingleResult();
-        long durationTimeHour = prepareTimeConst.getDurationTime() * 60 * 1000;
+        long durationTime = prepareTimeConst.getDurationTime() * 60 * 1000;
 
         String nextOperationName = getNextId() == ONE_OPERATION_ID ? OperationName.CAST_CM_COLLECTOR_ONE : OperationName.CAST_CM_COLLECTOR_TWO;
 
         Operation operation = schema.getOperationMap().get(nextOperationName);
-        if (ObjectUtils.compare(getActivationDate(), operation.getActivationDate()) == 1) {
-            operation.setActivationDate(new Date(getActivationDate().getTime() + durationTimeHour));
+
+        final Date activationDate = new Date(getActivationDate().getTime() + durationTime);
+        if (ObjectUtils.compare(activationDate, operation.getActivationDate()) == 1) {
+            operation.setActivationDate(activationDate);
         }
 
         operation.setActivationCount(operation.getActivationCount() - 1);

@@ -96,6 +96,7 @@ public class PrepareCollectorOneOperation extends Operation {
         Query castingUnitRepairsQuery = em.createNativeQuery("SELECT * from CU_REPAIR cur where cur.COLLE_ID = "
                 +  schema.getSchemaConfiguration().getCastingUnitCollectorIds()[0] , CastingUnitRepair.class);
         List castingUnitRepairs = castingUnitRepairsQuery.getResultList();
+        final Date activationDate = new Date(getActivationDate().getTime() + time);
         if(castingUnitRepairs != null) {
             for(Object object : castingUnitRepairs) {
                 CastingUnitRepair castingUnitRepair = (CastingUnitRepair )object;
@@ -103,7 +104,7 @@ public class PrepareCollectorOneOperation extends Operation {
                     continue;
                 }
 
-                if(castingUnitRepair.getTimeStart().after(new Date(getActivationDate().getTime() + time))) {
+                if(castingUnitRepair.getTimeStart().after(activationDate)) {
                     continue;
                 }
 
@@ -120,8 +121,8 @@ public class PrepareCollectorOneOperation extends Operation {
                 ? schema.getOperationMap().get(OperationName.CAST_CM_ONE_COLLECTOR_ONE)
                 : schema.getOperationMap().get(OperationName.CAST_CM_TWO_COLLECTOR_ONE);
 
-        if (ObjectUtils.compare(getActivationDate(), operation.getActivationDate()) == 1) {
-            operation.setActivationDate(new Date(getActivationDate().getTime() + time));
+        if (ObjectUtils.compare(activationDate, operation.getActivationDate()) == 1) {
+            operation.setActivationDate(activationDate);
         }
 
         operation.setCastWrapper(castWrapper);
