@@ -32,7 +32,7 @@ public class GroupCustomerOrderLoader implements DBLoader<GroupCustomerOrder>
                     "  from (select MIN(co.order_id) OVER (PARTITION BY p.form_id, p.mark_id, co.diameter, co.width, co.height, co.weight) group_id, co.order_id\n" +
                     "          from customer_order co,\n" +
                     "               product p\n" +
-                    "         where co.period between '01-MAY-13' and '31-MAY-13'\n" +
+                    "         where co.period between TO_DATE('01/05/2013', 'dd/mm/yyyy') and TO_DATE('31/05/2013', 'dd/mm/yyyy')\n" +
                     "           and p.form_id in (13/*SLAB*/) --(4 /*BILLET*/, 7/*INGOT*/, 13/*SLAB*/)\n" +
                     "           and p.product_id = co.product_id) go,\n" +
                     "       customer_order o,\n" +
