@@ -18,32 +18,35 @@ import ru.org.icad.mishka.app.process.casting.schema5_6.Schema5_6;
 import ru.org.icad.mishka.app.process.casting.schema9.Schema9;
 import ru.org.icad.mishka.app.util.CastUtil;
 import ru.org.icad.mishka.app.util.TimeCalculationUtils;
+import ru.org.icad.mishka.app.util.TimeUtil;
 
-import javax.persistence.*;
-import java.sql.Date;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
 import java.util.*;
 
 /**
  * Created by @author Ivan Solovyev.
  */
-public class ScheduleCalculator
-{
+public class ScheduleCalculator {
     private static final Logger LOGGER = LoggerFactory.getLogger(ScheduleCalculator.class);
 
-    public ScheduleCalculator()
-    {
+    private static final String START_DATE = "01/05/2013 00:00:00";
+
+
+    public ScheduleCalculator() {
     }
 
-    public void calculateSchedule() throws Exception
-    {
+    public void calculateSchedule() throws Exception {
         final Map<Integer, Schema> schemaMap = ImmutableMap.<Integer, Schema>builder()
-                .put(30, new Schema4(new SchemaConfiguration(2, 30, new int[]{49}, new int[]{46}, new int[] {15})))
-                .put(33, new Schema4(new SchemaConfiguration(2, 33, new int[]{52}, new int[]{51}, new int[] {16})))
-                .put(22, new Schema5_6(new SchemaConfiguration(2, 22, new int[]{40, 41}, new int[]{41}, new int[] {103})))
-                .put(24, new Schema5_6(new SchemaConfiguration(2, 24, new int[]{42, 43}, new int[]{42}, new int[] {59})))
-                .put(26, new Schema5_6(new SchemaConfiguration(2, 26, new int[]{44, 45}, new int[]{43}, new int[] {155})))
-                .put(28, new Schema5_6(new SchemaConfiguration(2, 28, new int[]{46, 47}, new int[]{44}, new int[] {158})))
-                .put(31, new Schema9(new SchemaConfiguration(2, 31, new int[]{50, 51}, new int[]{48, 50, 49}, new int[] {23, 30, 24})))
+                .put(30, new Schema4(new SchemaConfiguration(2, 30, new int[]{49}, new int[]{46}, new int[]{15})))
+                .put(33, new Schema4(new SchemaConfiguration(2, 33, new int[]{52}, new int[]{51}, new int[]{16})))
+                .put(22, new Schema5_6(new SchemaConfiguration(2, 22, new int[]{40, 41}, new int[]{41}, new int[]{103})))
+                .put(24, new Schema5_6(new SchemaConfiguration(2, 24, new int[]{42, 43}, new int[]{42}, new int[]{59})))
+                .put(26, new Schema5_6(new SchemaConfiguration(2, 26, new int[]{44, 45}, new int[]{43}, new int[]{155})))
+                .put(28, new Schema5_6(new SchemaConfiguration(2, 28, new int[]{46, 47}, new int[]{44}, new int[]{158})))
+                .put(31, new Schema9(new SchemaConfiguration(2, 31, new int[]{50, 51}, new int[]{48, 50, 49}, new int[]{23, 30, 24})))
                 .build();
 
         Map<Integer, List<Cast>> casts = new HashMap<>();
@@ -56,14 +59,11 @@ public class ScheduleCalculator
         DBLoader<CustomerOrder> customerOrderDBLoader = new CustomerOrderLoaded();
         Map<Object, CustomerOrder> customerOrderMap = customerOrderDBLoader.loadMap();
 
-        if (LOGGER.isDebugEnabled())
-        {
-            for (GroupCustomerOrder gco : groupCustomerOrders)
-            {
+        if (LOGGER.isDebugEnabled()) {
+            for (GroupCustomerOrder gco : groupCustomerOrders) {
                 LOGGER.debug("Group of Customer Orders: " + gco.getGroupId());
-                for (String coId : gco.getCustomerOrderIds())
-                {
-                    LOGGER.debug("    Customer Order: " + coId + ", Due Date: " + customerOrderMap.get(coId).getDueDate());
+                for (String coId : gco.getCustomerOrderIds()) {
+                    LOGGER.debug("Customer Order: " + coId + ", Due Date: " + customerOrderMap.get(coId).getDueDate());
                 }
             }
         }
@@ -71,9 +71,8 @@ public class ScheduleCalculator
         //Collection of Casting Units
         DBLoader<CastingUnit> castingUnitDBLoader = new CastingUnitLoader();
         Collection<CastingUnit> castingUnitList = castingUnitDBLoader.load();
-        for (CastingUnit cu : castingUnitList)
-        {
-            cu.setStartTime(new Date(2013, 5, 1));
+        for (CastingUnit cu : castingUnitList) {
+            cu.setStartTime(TimeUtil.stringToDate(START_DATE));
             casts.put(cu.getId(), new ArrayList<Cast>());
         }
 
@@ -82,8 +81,7 @@ public class ScheduleCalculator
         //Last mounted Mould on Casting Unit
         Map<Integer, Integer> castingUnitMould = new HashMap<>();
 
-        for (CastingUnit cu : castingUnitList)
-        {
+        for (CastingUnit cu : castingUnitList) {
             castingUnitLastProduct.put(cu.getId(), cu.getPreviousProductId());
             //TODO: load from DB, current value is blank
             castingUnitMould.put(cu.getId(), 0);
@@ -97,20 +95,14 @@ public class ScheduleCalculator
         schedule.setUnassignedGroupCustomerOrders(groupCustomerOrders);
 
         //TODO:while
-        if (schedule.getUnassignedGroupCustomerOrders().size() > 0)
-        {
+        if (schedule.getUnassignedGroupCustomerOrders().size() > 0) {
             CastingUnit castingUnitForAssign = null;
             //get first available cast unit
-            for (CastingUnit castingUnit : schedule.getCastingUnits())
-            {
-                if (castingUnitForAssign == null)
-                {
+            for (CastingUnit castingUnit : schedule.getCastingUnits()) {
+                if (castingUnitForAssign == null) {
                     castingUnitForAssign = castingUnit;
-                }
-                else
-                {
-                    if (ObjectUtils.compare(castingUnit.getStartTime(), castingUnitForAssign.getStartTime()) < 0)
-                    {
+                } else {
+                    if (ObjectUtils.compare(castingUnit.getStartTime(), castingUnitForAssign.getStartTime()) < 0) {
                         castingUnitForAssign = castingUnit;
                     }
                 }
@@ -122,22 +114,17 @@ public class ScheduleCalculator
             GroupCustomerOrder assignedGroupCustomerOrder = null;
 
             //get most convenient group of orders
-            for (GroupCustomerOrder gco : groupCustomerOrders)
-            {
+            for (GroupCustomerOrder gco : groupCustomerOrders) {
                 int preparationTime = TimeCalculationUtils.getPreparationTime(castingUnitForAssign.getId(),
                         castingUnitLastProduct.get(castingUnitForAssign.getId()),
                         gco.getCustomerOrderIds().iterator().next(),
                         castingUnitMould.get(castingUnitForAssign.getId()));
 
-                if (assignedGroupCustomerOrder == null)
-                {
+                if (assignedGroupCustomerOrder == null) {
                     minimalPreparationTime = preparationTime;
                     assignedGroupCustomerOrder = gco;
-                }
-                else
-                {
-                    if (preparationTime < minimalPreparationTime)
-                    {
+                } else {
+                    if (preparationTime < minimalPreparationTime) {
                         minimalPreparationTime = preparationTime;
                         assignedGroupCustomerOrder = gco;
                     }
@@ -146,16 +133,14 @@ public class ScheduleCalculator
 
             assert assignedGroupCustomerOrder != null;
 
-            if (LOGGER.isDebugEnabled())
-            {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Preparation Time for " + castingUnitForAssign.getId() + " on " +
                         assignedGroupCustomerOrder.getGroupId() + " is " + minimalPreparationTime);
             }
 
             //generate Casts, assign order, recalculate time
 
-            for (String assignedOrderId : assignedGroupCustomerOrder.getCustomerOrderIds())
-            {
+            for (String assignedOrderId : assignedGroupCustomerOrder.getCustomerOrderIds()) {
                 CustomerOrder customerOrder = schedule.getCustomerOrders().get(assignedOrderId);
 
                 //Calculation number of Casts for current Order
@@ -166,12 +151,9 @@ public class ScheduleCalculator
                 List<CastingUnitCollector> castingUnitCollectors = castingUnitCollectorQuery.getResultList();
                 int collectorTonnage = 0;
                 for (CastingUnitCollector castingUnitCollector : castingUnitCollectors) {
-                    if (collectorTonnage == 0)
-                    {
+                    if (collectorTonnage == 0) {
                         collectorTonnage = castingUnitCollector.getMixerTonnageMax();
-                    }
-                    else if (castingUnitCollector.getMixerTonnageMax() < collectorTonnage)
-                    {
+                    } else if (castingUnitCollector.getMixerTonnageMax() < collectorTonnage) {
                         collectorTonnage = castingUnitCollector.getMixerTonnageMax();
                     }
                 }
@@ -211,14 +193,10 @@ public class ScheduleCalculator
             CastingProcess castingProcess = new CastingProcess(schemaMap.get(castingUnitForAssign.getId()));
             List<CastWrapper> castWrappers = castingProcess.castingProcess(casts.get(castingUnitForAssign.getId()));
 
-            for (CastWrapper castWrapper : castWrappers)
-            {
-                for (CastingUnit cu : schedule.getCastingUnits())
-                {
-                    if (cu.getId() == castingUnitForAssign.getId() && castWrapper.getCast().getCastingUnit().getId() == castingUnitForAssign.getId())
-                    {
-                        if (castWrapper.getEndDate().compareTo(cu.getStartTime()) > 0)
-                        {
+            for (CastWrapper castWrapper : castWrappers) {
+                for (CastingUnit cu : schedule.getCastingUnits()) {
+                    if (cu.getId() == castingUnitForAssign.getId() && castWrapper.getCast().getCastingUnit().getId() == castingUnitForAssign.getId()) {
+                        if (castWrapper.getEndDate().compareTo(cu.getStartTime()) > 0) {
                             cu.setStartTime(castWrapper.getEndDate());
                             cu.setPreviousProductId(customerOrderMap.get(assignedGroupCustomerOrder.getGroupId()).getProduct().getId());
                         }
@@ -228,19 +206,16 @@ public class ScheduleCalculator
 
             schedule.getUnassignedGroupCustomerOrders().remove(assignedGroupCustomerOrder);
 
-            if (LOGGER.isDebugEnabled())
-            {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Finishing calculation for one Group of Orders");
             }
         }
     }
 
-    public List<Cast> generateCasts(CustomerOrder customerOrder, CastingUnit castingUnit, Mould mould) throws Exception
-    {
+    public List<Cast> generateCasts(CustomerOrder customerOrder, CastingUnit castingUnit, Mould mould) throws Exception {
         List<Cast> casts = new ArrayList<>();
 
-        if (Form.SLAB == customerOrder.getProduct().getForm().getId())
-        {
+        if (Form.SLAB == customerOrder.getProduct().getForm().getId()) {
             int ingots = 0;
             int blanks = 0;
 
@@ -256,23 +231,18 @@ public class ScheduleCalculator
 
             int weightProdCast = (int) (customerOrder.getLength() * customerOrder.getHeight() * customerOrder.getWidth() * CastUtil.RO);
 
-            int lengthMaxProd = castingUnit.getCastHouse().getBlankWeightMax() * customerOrder.getLength().intValue() / weightProdCast;
+            int lengthMaxProd = castingUnit.getCastHouse().getBlankWeightMax() * customerOrder.getLength() / weightProdCast;
 
-            if (lengthMaxProd < lengthMaxBlankCast)
-            {
+            if (lengthMaxProd < lengthMaxBlankCast) {
                 lengthMaxBlankCast = lengthMaxProd;
             }
 
             boolean isLengthConditionPassed = true;
-            while (isLengthConditionPassed)
-            {
-                if (((ingots + 1) * customerOrder.getLength().intValue() + customerOrder.getProduct().getClipping()) < lengthMaxBlankCast)
-                {
+            while (isLengthConditionPassed) {
+                if (((ingots + 1) * customerOrder.getLength() + customerOrder.getProduct().getClipping()) < lengthMaxBlankCast) {
                     ingots += 1;
                     lengthBlanksCast = ingots * customerOrder.getLength() + customerOrder.getProduct().getClipping();
-                }
-                else
-                {
+                } else {
                     isLengthConditionPassed = false;
                 }
             }
@@ -282,10 +252,8 @@ public class ScheduleCalculator
             List<MouldBlanks> mouldBlanksList = mbTypedQuery.getResultList();
 
             //TODO: calculate MouldBlanks based on volume of mixer
-            for (MouldBlanks mouldBlanks : mouldBlanksList)
-            {
-                if (mouldBlanks.getNumBlanks() > blanks)
-                {
+            for (MouldBlanks mouldBlanks : mouldBlanksList) {
+                if (mouldBlanks.getNumBlanks() > blanks) {
                     blanks = mouldBlanks.getNumBlanks();
                 }
             }
@@ -294,8 +262,7 @@ public class ScheduleCalculator
 
             int custNum = (int) Math.ceil((double) customerOrder.getTonnage() / vCast);
 
-            for (int i = 0; i < custNum; i++)
-            {
+            for (int i = 0; i < custNum; i++) {
                 Cast cast = new Cast();
                 cast.setCastingUnit(castingUnit);
                 cast.setCastNumber(i + 1);
@@ -309,14 +276,11 @@ public class ScheduleCalculator
             return casts;
         }
 
-        if (Form.INGOT == customerOrder.getProduct().getForm().getId())
-        {
+        if (Form.INGOT == customerOrder.getProduct().getForm().getId()) {
             //TODO: define generation of Casts for INGOT
 
             return casts;
-        }
-        else if (Form.BILLET == customerOrder.getProduct().getForm().getId())
-        {
+        } else if (Form.BILLET == customerOrder.getProduct().getForm().getId()) {
             //TODO: define generation of Casts for BILLET
 
             return casts;
