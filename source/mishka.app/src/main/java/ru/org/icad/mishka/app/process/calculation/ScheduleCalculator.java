@@ -2,6 +2,7 @@ package ru.org.icad.mishka.app.process.calculation;
 
 import com.google.common.collect.ImmutableMap;
 import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.math3.util.Precision;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.org.icad.mishka.app.loader.db.CastingUnitLoader;
@@ -24,6 +25,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
+import java.math.BigDecimal;
 import java.util.*;
 
 /**
@@ -237,15 +239,8 @@ public class ScheduleCalculator {
                 lengthMaxBlankCast = lengthMaxProd;
             }
 
-            boolean isLengthConditionPassed = true;
-            while (isLengthConditionPassed) {
-                if (((ingots + 1) * customerOrder.getLength() + customerOrder.getProduct().getClipping()) < lengthMaxBlankCast) {
-                    ingots += 1;
-                    lengthBlanksCast = ingots * customerOrder.getLength() + customerOrder.getProduct().getClipping();
-                } else {
-                    isLengthConditionPassed = false;
-                }
-            }
+            ingots = (int) Precision.round( (lengthMaxBlankCast - customerOrder.getProduct().getClipping()) / customerOrder.getLength(), BigDecimal.ROUND_DOWN);
+            lengthBlanksCast = ingots * customerOrder.getLength() + customerOrder.getProduct().getClipping();
 
             TypedQuery<MouldBlanks> mbTypedQuery = em.createNamedQuery("MouldBlanks.getMouldBlanksForMould", MouldBlanks.class);
             mbTypedQuery.setParameter("mouldId", mould.getId());
@@ -258,9 +253,9 @@ public class ScheduleCalculator {
                 }
             }
 
-            int vCast = blanks * lengthBlanksCast * customerOrder.getHeight() * customerOrder.getWidth();
+            int vCast = (int) (blanks * lengthBlanksCast * customerOrder.getHeight() * customerOrder.getWidth() * CastUtil.RO);
 
-            int custNum = (int) Math.ceil((double) customerOrder.getTonnage() / vCast);
+            int custNum = (int) Precision.round(customerOrder.getTonnage() / vCast, BigDecimal.ROUND_DOWN);
 
             for (int i = 0; i < custNum; i++) {
                 Cast cast = new Cast();
