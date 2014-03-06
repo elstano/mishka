@@ -28,9 +28,6 @@ import javax.persistence.TypedQuery;
 import java.math.BigDecimal;
 import java.util.*;
 
-/**
- * Created by @author Ivan Solovyev.
- */
 public class ScheduleCalculator {
     private static final Logger LOGGER = LoggerFactory.getLogger(ScheduleCalculator.class);
 
@@ -149,9 +146,9 @@ public class ScheduleCalculator {
                 EntityManagerFactory emf = Persistence.createEntityManagerFactory("MishkaService");
                 EntityManager em = emf.createEntityManager();
                 TypedQuery<CastingUnitCollector> castingUnitCollectorQuery = em.createNamedQuery("CastingUnitCollector.findByCastingUnit", CastingUnitCollector.class);
-                castingUnitCollectorQuery.setParameter("castUnitId", castingUnitForAssign.getId());
+                castingUnitCollectorQuery.setParameter("castingUnitId", castingUnitForAssign.getId());
                 List<CastingUnitCollector> castingUnitCollectors = castingUnitCollectorQuery.getResultList();
-                int collectorTonnage = 0;
+                double collectorTonnage = 0;
                 for (CastingUnitCollector castingUnitCollector : castingUnitCollectors) {
                     if (collectorTonnage == 0) {
                         collectorTonnage = castingUnitCollector.getMixerTonnageMax();
@@ -228,9 +225,9 @@ public class ScheduleCalculator {
 
             int lengthMaxBlankCast = castingUnitCastingMachines.get(0).getLenghtBlankMax();
 
-            int weightProdCast = (int) (customerOrder.getLength() * customerOrder.getHeight() * customerOrder.getWidth() * CastUtil.RO);
+            double weightProdCast = CastUtil.RO * customerOrder.getLength() * customerOrder.getHeight() * customerOrder.getWidth();
 
-            int lengthMaxProd = castingUnit.getCastHouse().getBlankWeightMax() * customerOrder.getLength() / weightProdCast;
+            int lengthMaxProd = (int) (castingUnit.getCastHouse().getBlankWeightMax() * customerOrder.getLength() / weightProdCast);
 
             if (lengthMaxProd < lengthMaxBlankCast) {
                 lengthMaxBlankCast = lengthMaxProd;
@@ -250,11 +247,11 @@ public class ScheduleCalculator {
                 }
             }
 
-            double vCast = blanks * lengthBlanksCast * customerOrder.getHeight() * customerOrder.getWidth() * CastUtil.RO;
+            double vCast = CastUtil.RO * blanks * lengthBlanksCast * customerOrder.getHeight() * customerOrder.getWidth();
 
-            int custNum = (int) Precision.round(customerOrder.getTonnage() / vCast, BigDecimal.ROUND_DOWN);
+            int castNum = (int) Precision.round(customerOrder.getTonnage() / vCast, BigDecimal.ROUND_DOWN);
 
-            for (int i = 0; i < custNum; i++) {
+            for (int i = 0; i < castNum; i++) {
                 Cast cast = new Cast();
                 cast.setCastingUnit(castingUnit);
                 cast.setCastNumber(i + 1);
@@ -269,11 +266,72 @@ public class ScheduleCalculator {
         }
 
         if (Form.INGOT == customerOrder.getProduct().getForm().getId()) {
-            //TODO: define generation of Casts for INGOT
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("MishkaService");
+            EntityManager em = emf.createEntityManager();
+            TypedQuery<CastingUnitCollector> typedQuery = em.createNamedQuery("CastingUnitCollector.findByCastingUnit", CastingUnitCollector.class);
+            typedQuery.setParameter("castingUnitId", castingUnit.getId());
+            List<CastingUnitCollector> castingUnitCollectors = typedQuery.getResultList();
+
+            CastingUnitCollector castingUnitCollector = castingUnitCollectors.get(0);
+
+            double mixerTonnage = castingUnitCollector.getMixerTonnageMax() - castingUnitCollector.getMixerRestTonnage();
+
+            int vCast = (int) Precision.round(mixerTonnage, BigDecimal.ROUND_DOWN);
+            int castNum = (int) Precision.round(customerOrder.getTonnage() / vCast, BigDecimal.ROUND_DOWN);
+
+            for (int i = 0; i < castNum; i++) {
+                Cast cast = new Cast();
+                cast.setCastingUnit(castingUnit);
+                cast.setCastNumber(i + 1);
+                cast.setCustomerOrder(customerOrder);
+                cast.setBlankCount(1);
+                cast.setIngotCount(0);
+                cast.setIngotInBlankCount(vCast);
+                casts.add(cast);
+            }
 
             return casts;
         } else if (Form.BILLET == customerOrder.getProduct().getForm().getId()) {
-            //TODO: define generation of Casts for BILLET
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("MishkaService");
+            EntityManager em = emf.createEntityManager();
+            TypedQuery<CastingUnitCastingMachine> typedQuery = em.createNamedQuery("CastingUnitCastingMachine.findByCastUnitId", CastingUnitCastingMachine.class);
+            typedQuery.setParameter("castingUnitId", castingUnit.getId());
+            List<CastingUnitCastingMachine> castingUnitCastingMachines = typedQuery.getResultList();
+
+            int lengthMaxBlankCast = castingUnitCastingMachines.get(0).getLenghtBlankMax();
+
+            double weightProdCast = CastUtil.RO * customerOrder.getLength() * customerOrder.getHeight() * customerOrder.getWidth();
+
+            int lengthMaxProd = (int) (castingUnit.getCastHouse().getBlankWeightMax() * customerOrder.getLength() / weightProdCast);
+
+            if (lengthMaxProd < lengthMaxBlankCast) {
+                lengthMaxBlankCast = lengthMaxProd;
+            }
+
+            final int ingots = (int) Precision.round( (lengthMaxBlankCast - customerOrder.getProduct().getClipping()) / customerOrder.getLength(), BigDecimal.ROUND_DOWN);
+            final int lengthBlanksCast = ingots * customerOrder.getLength() + customerOrder.getProduct().getClipping();
+
+            TypedQuery<MouldBlanks> mbTypedQuery = em.createNamedQuery("MouldBlanks.getMouldBlanksForMould", MouldBlanks.class);
+            mbTypedQuery.setParameter("mouldId", mould.getId());
+            List<MouldBlanks> mouldBlanksList = mbTypedQuery.getResultList();
+
+            //TODO: calculate MouldBlanks based on volume of mixer
+            int blanks =  mouldBlanksList.get(0).getNumBlanks();
+
+            double vCast = CastUtil.RO * blanks * lengthBlanksCast * Math.pow(customerOrder.getDiameter(), 2) * Math.PI / 4;
+
+            int castNum = (int) Precision.round(customerOrder.getTonnage() / vCast, BigDecimal.ROUND_DOWN);
+
+            for (int i = 0; i < castNum; i++) {
+                Cast cast = new Cast();
+                cast.setCastingUnit(castingUnit);
+                cast.setCastNumber(i + 1);
+                cast.setCustomerOrder(customerOrder);
+                cast.setBlankCount(blanks);
+                cast.setIngotCount(0);
+                cast.setIngotInBlankCount(ingots);
+                casts.add(cast);
+            }
 
             return casts;
         }
