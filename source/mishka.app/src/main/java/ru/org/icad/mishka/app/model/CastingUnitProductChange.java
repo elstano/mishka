@@ -1,7 +1,9 @@
 package ru.org.icad.mishka.app.model;
 
-import ru.org.icad.mishka.app.ColumnName;
-import ru.org.icad.mishka.app.TableName;
+import org.eclipse.persistence.annotations.Customizer;
+import ru.org.icad.mishka.app.OrderCustomizer;
+import ru.org.icad.mishka.app.constant.ColumnName;
+import ru.org.icad.mishka.app.constant.TableName;
 
 import javax.persistence.*;
 
@@ -14,6 +16,7 @@ import javax.persistence.*;
                 query = "SELECT cupc FROM CastingUnitProductChange cupc WHERE cupc.castingUnit.id = :castingUnitId AND cupc.markId1 = :markId1 AND cupc.markId2 = :markId2")
 })
 @Entity
+@Customizer(OrderCustomizer.class)
 @Table(name = TableName.CU_PRODUCT_CHANGE)
 public class CastingUnitProductChange {
 

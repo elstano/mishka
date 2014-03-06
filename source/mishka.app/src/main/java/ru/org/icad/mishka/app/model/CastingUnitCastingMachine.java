@@ -1,7 +1,9 @@
 package ru.org.icad.mishka.app.model;
 
-import ru.org.icad.mishka.app.ColumnName;
-import ru.org.icad.mishka.app.TableName;
+import org.eclipse.persistence.annotations.Customizer;
+import ru.org.icad.mishka.app.OrderCustomizer;
+import ru.org.icad.mishka.app.constant.ColumnName;
+import ru.org.icad.mishka.app.constant.TableName;
 
 import javax.persistence.*;
 import java.util.List;
@@ -15,6 +17,7 @@ import java.util.List;
                 query = "SELECT c FROM CastingUnitCastingMachine c WHERE c.castingUnit.id = :castingUnitId")
 })
 @Entity
+@Customizer(OrderCustomizer.class)
 @Table(name = TableName.CU_CASTING_MACHINE)
 public class CastingUnitCastingMachine {
 

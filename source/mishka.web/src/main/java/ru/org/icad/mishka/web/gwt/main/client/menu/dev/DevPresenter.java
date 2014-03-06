@@ -13,7 +13,7 @@ import com.google.gwt.user.client.ui.*;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
-import ru.org.icad.mishka.app.TableName;
+import ru.org.icad.mishka.app.constant.TableName;
 import ru.org.icad.mishka.web.gwt.main.client.MainView;
 import ru.org.icad.mishka.web.gwt.main.client.menu.OptionPresenter;
 

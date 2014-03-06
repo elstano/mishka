@@ -1,7 +1,7 @@
 package ru.org.icad.mishka.app.loader.excel;
 
 import org.testng.annotations.Test;
-import ru.org.icad.mishka.app.TableName;
+import ru.org.icad.mishka.app.constant.TableName;
 import ru.org.icad.mishka.app.model.Heater;
 
 import java.net.URL;

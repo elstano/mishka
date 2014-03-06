@@ -1,10 +1,11 @@
 package ru.org.icad.mishka.app.model;
 
-import ru.org.icad.mishka.app.ColumnName;
-import ru.org.icad.mishka.app.TableName;
+import org.eclipse.persistence.annotations.Customizer;
+import ru.org.icad.mishka.app.OrderCustomizer;
+import ru.org.icad.mishka.app.constant.ColumnName;
+import ru.org.icad.mishka.app.constant.TableName;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @NamedQueries({
         @NamedQuery(name = "CuttingLine.findAll",
@@ -13,6 +14,7 @@ import java.io.Serializable;
                 query = "SELECT cl FROM CuttingLine cl WHERE cl.castingUnitHomogenCuttingLine.id = :castingUnitHomogenCuttingLineId and cl.diameter = :diameter")
 })
 @Entity
+@Customizer(OrderCustomizer.class)
 @Table(name = TableName.CUTTING_LINE)
 public class CuttingLine {
 

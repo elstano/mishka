@@ -3,7 +3,7 @@ package ru.org.icad.mishka.app.loader;
 import com.google.common.collect.ImmutableMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.org.icad.mishka.app.TableName;
+import ru.org.icad.mishka.app.constant.TableName;
 import ru.org.icad.mishka.app.loader.excel.*;
 import ru.org.icad.mishka.app.util.ExcelUtil;
 

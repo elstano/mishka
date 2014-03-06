@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.org.icad.mishka.app.TableName;
+import ru.org.icad.mishka.app.constant.TableName;
 import ru.org.icad.mishka.app.model.*;
 import ru.org.icad.mishka.app.util.HtmlUtil;
 

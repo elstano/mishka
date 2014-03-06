@@ -1,6 +1,6 @@
 package ru.org.icad.mishka.app.service;
 
-import ru.org.icad.mishka.app.TableName;
+import ru.org.icad.mishka.app.constant.TableName;
 import ru.org.icad.mishka.app.model.Plant;
 
 import javax.persistence.EntityManager;

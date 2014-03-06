@@ -3,7 +3,7 @@ package ru.org.icad.mishka.app.loader.db;
 import org.apache.commons.lang3.StringUtils;
 import ru.org.icad.mishka.app.jdbc.JDBCHandler;
 import ru.org.icad.mishka.app.jdbc.JDBCTool;
-import ru.org.icad.mishka.app.model.GroupCustomerOrder;
+import ru.org.icad.mishka.app.process.calculation.GroupCustomerOrder;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

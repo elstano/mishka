@@ -1,7 +1,9 @@
 package ru.org.icad.mishka.app.model;
 
-import ru.org.icad.mishka.app.ColumnName;
-import ru.org.icad.mishka.app.TableName;
+import org.eclipse.persistence.annotations.Customizer;
+import ru.org.icad.mishka.app.OrderCustomizer;
+import ru.org.icad.mishka.app.constant.ColumnName;
+import ru.org.icad.mishka.app.constant.TableName;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -18,6 +20,7 @@ import java.sql.Date;
                 query = "SELECT p FROM PeriodicOperation p WHERE p.castingUnitCastingMachine.id IN :castingUnitCastingMachineIds AND p.operationDate >= :startDate AND p.operationDate < :endDate")
 })
 @Entity
+@Customizer(OrderCustomizer.class)
 @Table(name = TableName.PERIODIC_OPERATION)
 public class PeriodicOperation {
 

@@ -3,7 +3,7 @@ package ru.org.icad.mishka.app.process.casting.schema5_6.operation;
 import org.apache.commons.lang3.ObjectUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.org.icad.mishka.app.OperationName;
+import ru.org.icad.mishka.app.constant.OperationName;
 import ru.org.icad.mishka.app.model.CastMachMoulds;
 import ru.org.icad.mishka.app.model.CastingUnitCastingMachine;
 import ru.org.icad.mishka.app.model.Form;

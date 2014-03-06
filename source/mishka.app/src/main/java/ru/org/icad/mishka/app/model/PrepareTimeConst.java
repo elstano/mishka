@@ -1,7 +1,9 @@
 package ru.org.icad.mishka.app.model;
 
-import ru.org.icad.mishka.app.ColumnName;
-import ru.org.icad.mishka.app.TableName;
+import org.eclipse.persistence.annotations.Customizer;
+import ru.org.icad.mishka.app.OrderCustomizer;
+import ru.org.icad.mishka.app.constant.ColumnName;
+import ru.org.icad.mishka.app.constant.TableName;
 
 import javax.persistence.*;
 
@@ -16,6 +18,7 @@ import javax.persistence.*;
                 query = "SELECT p FROM PrepareTimeConst p WHERE p.castingUnitCastingMachine.id IS NOT NULL")
 })
 @Entity
+@Customizer(OrderCustomizer.class)
 @Table(name = TableName.PREPARE_TIME_CONST)
 public class PrepareTimeConst {
 

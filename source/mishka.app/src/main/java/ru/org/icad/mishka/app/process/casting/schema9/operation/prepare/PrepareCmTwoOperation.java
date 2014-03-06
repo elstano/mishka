@@ -3,7 +3,7 @@ package ru.org.icad.mishka.app.process.casting.schema9.operation.prepare;
 import org.apache.commons.lang3.ObjectUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.org.icad.mishka.app.OperationName;
+import ru.org.icad.mishka.app.constant.OperationName;
 import ru.org.icad.mishka.app.model.PrepareTimeConst;
 import ru.org.icad.mishka.app.process.casting.Operation;
 import ru.org.icad.mishka.app.process.casting.Schema;

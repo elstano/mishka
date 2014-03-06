@@ -4,7 +4,7 @@ import org.apache.commons.lang3.ObjectUtils;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.org.icad.mishka.app.OperationName;
+import ru.org.icad.mishka.app.constant.OperationName;
 import ru.org.icad.mishka.app.model.PeriodicOperation;
 import ru.org.icad.mishka.app.process.casting.Operation;
 import ru.org.icad.mishka.app.process.casting.Schema;

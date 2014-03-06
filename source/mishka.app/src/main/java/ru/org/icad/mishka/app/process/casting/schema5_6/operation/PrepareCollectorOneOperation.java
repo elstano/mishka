@@ -4,7 +4,7 @@ import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.math3.util.Precision;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.org.icad.mishka.app.OperationName;
+import ru.org.icad.mishka.app.constant.OperationName;
 import ru.org.icad.mishka.app.cache.CastHouseCache;
 import ru.org.icad.mishka.app.cache.CastingUnitCache;
 import ru.org.icad.mishka.app.model.Cast;

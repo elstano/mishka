@@ -1,4 +1,8 @@
-package ru.org.icad.mishka.app.model;
+package ru.org.icad.mishka.app.process.calculation;
+
+import ru.org.icad.mishka.app.model.Cast;
+import ru.org.icad.mishka.app.model.CastingUnit;
+import ru.org.icad.mishka.app.model.CustomerOrder;
 
 import java.util.*;
 

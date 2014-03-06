@@ -1,7 +1,9 @@
 package ru.org.icad.mishka.app.model;
 
-import ru.org.icad.mishka.app.ColumnName;
-import ru.org.icad.mishka.app.TableName;
+import org.eclipse.persistence.annotations.Customizer;
+import ru.org.icad.mishka.app.OrderCustomizer;
+import ru.org.icad.mishka.app.constant.ColumnName;
+import ru.org.icad.mishka.app.constant.TableName;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -11,6 +13,7 @@ import java.sql.Date;
                 query = "SELECT cur FROM CastingUnitRepair cur")
 })
 @Entity
+@Customizer(OrderCustomizer.class)
 @Table(name = TableName.CU_REPAIR)
 public class CastingUnitRepair {
 

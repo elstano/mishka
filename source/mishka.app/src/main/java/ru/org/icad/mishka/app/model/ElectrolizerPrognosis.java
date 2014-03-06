@@ -1,12 +1,15 @@
 package ru.org.icad.mishka.app.model;
 
-import ru.org.icad.mishka.app.ColumnName;
-import ru.org.icad.mishka.app.TableName;
+import org.eclipse.persistence.annotations.Customizer;
+import ru.org.icad.mishka.app.OrderCustomizer;
+import ru.org.icad.mishka.app.constant.ColumnName;
+import ru.org.icad.mishka.app.constant.TableName;
 
 import javax.persistence.*;
 import java.sql.Date;
 
 @Entity
+@Customizer(OrderCustomizer.class)
 @Table(name = TableName.ELECTROLIZER_PROGNOSIS)
 public class ElectrolizerPrognosis {
 

@@ -1,4 +1,4 @@
-package ru.org.icad.mishka.app;
+package ru.org.icad.mishka.app.constant;
 
 public final class ColumnName {
 

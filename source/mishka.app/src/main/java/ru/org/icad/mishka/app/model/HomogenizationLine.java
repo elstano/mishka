@@ -1,10 +1,11 @@
 package ru.org.icad.mishka.app.model;
 
-import ru.org.icad.mishka.app.ColumnName;
-import ru.org.icad.mishka.app.TableName;
+import org.eclipse.persistence.annotations.Customizer;
+import ru.org.icad.mishka.app.OrderCustomizer;
+import ru.org.icad.mishka.app.constant.ColumnName;
+import ru.org.icad.mishka.app.constant.TableName;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @NamedQueries({
         @NamedQuery(name = "HomogenizationLine.findAll",
@@ -13,6 +14,7 @@ import java.io.Serializable;
                 query = "SELECT hl FROM HomogenizationLine hl WHERE hl.castingUnitHomogenCuttingLine.id = :castingUnitHomogenCuttingLineId and hl.diameter = :diameter")
 })
 @Entity
+@Customizer(OrderCustomizer.class)
 @Table(name = TableName.HOMOGENIZATION_LINE)
 public class HomogenizationLine {
 

@@ -1,11 +1,9 @@
 package ru.org.icad.mishka.app.loader.excel;
 
 import org.testng.annotations.Test;
-import ru.org.icad.mishka.app.TableName;
-import ru.org.icad.mishka.app.model.Cast;
+import ru.org.icad.mishka.app.constant.TableName;
 import ru.org.icad.mishka.app.model.CastingUnit;
 
-import java.net.SocketPermission;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.util.List;

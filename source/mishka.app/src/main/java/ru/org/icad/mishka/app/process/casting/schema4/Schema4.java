@@ -1,6 +1,6 @@
 package ru.org.icad.mishka.app.process.casting.schema4;
 
-import ru.org.icad.mishka.app.OperationName;
+import ru.org.icad.mishka.app.constant.OperationName;
 import ru.org.icad.mishka.app.process.casting.AbstractSchema;
 import ru.org.icad.mishka.app.process.casting.Operation;
 import ru.org.icad.mishka.app.process.casting.SchemaConfiguration;
