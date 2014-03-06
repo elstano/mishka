@@ -218,10 +218,7 @@ public class ScheduleCalculator {
         List<Cast> casts = new ArrayList<>();
 
         if (Form.SLAB == customerOrder.getProduct().getForm().getId()) {
-            int ingots = 0;
             int blanks = 0;
-
-            int lengthBlanksCast = 0;
 
             EntityManagerFactory emf = Persistence.createEntityManagerFactory("MishkaService");
             EntityManager em = emf.createEntityManager();
@@ -239,8 +236,8 @@ public class ScheduleCalculator {
                 lengthMaxBlankCast = lengthMaxProd;
             }
 
-            ingots = (int) Precision.round( (lengthMaxBlankCast - customerOrder.getProduct().getClipping()) / customerOrder.getLength(), BigDecimal.ROUND_DOWN);
-            lengthBlanksCast = ingots * customerOrder.getLength() + customerOrder.getProduct().getClipping();
+            final int ingots = (int) Precision.round( (lengthMaxBlankCast - customerOrder.getProduct().getClipping()) / customerOrder.getLength(), BigDecimal.ROUND_DOWN);
+            final int lengthBlanksCast = ingots * customerOrder.getLength() + customerOrder.getProduct().getClipping();
 
             TypedQuery<MouldBlanks> mbTypedQuery = em.createNamedQuery("MouldBlanks.getMouldBlanksForMould", MouldBlanks.class);
             mbTypedQuery.setParameter("mouldId", mould.getId());
@@ -253,7 +250,7 @@ public class ScheduleCalculator {
                 }
             }
 
-            int vCast = (int) (blanks * lengthBlanksCast * customerOrder.getHeight() * customerOrder.getWidth() * CastUtil.RO);
+            double vCast = blanks * lengthBlanksCast * customerOrder.getHeight() * customerOrder.getWidth() * CastUtil.RO;
 
             int custNum = (int) Precision.round(customerOrder.getTonnage() / vCast, BigDecimal.ROUND_DOWN);
 
