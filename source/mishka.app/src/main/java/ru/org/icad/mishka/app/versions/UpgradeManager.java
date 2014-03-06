@@ -12,11 +12,6 @@ import java.sql.*;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * User: Boss
- * Date: 10/3/13
- * Time: 11:33 PM
- */
 public class UpgradeManager {
     public static final Version NOT_INSTALLED = new Version();
     public static final String TABLE_INSTALLED_VERSIONS = "INSTALLED_VERSIONS";

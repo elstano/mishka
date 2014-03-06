@@ -4,11 +4,6 @@ import ru.org.icad.mishka.app.JNDIFacade;
 
 import javax.transaction.*;
 
-/**
- * User: Boss
- * Date: 10/4/13
- * Time: 12:37 AM
- */
 public class TxUtil {
     public static <T> T executeInTransaction(Callable<T> c){
         UserTransaction t = JNDIFacade.getUserTransaction();

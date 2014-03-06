@@ -13,11 +13,6 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
 
-/**
- * User: Boss
- * Date: 10/8/13
- * Time: 12:35 AM
- */
 public class SettingsPresenter implements OptionPresenter{
     private SettingsServiceAsync settingsService = GWT.create(SettingsService.class);
 

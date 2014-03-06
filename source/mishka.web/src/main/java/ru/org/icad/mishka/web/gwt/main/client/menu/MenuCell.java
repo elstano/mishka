@@ -6,11 +6,6 @@ import com.google.gwt.safehtml.client.SafeHtmlTemplates;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 
-/**
- * User: Boss
- * Date: 10/7/13
- * Time: 12:48 AM
- */
 public class MenuCell extends AbstractCell<MenuItem>{
     public interface MenuTemplate extends SafeHtmlTemplates{
         @Template("<table style='margin-left: 30px'><tr><td><div style='width: {0}; height:{1}; background-reapeat: norepeat; background-image: url({2})' /></td><td>{3}</td></tr></table>")

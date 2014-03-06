@@ -13,11 +13,6 @@ import ru.org.icad.mishka.web.gwt.main.shared.settings.SettingsBean;
 import java.io.IOException;
 import java.sql.SQLException;
 
-/**
- * User: Boss
- * Date: 10/8/13
- * Time: 12:22 AM
- */
 public class SettingsServiceImpl extends RemoteServiceServlet implements SettingsService {
     private final static Logger LOGGER = LoggerFactory.getLogger(SettingsServiceImpl.class);
 

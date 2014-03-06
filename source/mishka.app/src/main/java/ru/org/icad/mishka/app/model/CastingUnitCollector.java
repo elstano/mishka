@@ -13,7 +13,7 @@ import javax.persistence.*;
         @NamedQuery(name = "CastingUnitCollector.findByPrimaryKey",
                 query = "SELECT cuc FROM CastingUnitCollector cuc WHERE cuc.id = :id"),
         @NamedQuery(name = "CastingUnitCollector.findByCastingUnit",
-                query = "select cuc from CastingUnitCollector cuc where cuc.castingUnit.id = :castUnitId")
+                query = "select cuc from CastingUnitCollector cuc where cuc.castingUnit.id = :castingUnitId")
 })
 @Entity
 @Customizer(OrderCustomizer.class)
@@ -27,9 +27,9 @@ public class CastingUnitCollector {
     @JoinColumn(name = ColumnName.CU_ID)
     private CastingUnit castingUnit;
     @Column(name = "MIXER_TONNAGE_MAX")
-    private int mixerTonnageMax;
+    private Double mixerTonnageMax;
     @Column(name = "MIXER_REST_TONNAGE")
-    private int mixerRestTonnage;
+    private Double mixerRestTonnage;
 
     public CastingUnitCollector() {
     }
@@ -54,19 +54,19 @@ public class CastingUnitCollector {
         this.castingUnit = castingUnit;
     }
 
-    public int getMixerTonnageMax() {
+    public Double getMixerTonnageMax() {
         return mixerTonnageMax;
     }
 
-    public void setMixerTonnageMax(int mixerTonnageMax) {
+    public void setMixerTonnageMax(Double mixerTonnageMax) {
         this.mixerTonnageMax = mixerTonnageMax;
     }
 
-    public int getMixerRestTonnage() {
+    public Double getMixerRestTonnage() {
         return mixerRestTonnage;
     }
 
-    public void setMixerRestTonnage(int mixerRestTonnage) {
+    public void setMixerRestTonnage(Double mixerRestTonnage) {
         this.mixerRestTonnage = mixerRestTonnage;
     }
 

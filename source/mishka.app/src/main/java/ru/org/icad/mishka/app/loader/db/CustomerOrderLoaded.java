@@ -10,9 +10,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by @author Ivan Solovyev.
- */
 public class CustomerOrderLoaded implements DBLoader<CustomerOrder>
 {
 

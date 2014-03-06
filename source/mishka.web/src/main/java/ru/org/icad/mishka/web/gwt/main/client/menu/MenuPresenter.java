@@ -7,11 +7,6 @@ import com.google.gwt.view.client.ProvidesKey;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
 
-/**
- * User: Boss
- * Date: 10/6/13
- * Time: 10:37 PM
- */
 public class MenuPresenter {
     private CellList<MenuItem> menuView;
     private MenuDataManager dm;

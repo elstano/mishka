@@ -6,9 +6,6 @@ import ru.org.icad.mishka.app.model.CustomerOrder;
 
 import java.util.*;
 
-/**
- * Created by @author Ivan Solovyev.
- */
 public class Schedule
 {
     //Customer Orders with specific for Schedule tonnage

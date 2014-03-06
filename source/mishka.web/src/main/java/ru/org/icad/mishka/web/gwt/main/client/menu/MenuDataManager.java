@@ -8,11 +8,6 @@ import ru.org.icad.mishka.web.gwt.main.client.upload.UploadPresenter;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * User: Boss
- * Date: 10/6/13
- * Time: 10:29 PM
- */
 public class MenuDataManager {
     private List<MenuItem> items = new ArrayList<MenuItem>();
 

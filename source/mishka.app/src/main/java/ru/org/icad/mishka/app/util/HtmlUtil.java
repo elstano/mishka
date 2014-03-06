@@ -3,7 +3,7 @@ package ru.org.icad.mishka.app.util;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
-public class HtmlUtil {
+public final class HtmlUtil {
 
     private HtmlUtil() {
     }

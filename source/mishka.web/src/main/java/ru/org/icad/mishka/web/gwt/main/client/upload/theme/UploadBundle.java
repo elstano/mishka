@@ -4,9 +4,6 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.ImageResource;
 
-/**
- * Created by Boss on 12/14/13.
- */
 public interface UploadBundle extends ClientBundle {
     public UploadBundle INSTANCE = GWT.create(UploadBundle.class);
 

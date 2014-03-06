@@ -14,6 +14,8 @@ import java.sql.Date;
                 query = "SELECT cu FROM CastingUnit cu"),
         @NamedQuery(name = "CastingUnit.findByPrimaryKey",
                 query = "SELECT cu FROM CastingUnit cu WHERE cu.id = :id"),
+        @NamedQuery(name = "CastingUnit.findByPrimaryKeys",
+                query = "SELECT cu FROM CastingUnit cu WHERE cu.id IN :ids"),
         @NamedQuery(name = "CastingUnit.findByPlantId",
                 query = "select cu from CastingUnit cu, CastHouse ch where ch.plant.id = :plantId and cu.castHouse.id = ch.id")
 })

@@ -5,11 +5,6 @@ import javax.ejb.MessageDriven;
 import javax.jms.Message;
 import javax.jms.MessageListener;
 
-/**
- * User: Boss
- * Date: 9/22/13
- * Time: 2:02 AM
- */
 @MessageDriven(mappedName = "jms/ScheduleAppraiserQueue", activationConfig =  {
         @ActivationConfigProperty(propertyName = "acknowledgeMode", propertyValue = "Auto-acknowledge"),
         @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue")

@@ -15,7 +15,7 @@ import java.util.Collections;
 import java.util.List;
 
 
-public class ExcelUtil {
+public final class ExcelUtil {
 
     private ExcelUtil() {
     }

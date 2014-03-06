@@ -7,10 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-/**
- * Created by @author Ivan Solovyev.
- */
-public class TimeCalculationUtils
+public final class TimeCalculationUtils
 {
     private static final String PREPARATION_TIME_QUERY =
                     "with prep as (\n" +

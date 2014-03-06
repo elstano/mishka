@@ -20,9 +20,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Created by Boss on 12/10/13.
- */
 public class UploadPresenter implements OptionPresenter {
 
     private String uploadCaption;

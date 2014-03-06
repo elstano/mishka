@@ -5,11 +5,6 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 import java.sql.*;
 
-/**
- * User: Boss
- * Date: 9/22/13
- * Time: 1:02 AM
- */
 public class JDBCTool {
     private DataSource ds;
 

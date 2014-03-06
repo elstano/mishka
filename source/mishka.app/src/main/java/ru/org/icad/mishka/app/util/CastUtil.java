@@ -4,7 +4,7 @@ import ru.org.icad.mishka.app.model.Cast;
 import ru.org.icad.mishka.app.model.CustomerOrder;
 import ru.org.icad.mishka.app.model.Form;
 
-public class CastUtil {
+public final class CastUtil {
 
     public static final double RO = 2.741 * Math.pow(10, -9);
 
@@ -22,11 +22,11 @@ public class CastUtil {
         final int formId = customerOrder.getProduct().getForm().getId();
 
         if (Form.SLAB == formId) {
-            return cast.getBlankCount() * getLengthBlank(cast) * customerOrder.getHeight() * customerOrder.getWidth() * RO;
+            return RO * cast.getBlankCount() * getLengthBlank(cast) * customerOrder.getHeight() * customerOrder.getWidth();
         }
 
         if (Form.BILLET == formId) {
-            return cast.getBlankCount() * getLengthBlank(cast) * Math.PI / 4 * Math.pow(customerOrder.getDiameter(), 2) * RO;
+            return RO * cast.getBlankCount() * getLengthBlank(cast) * Math.PI / 4 * Math.pow(customerOrder.getDiameter(), 2);
         }
 
         if (Form.INGOT == formId) {

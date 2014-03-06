@@ -2,11 +2,6 @@ package ru.org.icad.mishka.web.gwt.main.client.menu;
 
 import com.google.gwt.resources.client.ImageResource;
 
-/**
- * User: Boss
- * Date: 10/6/13
- * Time: 11:41 PM
- */
 public class MenuItem {
     private ImageResource image;
     private String caption;

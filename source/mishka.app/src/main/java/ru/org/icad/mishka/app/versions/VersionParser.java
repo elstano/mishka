@@ -11,11 +11,6 @@ import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-/**
- * User: Boss
- * Date: 10/9/13
- * Time: 1:16 AM
- */
 public class VersionParser {
     public static final String INSTALLER_RES = "installer/installer.zip";
     public static final int BUF_SIZE = 31000;

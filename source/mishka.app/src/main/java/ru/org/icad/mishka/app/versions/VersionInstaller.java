@@ -2,11 +2,6 @@ package ru.org.icad.mishka.app.versions;
 
 import java.util.TreeMap;
 
-/**
- * User: Boss
- * Date: 10/9/13
- * Time: 1:13 AM
- */
 public class VersionInstaller implements Comparable<VersionInstaller>{
     private int major;
     private int minor;

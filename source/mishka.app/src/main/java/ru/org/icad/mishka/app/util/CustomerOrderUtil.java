@@ -3,7 +3,7 @@ package ru.org.icad.mishka.app.util;
 import ru.org.icad.mishka.app.model.CustomerOrder;
 import ru.org.icad.mishka.app.model.Form;
 
-public class CustomerOrderUtil {
+public final class CustomerOrderUtil {
 
     private static final double RO = 2.741 * Math.pow(10, -9);
 

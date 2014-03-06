@@ -6,11 +6,6 @@ import javax.transaction.TransactionManager;
 import javax.transaction.TransactionSynchronizationRegistry;
 import javax.transaction.UserTransaction;
 
-/**
- * User: Boss
- * Date: 10/4/13
- * Time: 12:49 AM
- */
 public class JNDIFacade {
 
     public static <T> T lookup(String toLookup){

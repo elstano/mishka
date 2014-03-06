@@ -10,9 +10,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
-/**
- * @author Ivan Solovyev
- */
 public class GroupCustomerOrderLoader implements DBLoader<GroupCustomerOrder>
 {
     private static final String GROUP_CUSTOMER_ORDER_SQL =

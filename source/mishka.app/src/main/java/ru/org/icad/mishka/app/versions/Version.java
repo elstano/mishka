@@ -2,11 +2,6 @@ package ru.org.icad.mishka.app.versions;
 
 import java.util.Date;
 
-/**
- * User: Boss
- * Date: 10/3/13
- * Time: 11:59 PM
- */
 public class Version implements Comparable<Version>{
     private int major;
     private int minor;
