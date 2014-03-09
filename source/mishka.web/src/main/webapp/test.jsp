@@ -7,18 +7,11 @@
 </head>
 <body>
 <%
-    try
-    {
-        ScheduleCalculator calculator = new ScheduleCalculator();
+    ScheduleCalculator calculator = new ScheduleCalculator();
 
-        calculator.calculateSchedule();
+    calculator.calculateSchedule();
 
-        out.println("Calculation has been finished successfully. Please, check server.log for more details.");
-    }
-    catch (Exception e)
-    {
-        out.println(ExceptionUtils.getStackTrace(e));
-    }
+    out.println("Calculation has been finished successfully. Please, check server.log for more details.");
 %>
 </body>
 </html>

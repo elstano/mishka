@@ -26,6 +26,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 import java.math.BigDecimal;
+import java.sql.*;
 import java.util.*;
 
 public class ScheduleCalculator {
@@ -69,7 +70,7 @@ public class ScheduleCalculator {
 
         //Collection of Casting Units
         DBLoader<CastingUnit> castingUnitDBLoader = new CastingUnitLoader();
-        Collection<CastingUnit> castingUnitList = castingUnitDBLoader.load();
+        List<CastingUnit> castingUnitList = new ArrayList<>(castingUnitDBLoader.load());
         for (CastingUnit cu : castingUnitList) {
             cu.setStartTime(TimeUtil.stringToDate(START_DATE));
             casts.put(cu.getId(), new ArrayList<Cast>());
@@ -93,8 +94,11 @@ public class ScheduleCalculator {
         schedule.setCastingUnitMould(castingUnitMould);
         schedule.setUnassignedGroupCustomerOrders(groupCustomerOrders);
 
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("MishkaService");
+        EntityManager em = emf.createEntityManager();
+
         //TODO:while
-        if (schedule.getUnassignedGroupCustomerOrders().size() > 0) {
+        while (schedule.getUnassignedGroupCustomerOrders().size() > 0) {
             CastingUnit castingUnitForAssign = null;
             //get first available cast unit
             for (CastingUnit castingUnit : schedule.getCastingUnits()) {
@@ -114,9 +118,30 @@ public class ScheduleCalculator {
 
             //get most convenient group of orders
             for (GroupCustomerOrder gco : groupCustomerOrders) {
+                //check if CustomerOrder can be handled by castingUnitForAssign, e.g. castingUnitForAssign has appropriate Mould
+                String customerOrderFromGroupId = gco.getCustomerOrderIds().iterator().next();
+                CustomerOrder customerOrderFromGroup = customerOrderMap.get(customerOrderFromGroupId);
+                if (Form.SLAB == customerOrderFromGroup.getProduct().getForm().getId()) {
+                    TypedQuery<Mould> mouldTypedQuery = em.createNamedQuery("Mould.getMouldForSlab", Mould.class);
+                    mouldTypedQuery.setParameter("castingUnitId", castingUnitForAssign.getId());
+                    mouldTypedQuery.setParameter("formId", customerOrderFromGroup.getProduct().getForm().getId());
+                    mouldTypedQuery.setParameter("width", customerOrderFromGroup.getWidth());
+                    mouldTypedQuery.setParameter("height", customerOrderFromGroup.getHeight());
+
+                    List<Mould> moulds = mouldTypedQuery.getResultList();
+                    if (moulds.size() == 0)
+                        continue;
+                } else if (Form.BILLET == customerOrderFromGroup.getProduct().getForm().getId()) {
+                    //TODO: define check for Mould
+                } else if (Form.INGOT == customerOrderFromGroup.getProduct().getForm().getId()) {
+                    //TODO: define check for Mould
+                } else {
+                    throw new Exception();
+                }
+
                 int preparationTime = TimeCalculationUtils.getPreparationTime(castingUnitForAssign.getId(),
                         castingUnitLastProduct.get(castingUnitForAssign.getId()),
-                        gco.getCustomerOrderIds().iterator().next(),
+                        customerOrderFromGroupId,
                         castingUnitMould.get(castingUnitForAssign.getId()));
 
                 if (assignedGroupCustomerOrder == null) {
@@ -130,7 +155,21 @@ public class ScheduleCalculator {
                 }
             }
 
-            assert assignedGroupCustomerOrder != null;
+            if (assignedGroupCustomerOrder == null) {
+                //no group for specified CastUnit with Mould
+                //TODO: define logic for case then CastUnit doesn't have available CustomerOrder
+                for (int i = 0; i < schedule.getCastingUnits().size(); i++) {
+                    if (castingUnitForAssign.getId() == schedule.getCastingUnits().get(i).getId()) {
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.clear();
+                        calendar.setTime(castingUnitForAssign.getStartTime());
+                        calendar.add(Calendar.MONTH, 1);
+                        schedule.getCastingUnits().get(i).setStartTime(new java.sql.Date(calendar.getTimeInMillis()));
+                    }
+                }
+
+                continue;
+            }
 
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Preparation Time for " + castingUnitForAssign.getId() + " on " +
@@ -143,8 +182,6 @@ public class ScheduleCalculator {
                 CustomerOrder customerOrder = schedule.getCustomerOrders().get(assignedOrderId);
 
                 //Calculation number of Casts for current Order
-                EntityManagerFactory emf = Persistence.createEntityManagerFactory("MishkaService");
-                EntityManager em = emf.createEntityManager();
                 TypedQuery<CastingUnitCollector> castingUnitCollectorQuery = em.createNamedQuery("CastingUnitCollector.findByCastingUnit", CastingUnitCollector.class);
                 castingUnitCollectorQuery.setParameter("castingUnitId", castingUnitForAssign.getId());
                 List<CastingUnitCollector> castingUnitCollectors = castingUnitCollectorQuery.getResultList();
@@ -185,19 +222,21 @@ public class ScheduleCalculator {
                 mouldTypedQuery.setParameter("height", customerOrder.getHeight());
 
                 List<Mould> moulds = mouldTypedQuery.getResultList();
-
-                casts.get(castingUnitForAssign.getId()).addAll(generateCasts(customerOrder, castingUnitForAssign, moulds.get(0)));
+                Mould mould = moulds.get(0);
+                List<Cast> castsForOrder = generateCasts(customerOrder, castingUnitForAssign, mould);
+                casts.get(castingUnitForAssign.getId()).addAll(castsForOrder);
             }
 
             CastingProcess castingProcess = new CastingProcess(schemaMap.get(castingUnitForAssign.getId()));
             List<CastWrapper> castWrappers = castingProcess.castingProcess(casts.get(castingUnitForAssign.getId()));
 
             for (CastWrapper castWrapper : castWrappers) {
-                for (CastingUnit cu : schedule.getCastingUnits()) {
+                for (int i = 0; i < schedule.getCastingUnits().size(); i++) {
+                    CastingUnit cu = schedule.getCastingUnits().get(i);
                     if (cu.getId() == castingUnitForAssign.getId() && castWrapper.getCast().getCastingUnit().getId() == castingUnitForAssign.getId()) {
                         if (castWrapper.getEndDate().compareTo(cu.getStartTime()) > 0) {
-                            cu.setStartTime(castWrapper.getEndDate());
-                            cu.setPreviousProductId(customerOrderMap.get(assignedGroupCustomerOrder.getGroupId()).getProduct().getId());
+                            schedule.getCastingUnits().get(i).setStartTime(castWrapper.getEndDate());
+                            schedule.getCastingUnits().get(i).setPreviousProductId(customerOrderMap.get(assignedGroupCustomerOrder.getGroupId()).getProduct().getId());
                         }
                     }
                 }
@@ -291,7 +330,9 @@ public class ScheduleCalculator {
             }
 
             return casts;
-        } else if (Form.BILLET == customerOrder.getProduct().getForm().getId()) {
+        }
+
+        if (Form.BILLET == customerOrder.getProduct().getForm().getId()) {
             EntityManagerFactory emf = Persistence.createEntityManagerFactory("MishkaService");
             EntityManager em = emf.createEntityManager();
             TypedQuery<CastingUnitCastingMachine> typedQuery = em.createNamedQuery("CastingUnitCastingMachine.findByCastUnitId", CastingUnitCastingMachine.class);

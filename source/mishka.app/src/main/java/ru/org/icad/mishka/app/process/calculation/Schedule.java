@@ -18,7 +18,7 @@ public class Schedule
     private Collection<GroupCustomerOrder> unassignedGroupCustomerOrders;
 
     //Collection of CastingUnit with specific for Schedule previousProductId and startTime
-    private Collection<CastingUnit> castingUnits;
+    private List<CastingUnit> castingUnits;
 
     //TODO:Consider 9th schema, Mould on central LA (LA.ID = 50) should be used
     //Last mounted Mould on Casting Unit
@@ -84,12 +84,12 @@ public class Schedule
         unassignedGroupCustomerOrders.remove(groupId);
     }
 
-    public Collection<CastingUnit> getCastingUnits()
+    public List<CastingUnit> getCastingUnits()
     {
         return castingUnits;
     }
 
-    public void setCastingUnits(Collection<CastingUnit> castingUnits)
+    public void setCastingUnits(List<CastingUnit> castingUnits)
     {
         this.castingUnits = castingUnits;
     }
